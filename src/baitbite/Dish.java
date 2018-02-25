@@ -29,6 +29,10 @@ public class Dish {
 		this.Dish_Comments.add(comment);
 	}
 	
+	public ArrayList<Comment> getDish_Comments() {
+		return Dish_Comments;
+	}
+	
 	public void add_picture(){}
 	
 	public void delete_Comment(Comment comment){

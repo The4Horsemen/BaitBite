@@ -9,8 +9,10 @@ public class QandA {
 	private String answer;
 	
 	
-	public QandA() {
+	public QandA(Dish dish , String question) {
 		// TODO Auto-generated constructor stub
+		this.dish = dish;
+		this.question=question;
 	}
 
 

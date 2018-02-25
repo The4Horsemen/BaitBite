@@ -8,8 +8,13 @@ public class Comment {
 	//private Customer comment_writer;
 	private int Rate;
 
-	public Comment() {
+	public Comment(Dish dish,String commentID , String comment_content,int Rate) {
 		// TODO Auto-generated constructor stub
+		this.dish = dish;
+		this.commentID = commentID;
+		this.comment_content = comment_content;
+		this.Rate = Rate;
+		
 	}
 	
 	public void Report_Comment(){
