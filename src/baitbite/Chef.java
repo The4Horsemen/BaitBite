@@ -32,10 +32,14 @@ public class Chef extends Customer{
 		}
 	}
 	
-	public void Add_Order_Now(Order order){
+	public void Add_Order_Now(Order_Now order){
+		this.Orders_for_Now.add(order);
+		
+		
 	}
 	
-	public void Add_Pending_Special_Order_Item() {
+	public void Add_Pending_Special_Order_Item(Special_Order bspOrder) {
+		this.Pending_Special_Order.add(bspOrder);
 	}
 	
 	public void Create_Dish(String dName, String dDescription, int dQuantity, double dprice) {
@@ -51,8 +55,17 @@ public class Chef extends Customer{
 		
 	}
 	
-	public void Reject_Special_Order() {
-		
+	public void Reject_Special_Order(String orderNum){
+		boolean found = false;
+		for (Special_Order x: this.Pending_Special_Order){
+			if(x.getOrder_Number().equals(orderNum)){
+				found = true;
+				this.Pending_Special_Order.remove(x);
+			}
+		}
+		if(found == false){
+			System.out.println("order not found"); // Temporary
+		}
 	}
 	
 	public void Remove_Dish(String DName) {
@@ -69,8 +82,24 @@ public class Chef extends Customer{
 		}
 	}
 	
-	public void Remove_Order() {
+	public void Remove_Order(String orderNum) {
+		boolean found = false;
+		for (Order_Now x: this.Orders_for_Now){
+			if(x.getOrder_Number().equals(orderNum)){
+				found = true;
+				this.Orders_for_Now.remove(x);
+			}
+		}
 		
+		for (Special_Order x: this.Special_Order){
+			if(x.getOrder_Number().equals(orderNum)){
+				found = true;
+				this.Special_Order.remove(x);
+			}
+		}
+		if(found == false){
+			System.out.println("order not found"); // Temporary
+		}
 	}
 	
 	public void Turn_Availability_Off() {
