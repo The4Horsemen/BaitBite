@@ -18,7 +18,18 @@ public class Chef extends Customer{
 	private Image Logo;
 	
 	
-	public void Accept_Special_Order_Item(){
+	public void Accept_Special_Order_Item(String orderNum){
+		boolean found = false;
+		for (Special_Order x: this.Pending_Special_Order){
+			if(x.getOrder_Number().equals(orderNum)){
+				found = true;
+				this.Special_Order.add(x);
+				this.Pending_Special_Order.remove(x);
+			}
+		}
+		if(found == false){
+			System.out.println("order not found"); // Temporary
+		}
 	}
 	
 	public void Add_Order_Now(Order order){
@@ -103,12 +114,11 @@ public class Chef extends Customer{
 	public void setOrders_for_Now(ArrayList<Order_Now> orders_for_Now) {
 		Orders_for_Now = orders_for_Now;
 	}
-	public ArrayList<Special_Requests> getPending_Special_Requests() {
-		return Pending_Special_Requests;
+	public ArrayList<Special_Order> getPending_Special_Requests() {
+		return Pending_Special_Order;
 	}
-	public void setPending_Special_Requests(ArrayList<Special_Requests> pending_Special_Requests) {
-		Pending_Special_Requests = pending_Special_Requests;
-	}
+	
+	
 	public ArrayList<Special_Order> getSpecial_Order() {
 		return Special_Order;
 	}

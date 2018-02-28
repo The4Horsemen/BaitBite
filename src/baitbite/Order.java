@@ -13,7 +13,7 @@ public class Order {
 	private int Quantity ;
 	private String Request_Status;
 	private String Waiting_Time;
-	private String Request_Number;
+	private String Order_Number;
 	
 	
 	
@@ -47,8 +47,8 @@ public class Order {
 	public void setWaiting_Time(String waiting_Time) {
 		Waiting_Time = waiting_Time;
 	}
-	public String getRequest_Number() {
-		return Request_Number;
+	public String getOrder_Number() {
+		return Order_Number;
 	} 
 	
 	
