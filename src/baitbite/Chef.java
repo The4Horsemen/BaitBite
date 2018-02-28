@@ -27,7 +27,9 @@ public class Chef extends Customer{
 	public void Add_Pending_Special_Order_Item() {
 	}
 	
-	public void Create_Dish() {
+	public void Create_Dish(String dName, String dDescription, int dQuantity, double dprice) {
+		Dish dish = new Dish(dName, dDescription, dQuantity, dprice);
+		this.Food_Menu.add(dish);
 	}
 	
 	public void Generate_Validation_Request() {
@@ -42,8 +44,18 @@ public class Chef extends Customer{
 		
 	}
 	
-	public void Remove_Dish() {
-		
+	public void Remove_Dish(String DName) {
+		boolean found = false;
+		for (Dish x: this.Food_Menu) 
+		{ 
+		    if(x.getName().equals(DName)){
+		    	this.Food_Menu.remove(x);
+		    	found = true;
+		    }
+		}
+		if(found == false){
+			System.out.println("dish not found"); // Temporary 
+		}
 	}
 	
 	public void Remove_Order() {
@@ -51,6 +63,10 @@ public class Chef extends Customer{
 	}
 	
 	public void Turn_Availability_Off() {
+		for (Dish x: this.Food_Menu) 
+		{ 
+		    x.setQuantity(0);
+		}
 		
 	}
 	
