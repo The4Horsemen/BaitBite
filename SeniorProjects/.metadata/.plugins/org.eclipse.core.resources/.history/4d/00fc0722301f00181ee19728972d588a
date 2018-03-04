@@ -1,0 +1,21 @@
+package org.The4Horsemen.Senior.BaitBite.Resources;
+
+import javax.ws.rs.Path;
+
+@Path("/Chefs")
+public class APItest {
+
+	public void createChef(){
+		
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+}

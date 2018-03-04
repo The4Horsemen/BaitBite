@@ -1,0 +1,42 @@
+package org.The4Horsemen.Senior.BaitBite.Database;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.The4Horsemen.Senior.BaitBite.model.Chef;
+
+public class DataBase {
+
+	
+	
+	private static Map<Long, Chef> Chefs = new HashMap<>();
+	
+	
+	
+	
+	public static Map<Long,Chef> getChefs(){
+		
+	return Chefs;
+	}
+	public static void addChefs(){
+		
+		//Chefs.put(1L,new Chef("Aseel","approve",10));
+		//Chefs.put(2L,new Chef("justin","approve",10));
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+}

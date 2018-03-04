@@ -1,0 +1,49 @@
+package org.The4Horsemen.Senior.BaitBite.Resources;
+
+
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
+import org.The4Horsemen.Senior.BaitBite.Database.DataBase;
+import org.The4Horsemen.Senior.BaitBite.model.Chef;
+
+@Path("/Chefs")
+public class APItest {
+
+	
+	
+	
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public String createChef(Chef chef){
+		
+		return "Done!";
+		
+	}
+	
+	
+
+	@GET
+	@Produces(MediaType.APPLICATION_XML)
+	public String getChef(){
+		DataBase.addChefs();
+		System.out.println(DataBase.getChefs().values()+"");
+		
+		return "Hey";
+		
+	}
+	
+	
+	
+	
+	
+}
