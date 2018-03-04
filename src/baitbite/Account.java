@@ -9,6 +9,14 @@ public class Account {
 	private String Name;
 	private String Phone_Number;
 	
+	
+	public Account(String email, String location, String name, String phone_number){
+		this.Email = email;
+		this.Location = location;
+		this.Name = name;
+		this.Phone_Number = phone_number;
+	}
+	
 	public void Generate_Account_ID() {
 	}
 	

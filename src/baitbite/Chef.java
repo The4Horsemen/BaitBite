@@ -13,10 +13,13 @@ public class Chef extends Customer{
 
 	private String Account_Status;
 	private String Chef_Status;
-	private int Rating;
+	private int Rate;
 	private Image Health_Certificate;
 	private Image Logo;
 	
+	public Chef(String email, String location, String name, String phone_number, String chef_Stattus){
+		super(email, location, name, phone_number);
+	}
 	
 	public void Accept_Special_Order_Item(String orderNum){
 		boolean found = false;
@@ -166,11 +169,11 @@ public class Chef extends Customer{
 	public void setChef_Status(String chef_Status) {
 		Chef_Status = chef_Status;
 	}
-	public int getRating() {
-		return Rating;
+	public int getRate() {
+		return Rate;
 	}
-	public void setRating(int rating) {
-		Rating = rating;
+	public void setRating(int rate) {
+		Rate = rate;
 	}
 	public Image getHealth_Certificate() {
 		return Health_Certificate;
