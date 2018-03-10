@@ -26,7 +26,7 @@
 
         <activity
             android:name="com.example.android.logmahapp.MenuActivity"
-            android:label="@string/chef_menu_title"
+            android:label="@string/chef_ordersNow_title"
             android:parentActivityName="com.example.android.logmahapp.DashboardActivity" >
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data

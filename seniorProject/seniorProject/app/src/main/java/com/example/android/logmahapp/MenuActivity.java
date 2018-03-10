@@ -46,7 +46,7 @@ public class MenuActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.new_activity);
+        setContentView(R.layout.order_activity);
 
         // Find a reference to the {@link ListView} in the layout
         ListView newListView = (ListView) findViewById(R.id.list_view);

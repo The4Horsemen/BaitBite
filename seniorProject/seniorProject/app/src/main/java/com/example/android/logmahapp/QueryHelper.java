@@ -140,8 +140,8 @@ public final class QueryHelper {
             return null;
         }
 
-        // Create an empty ArrayList that we can start adding newsList to
-        List<Order> newsList = new ArrayList<>();
+        // Create an empty ArrayList that we can start adding ordersNowList to
+        List<Order> ordersNowList = new ArrayList<>();
 
         // Try to parse the JSON response string. If there's a problem with the way the JSON
         // is formatted, a JSONException exception object will be thrown.
@@ -160,7 +160,7 @@ public final class QueryHelper {
             // For each new in the resultArray, create an {@link Order} object
             for (int i = 0; i < resultArray.length(); i++) {
 
-                // Get a single aOrder at position i within the list of newsList
+                // Get a single aOrder at position i within the list of ordersNowList
                 JSONObject currentNew = resultArray.getJSONObject(i);
 
                 // Extract the value for the key called "webTitle"
@@ -199,12 +199,12 @@ public final class QueryHelper {
                     }
                 }
 
-                // Create a new {@link Order} object with the articleTitle, sectionName, webURL,
-                // and webPublicationDate from the JSON response.
+                // Create a new {@link Order} object with the textView_OrderNowTitle, textView_OrderNowID, webURL,
+                // and textView_OrderNowDate from the JSON response.
                 Order aOrder = new Order(articleTitle, sectionName, authorName, webPublicationDate, webURL);
 
-                // Add the new {@link Order} to the list of newsList.
-                newsList.add(aOrder);
+                // Add the new {@link Order} to the list of ordersNowList.
+                ordersNowList.add(aOrder);
             }
 
         } catch (JSONException e) {
@@ -214,8 +214,8 @@ public final class QueryHelper {
             Log.e("QueryHelper", "Problem parsing the new JSON results", e);
         }
 
-        // Return the list of newsList
-        return newsList;
+        // Return the list of ordersNowList
+        return ordersNowList;
     }
 
 }

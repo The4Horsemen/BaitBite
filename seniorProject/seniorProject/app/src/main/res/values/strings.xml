@@ -49,7 +49,7 @@
     <string name="ordersNow" translatable="false">Orders Now</string>
     <string name="specialOrders">Special Orders</string>
     <string name="chef_store_logo_description">Chef Store Logo</string>
-    <string name="title_activity_dashboard">Dashboard</string>
+    <string name="title_activity_dashboard">Bait Bite</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -58,5 +58,8 @@
 
     <!-- Label for Chef Menu [CHAR LIMIT=20] -->
     <string name="chef_menu_title">MENU</string>
+
+    <!-- Label for Chef Orders Now List [CHAR LIMIT=20] -->
+    <string name="chef_ordersNow_title">Orders Now List</string>
 
 </resources>

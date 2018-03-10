@@ -20,17 +20,17 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/articleTitle"
+            android:id="@+id/textView_orderNow_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="2"
             android:textColor="@color/textColorArticleTitle"
             android:textSize="16sp"
-            tools:text="Long placeholder location that should wrap to more than 2 lines of text" />
+            tools:text="Order Now Title" />
 
         <TextView
-            android:id="@+id/sectionName"
+            android:id="@+id/textView_orderNow_ID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
@@ -39,10 +39,18 @@
             android:textAllCaps="true"
             android:textColor="@color/textColorSectionName"
             android:textSize="12sp"
-            tools:text="section" />
+            tools:text="Order Now ID" />
 
         <TextView
-            android:id="@+id/authorName"
+            android:id="@+id/textView_orderNow_date"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textColor="@color/textColorSectionName"
+            android:textSize="12sp"
+            tools:text="Order Now Date" />
+
+        <TextView
+            android:id="@+id/textView_orderNow_customerName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
@@ -63,14 +71,15 @@
         android:layout_marginStart="16dp"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/webPublicationDate"
+        <Button
+            android:id="@+id/button_orderNow_finish"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:textColor="@color/textColorSectionName"
-            android:textSize="12sp"
-            tools:text="Mar 6, 2010" />
+            android:text="Finish"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_horizontal"
+            android:textColor="@color/textColorArticleTitle"
+            android:textSize="16sp" />
 
     </LinearLayout>
 </LinearLayout>
