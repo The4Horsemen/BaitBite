@@ -12,25 +12,25 @@ import android.widget.TextView;
 import java.util.List;
 
 /**
- * An {@link OrderAdapter} knows how to create a list item layout for each new
- * in the data source (a list of {@link Order} objects).
+ * An {@link OrdersNowAdapter} knows how to create a list item layout for each new
+ * in the data source (a list of {@link OrderNow} objects).
  *
  * These list item layouts will be provided to an adapter view like ListView
  * to be displayed to the user.
  */
-public class OrderAdapter extends ArrayAdapter<Order> {
+public class OrdersNowAdapter extends ArrayAdapter<OrderNow> {
 
     private static final String LOCATION_SEPARATOR = " of ";
 
     /**
-     * Constructs a new {@link OrderAdapter}.
+     * Constructs a new {@link OrdersNowAdapter}.
      *
      * @param context of the app
-     * @param aOrders is the list of aOrders, which is the data source of the adapter
+     * @param aOrderNows is the list of aOrderNows, which is the data source of the adapter
      */
-    public OrderAdapter(Context context, List<Order> aOrders) {
+    public OrdersNowAdapter(Context context, List<OrderNow> aOrderNows) {
 
-        super(context, 0, aOrders);
+        super(context, 0, aOrderNows);
     }
 
     /**
@@ -44,31 +44,31 @@ public class OrderAdapter extends ArrayAdapter<Order> {
         View listItemView = convertView;
         if (listItemView == null) {
             listItemView = LayoutInflater.from(getContext()).inflate(
-                    R.layout.order_list_item, parent, false);
+                    R.layout.orders_now_list_item, parent, false);
         }
 
         // Find the new at the given position in the list of news
-        Order currentOrder = getItem(position);
+        OrderNow currentOrderNow = getItem(position);
 
         // Find the TextView with view ID textView_OrderNowTitle
         TextView textView_orderNowTitle = (TextView) listItemView.findViewById(R.id.textView_orderNow_title);
         // Display the textView_OrderNowTitle of the current new in that TextView
-        textView_orderNowTitle.setText(currentOrder.getArticleTitle());
+        textView_orderNowTitle.setText(currentOrderNow.getArticleTitle());
 
         // Find the TextView with view ID textView_OrderNowID
         TextView sectionNameView = (TextView) listItemView.findViewById(R.id.textView_orderNow_ID);
         // Display the textView_OrderNowID of the current new in that TextView
-        sectionNameView.setText(currentOrder.getSectionName());
+        sectionNameView.setText(currentOrderNow.getSectionName());
 
         // Find the TextView with view ID textView_orderNow_customerName
         TextView textView_orderNowBuyerName = (TextView) listItemView.findViewById(R.id.textView_orderNow_customerName);
         // Display the textView_orderNow_customerName of the current new in that TextView
-        textView_orderNowBuyerName.setText(currentOrder.getAuthorName());
+        textView_orderNowBuyerName.setText(currentOrderNow.getAuthorName());
 
         // Find the TextView with view ID textView_OrderNowDate
         TextView textView_OrderNowDate = (TextView) listItemView.findViewById(R.id.textView_orderNow_date);
         // Format the date string (i.e. "Mar 3, 1984")
-        String formattedWebPublicationDateDate = formatDate(currentOrder.getWebPublicationDate());
+        String formattedWebPublicationDateDate = formatDate(currentOrderNow.getWebPublicationDate());
         // Display the textView_OrderNowDate of the current new in that TextView
         textView_OrderNowDate.setText(formattedWebPublicationDateDate);
 

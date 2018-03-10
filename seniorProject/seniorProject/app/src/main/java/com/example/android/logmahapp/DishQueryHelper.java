@@ -18,25 +18,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Helper methods related to requesting and receiving new data.
+ * Helper methods related to requesting and receiving dish data.
  */
-public final class QueryHelper {
+public final class DishQueryHelper {
 
     /** Tag for the log messages */
-    private static final String LOG_TAG = QueryHelper.class.getSimpleName();
+    private static final String LOG_TAG = DishQueryHelper.class.getSimpleName();
 
     /**
-     * Create a private constructor because no one should ever create a {@link QueryHelper} object.
+     * Create a private constructor because no one should ever create a {@link DishQueryHelper} object.
      * This class is only meant to hold static variables and methods, which can be accessed
-     * directly from the class name QueryHelper (and an object instance of QueryHelper is not needed).
+     * directly from the class name DishQueryHelper (and an object instance of DishQueryHelper is not needed).
      */
-    private QueryHelper() {
+    private DishQueryHelper() {
     }
 
     /**
-     * Query the Guardian dataset and return a list of {@link Order} objects.
+     * Query the Guardian dataset and return a list of {@link Dish} objects.
      */
-    public static List<Order> fetchNewData(String requestUrl) {
+    public static List<Dish> fetchNewData(String requestUrl) {
         // Create URL object
         URL url = createUrl(requestUrl);
 
@@ -48,11 +48,11 @@ public final class QueryHelper {
             Log.e(LOG_TAG, "Problem making the HTTP request.", e);
         }
 
-        // Extract relevant fields from the JSON response and create a list of {@link Order}s
-        List<Order> aOrders = extractInfoFromJson(jsonResponse);
+        // Extract relevant fields from the JSON response and create a list of {@link Dish}s
+        List<Dish> dishes = extractInfoFromJson(jsonResponse);
 
-        // Return the list of {@link Order}s
-        return aOrders;
+        // Return the list of {@link Dish}s
+        return dishes;
     }
 
     /**
@@ -131,17 +131,17 @@ public final class QueryHelper {
     }
 
     /**
-     * Return a list of {@link Order} objects that has been built up from
+     * Return a list of {@link Dish} objects that has been built up from
      * parsing the given JSON response.
      */
-    private static List<Order> extractInfoFromJson(String newJSON) {
+    private static List<Dish> extractInfoFromJson(String newJSON) {
         // If the JSON string is empty or null, then return early.
         if (TextUtils.isEmpty(newJSON)) {
             return null;
         }
 
-        // Create an empty ArrayList that we can start adding ordersNowList to
-        List<Order> ordersNowList = new ArrayList<>();
+        // Create an empty ArrayList that we can start adding dishesList to
+        List<Dish> dishesList = new ArrayList<>();
 
         // Try to parse the JSON response string. If there's a problem with the way the JSON
         // is formatted, a JSONException exception object will be thrown.
@@ -157,10 +157,10 @@ public final class QueryHelper {
             // Extract the JSONArray associated with the key called "results"
             JSONArray resultArray = response.getJSONArray("results");
 
-            // For each new in the resultArray, create an {@link Order} object
+            // For each new in the resultArray, create an {@link OrderNow} object
             for (int i = 0; i < resultArray.length(); i++) {
 
-                // Get a single aOrder at position i within the list of ordersNowList
+                // Get a single aOrderNow at position i within the list of ordersNowList
                 JSONObject currentNew = resultArray.getJSONObject(i);
 
                 // Extract the value for the key called "webTitle"
@@ -199,23 +199,23 @@ public final class QueryHelper {
                     }
                 }
 
-                // Create a new {@link Order} object with the textView_OrderNowTitle, textView_OrderNowID, webURL,
+                // Create a new {@link Dish} object with the textView_OrderNowTitle, textView_OrderNowID, webURL,
                 // and textView_OrderNowDate from the JSON response.
-                Order aOrder = new Order(articleTitle, sectionName, authorName, webPublicationDate, webURL);
+                Dish dish = new Dish(articleTitle, sectionName, authorName, webPublicationDate, webURL);
 
-                // Add the new {@link Order} to the list of ordersNowList.
-                ordersNowList.add(aOrder);
+                // Add the new {@link OrderNow} to the list of ordersNowList.
+                dishesList.add(dish);
             }
 
         } catch (JSONException e) {
             // If an error is thrown when executing any of the above statements in the "try" block,
             // catch the exception here, so the app doesn't crash. Print a log message
             // with the message from the exception.
-            Log.e("QueryHelper", "Problem parsing the new JSON results", e);
+            Log.e("OrdersNowQueryHelper", "Problem parsing the new JSON results", e);
         }
 
         // Return the list of ordersNowList
-        return ordersNowList;
+        return dishesList;
     }
 
 }

@@ -1,9 +1,9 @@
 package com.example.android.logmahapp;
 
 /**
- * An {@link Order} object contains information related to a single new.
+ * An {@link OrderNow} object contains information related to a single new.
  */
-public class Order {
+public class OrderNow {
 
     /** Title of the Article */
     private String articleTitle;
@@ -21,7 +21,7 @@ public class Order {
     private String webUrl;
 
     /**
-     * Constructs a new {@link Order} object.
+     * Constructs a new {@link OrderNow} object.
      *
      * @param articleTitle is the article title of the new
      * @param sectionName is the section name of the new
@@ -29,7 +29,7 @@ public class Order {
      * @param webPublicationDate is the publish date of the new
      * @param webURL is the website URL to find more details about the new
      */
-    public Order(String articleTitle, String sectionName, String authorName, String webPublicationDate, String webURL) {
+    public OrderNow(String articleTitle, String sectionName, String authorName, String webPublicationDate, String webURL) {
         this.articleTitle = articleTitle;
         this.sectionName = sectionName;
         this.authorName = authorName;

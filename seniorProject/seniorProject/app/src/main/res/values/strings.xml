@@ -5,7 +5,7 @@
     <string name="app_name">Loqmah App</string>
 
     <!-- Text to display in the list when there areaNewsakes [CHAR LIMIT=NONE] -->
-    <string name="no_news">No News found.</string>
+    <string name="no_dishes">No Dishes found.</string>
 
     <!-- Error message when there is no internet connectivity [CHAR LIMIT=NONE] -->
     <string name="lost_internet_connection">Warning! Check your internet connection.</string>
@@ -27,7 +27,7 @@
     <string name="settings_filter_section_by_key" translatable="false">section</string>
     <string name="settings_filter_section_by_default" translatable="false">Books</string>
 
-    <!-- Strings For Order-By Preference [CHAR LIMIT=30] -->
+    <!-- Strings OrderNowrder-By Preference [CHAR LIMIT=30] -->
     <string name="settings_filter_orders_by">Filter Orders By</string>
     <string name="settings_order_by_key" translatable="false">order_by</string>
     <string name="settings_order_by_default" translatable="false">newest</string>

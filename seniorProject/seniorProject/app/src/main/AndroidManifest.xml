@@ -25,8 +25,18 @@
         </activity>
 
         <activity
-            android:name="com.example.android.logmahapp.MenuActivity"
+            android:name="com.example.android.logmahapp.OrdersNowActivity"
             android:label="@string/chef_ordersNow_title"
+            android:parentActivityName="com.example.android.logmahapp.DashboardActivity" >
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.android.logmahapp.DashboardActivity" />
+        </activity>
+
+        <activity
+            android:name="com.example.android.logmahapp.MenuActivity"
+            android:label="@string/chef_menu_title"
             android:parentActivityName="com.example.android.logmahapp.DashboardActivity" >
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data

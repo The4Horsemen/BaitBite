@@ -23,8 +23,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MenuActivity extends AppCompatActivity
-        implements LoaderManager.LoaderCallbacks<List<Dish>>, SharedPreferences.OnSharedPreferenceChangeListener{
+public class OrdersNowActivity extends AppCompatActivity
+        implements LoaderManager.LoaderCallbacks<List<OrderNow>>, SharedPreferences.OnSharedPreferenceChangeListener{
 
     private static final String LOG_TAG = MenuActivity.class.getName();
 
@@ -37,8 +37,8 @@ public class MenuActivity extends AppCompatActivity
      */
     private static final int NEW_LOADER_ID = 1;
 
-    /** Adapter for the list of news */
-    private DishAdapter dishAdapter;
+    /** Adapter for the list of ordersNow */
+    private OrdersNowAdapter ordersNowAdapter;
 
     /** TextView that is displayed when the list is empty */
     private TextView mEmptyStateTextView;
@@ -46,31 +46,31 @@ public class MenuActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.menu_activity);
+        setContentView(R.layout.orders_now_activity);
 
         // Find a reference to the {@link ListView} in the layout
-        ListView dishListView = (ListView) findViewById(R.id.list_view);
+        ListView ordersNowListView = (ListView) findViewById(R.id.list_view);
 
         mEmptyStateTextView = (TextView) findViewById(R.id.empty_view);
-        dishListView.setEmptyView(mEmptyStateTextView);
+        ordersNowListView.setEmptyView(mEmptyStateTextView);
 
-        // Create a new adapter that takes an empty list of news as input
-        dishAdapter = new DishAdapter(this, new ArrayList<Dish>());
+        // Create a new adapter that takes an empty list of ordersNow as input
+        ordersNowAdapter = new OrdersNowAdapter(this, new ArrayList<OrderNow>());
 
         // Set the adapter on the {@link ListView}
         // so the list can be populated in the user interface
-        dishListView.setAdapter(dishAdapter);
+        ordersNowListView.setAdapter(ordersNowAdapter);
 
         // Set an item click listener on the ListView, which sends an intent to a web browser
         // to open a website with more information about the selected new.
-        dishListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        ordersNowListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 // Find the current new that was clicked on
-                Dish currentDish = dishAdapter.getItem(position);
+                OrderNow currentOrderNow = ordersNowAdapter.getItem(position);
 
                 // Convert the String URL into a URI object (to pass into the Intent constructor)
-                Uri newUri = Uri.parse(currentDish.getWebUrl());
+                Uri newUri = Uri.parse(currentOrderNow.getWebUrl());
 
                 // Create a new intent to view the new URI
                 Intent websiteIntent = new Intent(Intent.ACTION_VIEW, newUri);
@@ -106,18 +106,10 @@ public class MenuActivity extends AppCompatActivity
             mEmptyStateTextView.setText(R.string.lost_internet_connection);
         }
 
-        FloatingActionButton fabAddNewDish = (FloatingActionButton) findViewById(R.id.fab_add_new_dish);
-        fabAddNewDish.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Add new Dish", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
     }
 
     @Override
-    public Loader<List<Dish>> onCreateLoader(int i, Bundle bundle) {
+    public Loader<List<OrderNow>> onCreateLoader(int i, Bundle bundle) {
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         // getString retrieves a String value from the preferences. The second parameter is the default value for this preference.
@@ -140,29 +132,29 @@ public class MenuActivity extends AppCompatActivity
         uriBuilder.appendQueryParameter("api-key", "89867c4d-5bcd-46d1-8205-d34fedd9d876");
 
         // Return the completed uri
-        return new DishLoader(this, uriBuilder.toString().replace("&=", ""));
+        return new OrderaNowLoader(this, uriBuilder.toString().replace("&=", ""));
     }
 
     @Override
-    public void onLoadFinished(Loader<List<Dish>> loader, List<Dish> dishes) {
+    public void onLoadFinished(Loader<List<OrderNow>> loader, List<OrderNow> aOrderNows) {
         // Hide loading indicator because the data has been loaded
         View loadingIndicator = findViewById(R.id.loading_indicator);
         loadingIndicator.setVisibility(View.GONE);
 
-        // Set empty state text to display "No Dishes found."
+        // Set empty state text to display "No aOrderNows found."
         mEmptyStateTextView.setText(R.string.no_dishes);
-        
+
         // If there is a valid list of {@link OrderNow}s, then add them to the adapter's
         // data set. This will trigger the ListView to update.
-        if (dishes != null && !dishes.isEmpty()) {
-            dishAdapter.addAll(dishes);
+        if (aOrderNows != null && !aOrderNows.isEmpty()) {
+            ordersNowAdapter.addAll(aOrderNows);
         }
     }
 
     @Override
-    public void onLoaderReset(Loader<List<Dish>> loader) {
+    public void onLoaderReset(Loader<List<OrderNow>> loader) {
         // Loader reset, so we can clear out our existing data.
-        dishAdapter.clear();
+        ordersNowAdapter.clear();
     }
 
     @Override

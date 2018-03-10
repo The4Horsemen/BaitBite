@@ -61,7 +61,7 @@ public class DashboardActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(DashboardActivity.this, MenuActivity.class);
+                Intent intent = new Intent(DashboardActivity.this, OrdersNowActivity.class);
                 startActivity(intent);
 
             }
