@@ -59,7 +59,7 @@
             android:textAllCaps="true"
             android:textColor="@color/textColorSectionName"
             android:textSize="12sp"
-            tools:text="section" />
+            tools:text="Customer Name" />
 
     </LinearLayout>
 
@@ -75,11 +75,13 @@
             android:id="@+id/button_orderNow_finish"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Finish"
             android:layout_gravity="center_vertical"
+            android:focusable="false"
             android:gravity="center_horizontal"
+            android:text="Finish"
             android:textColor="@color/textColorArticleTitle"
             android:textSize="16sp" />
 
     </LinearLayout>
+
 </LinearLayout>
