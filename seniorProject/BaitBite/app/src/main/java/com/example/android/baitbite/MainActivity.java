@@ -1,5 +1,6 @@
 package com.example.android.baitbite;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
+    //Button SignIn & SignUp in Main page
     Button buttonSignUp, buttonSignIn;
     TextView textSlogan;
 
@@ -27,13 +29,16 @@ public class MainActivity extends AppCompatActivity {
         buttonSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent signUp = new Intent(MainActivity.this, SignUp.class);
+                startActivity(signUp);
             }
         });
 
         buttonSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent signIn = new Intent(MainActivity.this, SignIn.class);
+                startActivity(signIn);
 
             }
         });
