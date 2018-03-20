@@ -31,7 +31,7 @@ public class SignIn extends AppCompatActivity {
         editPhone = (MaterialEditText) findViewById(R.id.editPhone);
         editPassword = (MaterialEditText) findViewById(R.id.editPassword);
 
-        buttonSignIn = (Button) findViewById(R.id.buttonSignUp);
+        buttonSignIn = (Button) findViewById(R.id.buttonSignIn);
 
         //Init Firebase
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
@@ -55,7 +55,7 @@ public class SignIn extends AppCompatActivity {
                             //Get Customer info
                             mDialog.dismiss();
                             Customer customer = dataSnapshot.child(editPhone.getText().toString()).getValue(Customer.class);
-                            if(customer.getPassword().equals(editPassword.getText().toString())){
+                            if(customer.getPassword().equals(editPassword.getText().toString())) {
                                 Toast.makeText(SignIn.this, "Sign in successfully !",Toast.LENGTH_LONG).show();
                             }else{
                                 Toast.makeText(SignIn.this, "Wrong Password !",Toast.LENGTH_LONG).show();

@@ -1,9 +1,5 @@
 package com.example.android.baitbite.Model;
 
-/**
- * Created by janbi on 3/21/2018.
- */
-
 public class Customer {
     private String Name;
     private String Password;
@@ -16,16 +12,19 @@ public class Customer {
         this.Password = Password;
     }
 
-    public String setName(String Name) {
-        this.Name = Name;
-        return this.Name;
-    }
-
     public String getName() {
         return Name;
     }
 
+    public void setName(String name) {
+        Name = name;
+    }
+
     public String getPassword() {
         return Password;
+    }
+
+    public void setPassword(String password) {
+        Password = password;
     }
 }
