@@ -14,4 +14,10 @@
 
     <!-- Text color for the primary location of aNewuake in the list item -->
     <color name="textColorArticleTitle">#2B3D4D</color>
+
+    <!-- Primary color for the editor -->
+    <color name="editorColorPrimary">#efc150</color>
+
+    <!-- Primary dark color for the editor -->
+    <color name="editorColorPrimaryDark">#d9a302</color>
 </resources>

@@ -112,6 +112,9 @@ public class MenuActivity extends AppCompatActivity
             public void onClick(View view) {
                 Snackbar.make(view, "Add new Dish", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+
+                Intent intent = new Intent(MenuActivity.this, EditorActivity.class);
+                startActivity(intent);
             }
         });
     }
