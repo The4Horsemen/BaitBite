@@ -1,6 +1,5 @@
 package com.example.android.baitbite.ViewHolder;
 
-
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -9,25 +8,29 @@ import android.widget.TextView;
 import com.example.android.baitbite.Interface.ItemClicListener;
 import com.example.android.baitbite.R;
 
-public class MenuViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+/**
+ * Created by janbi on 3/24/2018.
+ */
 
-    public TextView textViewMenuName;
-    public ImageView imageViewMenu;
+public class DishViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+    public TextView textViewDishName;
+    public ImageView imageViewDish;
 
     private ItemClicListener itemClicListener;
 
-    public MenuViewHolder(View itemView) {
+    public void setItemClicListener(ItemClicListener itemClicListener) {
+        this.itemClicListener = itemClicListener;
+    }
+
+    public DishViewHolder(View itemView) {
         super(itemView);
 
-        textViewMenuName = (TextView) itemView.findViewById(R.id.menu_name);
-        imageViewMenu = (ImageView) itemView.findViewById(R.id.menu_image);
+        textViewDishName = (TextView) itemView.findViewById(R.id.dish_name);
+        imageViewDish = (ImageView) itemView.findViewById(R.id.dish_image);
 
         itemView.setOnClickListener(this);
 
-    }
-
-    public void setItemClicListener(ItemClicListener itemClicListener) {
-        this.itemClicListener = itemClicListener;
     }
 
     @Override

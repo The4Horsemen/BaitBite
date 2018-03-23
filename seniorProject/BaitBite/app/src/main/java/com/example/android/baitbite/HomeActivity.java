@@ -1,5 +1,6 @@
 package com.example.android.baitbite;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -15,7 +16,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.android.baitbite.Common.Common;
 import com.example.android.baitbite.Interface.ItemClicListener;
@@ -30,12 +30,14 @@ public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     FirebaseDatabase firebaseDatabase;
-    DatabaseReference category;
+    DatabaseReference categoryList;
 
     TextView textView_customerName;
 
     RecyclerView recyclerView_menu;
     RecyclerView.LayoutManager layoutManager;
+
+    FirebaseRecyclerAdapter<Category, MenuViewHolder> categoryAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +49,7 @@ public class HomeActivity extends AppCompatActivity
 
         //Init Firebase
         firebaseDatabase = FirebaseDatabase.getInstance();
-        category = firebaseDatabase.getReference("Category");
+        categoryList = firebaseDatabase.getReference("Category");
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -85,21 +87,25 @@ public class HomeActivity extends AppCompatActivity
 
     private void loadMenu() {
 
-        FirebaseRecyclerAdapter<Category, MenuViewHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Category, MenuViewHolder>(Category.class, R.layout.menu_item, MenuViewHolder.class, category) {
+        categoryAdapter = new FirebaseRecyclerAdapter<Category, MenuViewHolder>(Category.class, R.layout.menu_item, MenuViewHolder.class, categoryList) {
             @Override
             protected void populateViewHolder(MenuViewHolder viewHolder, Category model, int position) {
                 viewHolder.textViewMenuName.setText(model.getName());
-                Picasso.with(getBaseContext()).load(model.getImage()).into(viewHolder.imageView);
+                Picasso.with(getBaseContext()).load(model.getImage()).into(viewHolder.imageViewMenu);
                 final Category clickItem = model;
                 viewHolder.setItemClicListener(new ItemClicListener() {
                     @Override
                     public void onClick(View view, int position, boolean isLongClick) {
-                        Toast.makeText(HomeActivity.this, ""+clickItem.getImage(), Toast.LENGTH_LONG).show();
+                        //Get CategoryID & send it to DishList Activity
+                        Intent dishList = new Intent(HomeActivity.this, DishListActivity.class);
+                        //Get the key of CategoryID
+                        dishList.putExtra("CategoryId", categoryAdapter.getRef(position).getKey());
+                        startActivity(dishList);
                     }
                 });
             }
         };
-        recyclerView_menu.setAdapter(firebaseRecyclerAdapter);
+        recyclerView_menu.setAdapter(categoryAdapter);
     }
 
     @Override
