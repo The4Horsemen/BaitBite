@@ -4,10 +4,14 @@
     <color name="colorPrimaryDark">#640500</color>
     <color name="colorAccent">#8b4440</color>
 
-    <!-- Color for button SignUp -->
+    <!-- Color for butSignUpActivitygnUp -->
     <color name="buttonSignUpColor">#991616</color>
 
-    <!-- Color for button SignIn -->
+    <!-- Color for butSignInActivitygnIn -->
     <color name="buttonSignInColor">#d49e40</color>
+
+    <!-- Colors for RecyclerView Menu -->
+    <color name="overlayBackground">#7f333639</color>
+    <color name="overlayActionBar">#0e0d0e</color>
 
 </resources>

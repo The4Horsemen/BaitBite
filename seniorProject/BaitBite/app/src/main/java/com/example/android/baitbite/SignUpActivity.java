@@ -15,11 +15,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
-public class SignUp extends AppCompatActivity {
+public class SignUpActivity extends AppCompatActivity {
 
     MaterialEditText editPhone, editName, editPassword;
 
-    //Button SignUp in SignUp page
+    //Button SignUpActivity in SignUpActivity page
     Button buttonSignUp;
 
     @Override
@@ -40,7 +40,7 @@ public class SignUp extends AppCompatActivity {
         buttonSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final ProgressDialog mDialog = new ProgressDialog(SignUp.this);
+                final ProgressDialog mDialog = new ProgressDialog(SignUpActivity.this);
                 mDialog.setMessage("Please wait...");
                 mDialog.show();
 
@@ -51,12 +51,12 @@ public class SignUp extends AppCompatActivity {
                         //check if the phone number already exist
                         if(dataSnapshot.child(editPhone.getText().toString()).exists()){
                             mDialog.dismiss();
-                            Toast.makeText(SignUp.this, "The phone number is already registered by a customer", Toast.LENGTH_LONG).show();
+                            Toast.makeText(SignUpActivity.this, "The phone number is already registered by a customer", Toast.LENGTH_LONG).show();
                         }else {
                             mDialog.dismiss();
                             Customer customer = new Customer(editName.getText().toString(), editPassword.getText().toString());
                             table_customer.child(editPhone.getText().toString()).setValue(customer);
-                            Toast.makeText(SignUp.this, "Sign up successfully !", Toast.LENGTH_LONG).show();
+                            Toast.makeText(SignUpActivity.this, "Sign up successfully !", Toast.LENGTH_LONG).show();
                             finish();
                         }
                     }

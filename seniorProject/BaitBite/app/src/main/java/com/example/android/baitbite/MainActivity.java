@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    //Button SignIn & SignUp in Main page
+    //Button SignInActivity & SignUpActivity in Main page
     Button buttonSignUp, buttonSignIn;
     TextView textSlogan;
 
@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         buttonSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent signUp = new Intent(MainActivity.this, SignUp.class);
+                Intent signUp = new Intent(MainActivity.this, SignUpActivity.class);
                 startActivity(signUp);
             }
         });
@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         buttonSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent signIn = new Intent(MainActivity.this, SignIn.class);
+                Intent signIn = new Intent(MainActivity.this, SignInActivity.class);
                 startActivity(signIn);
 
             }

@@ -1,6 +1,7 @@
 package com.example.android.baitbite;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.android.baitbite.Common.Common;
 import com.example.android.baitbite.Model.Customer;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -16,11 +18,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
-public class SignIn extends AppCompatActivity {
+public class SignInActivity extends AppCompatActivity {
 
     EditText editPhone, editPassword;
 
-    //Button SignIn in SignIn page
+    //Button SignInActivity in SignInActivity page
     Button buttonSignIn;
 
     @Override
@@ -41,7 +43,7 @@ public class SignIn extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                final ProgressDialog mDialog = new ProgressDialog(SignIn.this);
+                final ProgressDialog mDialog = new ProgressDialog(SignInActivity.this);
                 mDialog.setMessage("Please wait...");
                 mDialog.show();
 
@@ -56,14 +58,17 @@ public class SignIn extends AppCompatActivity {
                             mDialog.dismiss();
                             Customer customer = dataSnapshot.child(editPhone.getText().toString()).getValue(Customer.class);
                             if(customer.getPassword().equals(editPassword.getText().toString())) {
-                                Toast.makeText(SignIn.this, "Sign in successfully !",Toast.LENGTH_LONG).show();
+                                Intent homeIntent = new Intent(SignInActivity.this, HomeActivity.class);
+                                Common.currentCustomer = customer;
+                                startActivity(homeIntent);
+                                finish();
                             }else{
-                                Toast.makeText(SignIn.this, "Wrong Password !",Toast.LENGTH_LONG).show();
+                                Toast.makeText(SignInActivity.this, "Wrong Password !",Toast.LENGTH_LONG).show();
                             }
 
                         }else{
                             mDialog.dismiss();
-                            Toast.makeText(SignIn.this, "Customer not exist, Sign Up please!",Toast.LENGTH_LONG).show();
+                            Toast.makeText(SignInActivity.this, "Customer not exist, Sign Up please!",Toast.LENGTH_LONG).show();
                         }
 
                     }
