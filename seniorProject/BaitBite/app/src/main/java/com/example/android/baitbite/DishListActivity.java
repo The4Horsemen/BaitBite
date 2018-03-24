@@ -1,5 +1,6 @@
 package com.example.android.baitbite;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -65,7 +66,12 @@ public class DishListActivity extends AppCompatActivity {
                 viewHolder.setItemClicListener(new ItemClicListener() {
                     @Override
                     public void onClick(View view, int position, boolean isLongClick) {
-                        Toast.makeText(DishListActivity.this, ""+local.getName(), Toast.LENGTH_LONG).show();
+                        // Start Dish Detail Activity
+                        Intent dishDetail = new Intent(DishListActivity.this, DishDetailActivity.class);
+
+                        //Send DishID to Dish Detail Activity
+                        dishDetail.putExtra("DishID", dishAdapter.getRef(position).getKey());
+                        startActivity(dishDetail);
                     }
                 });
             }
