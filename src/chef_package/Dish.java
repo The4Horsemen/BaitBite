@@ -1,4 +1,4 @@
-package baitbite;
+package chef_package;
 
 import java.util.ArrayList;
 
@@ -13,8 +13,9 @@ public class Dish {
 	private boolean prepare_now;
 	private boolean prepare_later;
 	private double price;
+	private boolean availability;
 	
-	public Dish(String Name, String Description, int Quantity, double price) {
+	public Dish(String Name, String Description, int Quantity, double price, boolean availability) {
 		this.Dish_Comments = new ArrayList<Comment>();
 		this.QA_List = new ArrayList<QandA>();
 		
@@ -22,6 +23,7 @@ public class Dish {
 		this.Description = Description;
 		this.Quantity = Quantity;
 		this.price = price;
+		this.availability = availability;
 		
 	}
 	
@@ -51,7 +53,23 @@ public class Dish {
 		}
 	}
 	
-	public void remove_picture(){}
+	public void remove_picture(){
+		
+	}
+	
+	
+
+	public boolean isAvailability() {
+		return availability;
+	}
+
+	public void setAvailability(boolean availability) {
+		this.availability = availability;
+	}
+
+	public ArrayList<QandA> getQA_List() {
+		return QA_List;
+	}
 
 	public int getQuantity() {
 		return Quantity;

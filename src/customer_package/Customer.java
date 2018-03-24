@@ -1,6 +1,10 @@
-package baitbite;
+package customer_package;
 
 import java.util.ArrayList;
+
+import baitbite.Account;
+import baitbite.Order_Now;
+import baitbite.Special_Order;
 
 
 
@@ -13,14 +17,6 @@ public class Customer extends Account{
 	
 	public Customer(String email, String location, String name, String phone_number){
 		super(email, location, name, phone_number);
-	}
-	
-	
-	public void add_comment(Comment comment){
-	}
-	
-	public void Ask_Question() {
-		
 	}
 	
 	public void Notify_Customer() {

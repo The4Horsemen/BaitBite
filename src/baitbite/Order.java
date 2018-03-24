@@ -2,11 +2,16 @@ package baitbite;
 
 import java.util.ArrayList;
 
+import customer_package.Customer;
+import chef_package.Chef;
+import chef_package.Dish;
+
 public class Order {
 	
 	private Chef chef;
 	private Customer customer;
-	private ArrayList<Dish> Dish;
+	private Dish dish;
+	private ArrayList<Dish> Dishes;
 	
 	private String Delivery_Method;
 	private String Order_Comment;
@@ -15,7 +20,22 @@ public class Order {
 	private String Waiting_Time;
 	private String Order_Number;
 	
+	public Order(Chef chef, Dish dish, Customer customer, int quantity, String Order_comment, String Request_Status){
+		this.chef = chef;
+		this.dish = dish;
+		this.customer = customer;
+		this.Quantity = quantity;
+		this.Order_Comment =  Order_comment;
+		this.Request_Status = Request_Status;
+		this.Order_Number = generateOrderNumber();
+	}
 	
+	
+	public String generateOrderNumber(){
+		String OrderNum = "";
+		
+		return OrderNum;
+	}
 	
 	public String getDelivery_Method() {
 		return Delivery_Method;

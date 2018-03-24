@@ -1,7 +1,12 @@
-package baitbite;
+package chef_package;
 
 import java.awt.Image;
 import java.util.ArrayList;
+
+import customer_package.Customer;
+import baitbite.Catagory;
+import baitbite.Order_Now;
+import baitbite.Special_Order;
 
 public class Chef extends Customer{
 	
@@ -45,8 +50,12 @@ public class Chef extends Customer{
 		this.Pending_Special_Order.add(bspOrder);
 	}
 	
-	public void Create_Dish(String dName, String dDescription, int dQuantity, double dprice) {
-		Dish dish = new Dish(dName, dDescription, dQuantity, dprice);
+	public void Create_Dish(String dName, String dDescription, int dQuantity, double dprice, boolean dAvailability) {
+		Dish dish = new Dish(dName, dDescription, dQuantity, dprice, dAvailability);
+		this.Food_Menu.add(dish);
+	}
+	
+	public void Add_Dish(Dish dish) {
 		this.Food_Menu.add(dish);
 	}
 	
@@ -121,6 +130,15 @@ public class Chef extends Customer{
 		
 	}
 	
+
+	public void add_comment(Comment comment){
+		
+		/*No need already in the dish*/
+	}
+	
+	public void Ask_Question() {
+		/*No need already in the dish*/
+	}
 	
 	
 	
