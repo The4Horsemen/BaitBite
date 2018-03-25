@@ -21,7 +21,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     //Button SignUpActivity in SignUpActivity page
     Button buttonSignUp;
-
+    Button buttonLocation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +30,7 @@ public class SignUpActivity extends AppCompatActivity {
         editPhone = (MaterialEditText) findViewById(R.id.editPhone);
         editName = (MaterialEditText) findViewById(R.id.editName);
         editPassword = (MaterialEditText) findViewById(R.id.editPassword);
-
+        buttonLocation = (Button) findViewById(R.id.buttonLocation);
         buttonSignUp = (Button) findViewById(R.id.buttonSignUp);
 
         //Init Firebase
@@ -43,7 +43,6 @@ public class SignUpActivity extends AppCompatActivity {
                 final ProgressDialog mDialog = new ProgressDialog(SignUpActivity.this);
                 mDialog.setMessage("Please wait...");
                 mDialog.show();
-
                 table_customer.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -70,5 +69,47 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
+                /*Aseel Code*/
+
+        buttonLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final ProgressDialog mDialog = new ProgressDialog(SignUpActivity.this);
+                mDialog.setMessage("Please wait...");
+                mDialog.show();
+                table_customer.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                        //check if the phone number already exist
+                        if(dataSnapshot.child(editPhone.getText().toString()).exists()){
+                            mDialog.dismiss();
+                            Toast.makeText(SignUpActivity.this, "The phone number is already registered by a customer", Toast.LENGTH_LONG).show();
+                        }else {
+                            mDialog.dismiss();
+                            Customer customer = new Customer(editName.getText().toString(), editPassword.getText().toString());
+                            table_customer.child(editPhone.getText().toString()).setValue(customer);
+                            Toast.makeText(SignUpActivity.this, "Sign up successfully !", Toast.LENGTH_LONG).show();
+                            finish();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+            }
+        });
+
+
+
+
+
+
+
+
+                /* End of Aseel Code*/
     }
 }
