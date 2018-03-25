@@ -3,13 +3,23 @@ package com.example.android.baitbite.Model;
 public class Customer {
     private String Name;
     private String Password;
+    private String Phone;
 
     public Customer() {
     }
 
-    public Customer(String Name, String Password) {
-        this.Name = Name;
-        this.Password = Password;
+    public Customer(String name, String password, String phone) {
+        Name = name;
+        Password = password;
+        Phone = phone;
+    }
+
+    public String getPhone() {
+        return Phone;
+    }
+
+    public void setPhone(String phone) {
+        Phone = phone;
     }
 
     public String getName() {
