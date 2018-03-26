@@ -45,5 +45,9 @@ dependencies {
     implementation 'com.cepheuen.elegant-number-button:lib:1.0.2'
     implementation 'com.android.support:design:26.1.0'
 
+    //Adding Order & Cart needed Library
+    implementation 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
+    implementation 'com.readystatesoftware.sqliteasset:sqliteassethelper:+'
+
 }
 apply plugin: 'com.google.gms.google-services'

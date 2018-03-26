@@ -57,6 +57,8 @@ public class SignInActivity extends AppCompatActivity {
                             //Get Customer info
                             mDialog.dismiss();
                             Customer customer = dataSnapshot.child(editPhone.getText().toString()).getValue(Customer.class);
+                            //Set Phone number of the customer
+                            customer.setPhone(editPhone.getText().toString());
                             if(customer.getPassword().equals(editPassword.getText().toString())) {
                                 Intent homeIntent = new Intent(SignInActivity.this, HomeActivity.class);
                                 Common.currentCustomer = customer;
