@@ -24,6 +24,7 @@ public class Customer {
 	  public String getPassword() {
         return Password;
     }
+
 	//..........................................
 	 public Customer() {
     }
