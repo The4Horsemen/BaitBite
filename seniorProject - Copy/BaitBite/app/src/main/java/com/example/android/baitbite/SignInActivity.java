@@ -70,10 +70,10 @@ public class SignInActivity extends AppCompatActivity {
     /**/
 
 
-    EditText editPhone, editPassword;
+    EditText editPhone, editPassword, verification_code;
 
     //Button SignInActivity in SignInActivity page
-    Button buttonSignIn;
+    Button buttonSignIn, buttonVerify;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,8 +84,10 @@ public class SignInActivity extends AppCompatActivity {
 
         editPhone = (MaterialEditText) findViewById(R.id.editPhone);
         editPassword = (MaterialEditText) findViewById(R.id.editPassword);
+        verification_code = (MaterialEditText) findViewById(R.id.verification_code);
 
         buttonSignIn = (Button) findViewById(R.id.buttonSignIn);
+        buttonVerify = (Button) findViewById(R.id.verify);
 
         //Init Firebase
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
@@ -108,6 +110,7 @@ public class SignInActivity extends AppCompatActivity {
                 //     detect the incoming verification SMS and perform verification without
                 //     user action.
                 Log.d(TAG, "onVerificationCompleted:" + credential);
+                Log.i(TAG, "onVerificationCompleted:" + credential);
 
                 signInWithPhoneAuthCredential(credential);
             }
@@ -151,6 +154,18 @@ public class SignInActivity extends AppCompatActivity {
 
         /**/
 
+        buttonVerify.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String code = verification_code.getText().toString();
+                if (TextUtils.isEmpty(code)) {
+                    verification_code.setError("Cannot be empty.");
+                    return;
+                }
+
+                verifyPhoneNumberWithCode(mVerificationId, code);
+            }});
+
         buttonSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -166,8 +181,8 @@ public class SignInActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
-                        //startPhoneNumberVerification(editPhone.getText().toString());
-                        startPhoneNumberVerification("+966567677671");
+                        startPhoneNumberVerification(editPhone.getText().toString());
+
 
                         //Check Customer existence in Database
                         if(dataSnapshot.child(editPhone.getText().toString()).exists()){
@@ -238,6 +253,15 @@ public class SignInActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
 
+
+                            /*Customer customer = dataSnapshot.child(editPhone.getText().toString()).getValue(Customer.class);
+
+                            Intent homeIntent = new Intent(SignInActivity.this, HomeActivity.class);
+                            Common.currentCustomer = customer;
+                            startActivity(homeIntent);
+                            finish();
+                            */
+
                             FirebaseUser user = task.getResult().getUser();
                             // ...
                         } else {
@@ -256,6 +280,34 @@ public class SignInActivity extends AppCompatActivity {
         PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, code);
         // [END verify_with_code]
         signInWithPhoneAuthCredential(credential);
+    }
+
+    public void onClick(View view) {
+        switch (view.getId()) {
+            /*case R.id.button_start_verification:
+                if (!validatePhoneNumber()) {
+                    return;
+                }
+
+                startPhoneNumberVerification(mPhoneNumberField.getText().toString());
+                break;*/
+            case R.id.verify:
+                String code = verification_code.getText().toString();
+                if (TextUtils.isEmpty(code)) {
+                    verification_code.setError("Cannot be empty.");
+                    return;
+                }
+
+                verifyPhoneNumberWithCode(mVerificationId, code);
+                break;
+            /*case R.id.button_resend:
+                resendVerificationCode(mPhoneNumberField.getText().toString(), mResendToken);
+                break;
+            /*case R.id.sign_out_button:
+                signOut();
+                break;
+                */
+        }
     }
 
 
