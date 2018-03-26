@@ -166,8 +166,8 @@ public class SignInActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
-                        //startPhoneNumberVerification(editPhone.getText().toString());
-                        startPhoneNumberVerification("+966567677671");
+                        startPhoneNumberVerification(editPhone.getText().toString());
+                        //startPhoneNumberVerification("+966567677671");
 
                         //Check Customer existence in Database
                         if(dataSnapshot.child(editPhone.getText().toString()).exists()){

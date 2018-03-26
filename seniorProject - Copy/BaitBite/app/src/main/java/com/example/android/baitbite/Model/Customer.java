@@ -19,12 +19,11 @@ public class Customer {
 
     }
 	 public void setPassword(String password) {
+        Password = password;
     }
 	  public String getPassword() {
         return Password;
     }
-    public void setPassword(String password) {
-        Password = password;
 	//..........................................
 	 public Customer() {
     }
