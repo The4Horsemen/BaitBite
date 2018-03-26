@@ -34,6 +34,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:11.8.0'
     implementation 'com.google.firebase:firebase-database:11.8.0'
     implementation 'com.rengwuxian.materialedittext:library:2.1.4'
+    implementation 'com.google.firebase:firebase-auth:11.8.0'
 
     //Adding FirebaseUI, Cardview & Recyclerview Library
     implementation 'com.android.support:cardview-v7:26.1.0'
