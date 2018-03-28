@@ -54,7 +54,7 @@ public class SignUpActivity extends AppCompatActivity {
                             Toast.makeText(SignUpActivity.this, "The phone number is already registered by a customer", Toast.LENGTH_LONG).show();
                         }else {
                             mDialog.dismiss();
-                            Customer customer = new Customer(editName.getText().toString(), editPassword.getText().toString());
+                            Customer customer = new Customer(editName.getText().toString(), editPassword.getText().toString(), editPhone.getText().toString());
                             table_customer.child(editPhone.getText().toString()).setValue(customer);
                             Toast.makeText(SignUpActivity.this, "Sign up successfully !", Toast.LENGTH_LONG).show();
                             finish();
