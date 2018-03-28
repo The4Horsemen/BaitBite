@@ -67,13 +67,17 @@ public class SignInActivity extends AppCompatActivity {
     private String mVerificationId;
     private PhoneAuthProvider.ForceResendingToken mResendToken;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
+
+    Customer customer;
     /**/
 
 
-    EditText editPhone, editPassword;
+
+
+    EditText editPhone,  verification_code;
 
     //Button SignInActivity in SignInActivity page
-    Button buttonSignIn;
+    Button buttonSignIn, buttonVerify;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,9 +87,10 @@ public class SignInActivity extends AppCompatActivity {
 
 
         editPhone = (MaterialEditText) findViewById(R.id.editPhone);
-        editPassword = (MaterialEditText) findViewById(R.id.editPassword);
+        verification_code = (MaterialEditText) findViewById(R.id.verification_code);
 
         buttonSignIn = (Button) findViewById(R.id.buttonSignIn);
+        buttonVerify = (Button) findViewById(R.id.verify);
 
         //Init Firebase
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
@@ -109,6 +114,7 @@ public class SignInActivity extends AppCompatActivity {
                 //     user action.
                 Log.d(TAG, "onVerificationCompleted:" + credential);
 
+
                 signInWithPhoneAuthCredential(credential);
             }
 
@@ -122,11 +128,9 @@ public class SignInActivity extends AppCompatActivity {
                     // Invalid request
                     // ...
 
-                    Log.i(TAG, "2");
                 } else if (e instanceof FirebaseTooManyRequestsException) {
                     // The SMS quota for the project has been exceeded
                     // ...
-                    Log.i(TAG, "3");
                 }
 
                 // Show a message and update the UI
@@ -141,6 +145,8 @@ public class SignInActivity extends AppCompatActivity {
                 // by combining the code with a verification ID.
                 Log.d(TAG, "onCodeSent:" + verificationId);
 
+                Toast.makeText(SignInActivity.this, "verification code is sent to your mobile ",Toast.LENGTH_LONG).show();
+
                 // Save verification ID and resending token so we can use them later
                 mVerificationId = verificationId;
                 mResendToken = token;
@@ -151,11 +157,30 @@ public class SignInActivity extends AppCompatActivity {
 
         /**/
 
-        buttonSignIn.setOnClickListener(new View.OnClickListener() {
+        buttonVerify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
 
+
+                String code = verification_code.getText().toString();
+                if (TextUtils.isEmpty(code)) {
+                    Toast.makeText(SignInActivity.this, "please enter the verification code.",Toast.LENGTH_LONG).show();
+                    //verification_code.setError("Cannot be empty.");
+                    return;
+                }
+
+                verifyPhoneNumberWithCode(mVerificationId, code);
+            }});
+
+        buttonSignIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if(editPhone.getText().toString().matches("")){
+                    Toast.makeText(SignInActivity.this, "please enter the phone number",Toast.LENGTH_LONG).show();
+                    return;
+                }
 
                 final ProgressDialog mDialog = new ProgressDialog(SignInActivity.this);
                 mDialog.setMessage("Please wait...");
@@ -166,36 +191,20 @@ public class SignInActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
-                        //startPhoneNumberVerification(editPhone.getText().toString());
-                        startPhoneNumberVerification("+966567677671");
-
                         //Check Customer existence in Database
                         if(dataSnapshot.child(editPhone.getText().toString()).exists()){
 
+                            startPhoneNumberVerification(editPhone.getText().toString());
 
+                            buttonSignIn.setVisibility(View.INVISIBLE);
+                            buttonVerify.setVisibility(View.VISIBLE);
+                            editPhone.setVisibility(View.INVISIBLE);
+                            verification_code.setVisibility(View.VISIBLE);
 
                             //Get Customer info
                             mDialog.dismiss();
-                            Customer customer = dataSnapshot.child(editPhone.getText().toString()).getValue(Customer.class);
+                            customer = dataSnapshot.child(editPhone.getText().toString()).getValue(Customer.class);
 
-                           /* if(mVerificationInProgress == true) {
-                                Intent homeIntent = new Intent(SignInActivity.this, HomeActivity.class);
-                                Common.currentCustomer = customer;
-                                startActivity(homeIntent);
-                                finish();
-                            }else{
-                                Toast.makeText(SignInActivity.this, "Wrong Password !",Toast.LENGTH_LONG).show();
-                            }
-
-
-                            /*if(customer.getPassword().equals(editPassword.getText().toString())) {
-                                Intent homeIntent = new Intent(SignInActivity.this, HomeActivity.class);
-                                Common.currentCustomer = customer;
-                                startActivity(homeIntent);
-                                finish();
-                            }else{
-                                Toast.makeText(SignInActivity.this, "Wrong Password !",Toast.LENGTH_LONG).show();
-                            }*/
 
                         }else{
                             mDialog.dismiss();
@@ -238,6 +247,15 @@ public class SignInActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
 
+                            Toast.makeText(SignInActivity.this, "the code is verified successfully",Toast.LENGTH_LONG).show();
+                            //Customer customer = dataSnapshot.child(editPhone.getText().toString()).getValue(Customer.class);
+
+                            Intent homeIntent = new Intent(SignInActivity.this, HomeActivity.class);
+                            Common.currentCustomer = customer;
+                            startActivity(homeIntent);
+                            finish();
+
+
                             FirebaseUser user = task.getResult().getUser();
                             // ...
                         } else {
@@ -245,6 +263,8 @@ public class SignInActivity extends AppCompatActivity {
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
                                 // The verification code entered was invalid
+                                Toast.makeText(SignInActivity.this, "the verification code is incorrect",Toast.LENGTH_LONG).show();
+
                             }
                         }
                     }
@@ -257,6 +277,8 @@ public class SignInActivity extends AppCompatActivity {
         // [END verify_with_code]
         signInWithPhoneAuthCredential(credential);
     }
+
+
 
 
 

@@ -1,4 +1,6 @@
 package com.example.android.baitbite.GPS;
+
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Service;
 import android.content.Context;
@@ -11,6 +13,8 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.provider.Settings;
 import android.util.Log;
+
+import com.karan.churi.PermissionManager.PermissionManager;
 
 
 public class GPSTracker extends Service implements LocationListener {
@@ -38,14 +42,17 @@ public class GPSTracker extends Service implements LocationListener {
 
     // Declaring a Location Manager
     protected LocationManager locationManager;
-
+    protected PermissionManager permissionnManager;
     public GPSTracker(Context context) {
         this.mContext = context;
         getLocation();
     }
 
+
+    @SuppressLint("MissingPermission")
     public Location getLocation() {
         try {
+
             locationManager = (LocationManager) mContext
                     .getSystemService(LOCATION_SERVICE);
 
@@ -62,6 +69,7 @@ public class GPSTracker extends Service implements LocationListener {
             } else {
                 this.canGetLocation = true;
                 // First get location from Network Provider
+                /*
                 if (isNetworkEnabled) {
                     locationManager.requestLocationUpdates(
                             LocationManager.NETWORK_PROVIDER,
@@ -77,6 +85,7 @@ public class GPSTracker extends Service implements LocationListener {
                         }
                     }
                 }
+                */
                 // if GPS Enabled get lat/long using GPS Services
                 if (isGPSEnabled) {
                     if (location == null) {
