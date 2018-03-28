@@ -27,6 +27,7 @@
             android:theme="@style/AppTheme" />
         <activity android:name=".DishListActivity" />
         <activity android:name=".DishDetail"></activity>
+        <activity android:name=".CustomerProfileActivity"></activity>
     </application>
 
 </manifest>
