@@ -191,9 +191,6 @@ public class SignInActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
-
-
-
                         //Check Customer existence in Database
                         if(dataSnapshot.child(editPhone.getText().toString()).exists()){
 
