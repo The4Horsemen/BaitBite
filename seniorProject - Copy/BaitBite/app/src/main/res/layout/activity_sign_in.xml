@@ -13,55 +13,78 @@
         android:layout_marginRight="8dp"
         android:layout_centerInParent="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/editPhone"
-            android:hint="Phone Number"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColorHint="@android:color/white"
-            android:text=""
-            android:textColor="@android:color/white"
-            android:textSize="34sp"
-            android:inputType="phone"
-            app:met_baseColor="@android:color/white"
-            app:met_floatingLabel="highlight"
-            app:met_primaryColor="@android:color/white"
-            app:met_singleLineEllipsis="true"/>
-
-        <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/editPassword"
-            android:hint="Password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColorHint="@android:color/white"
-            android:text=""
-            android:textColor="@android:color/white"
-            android:textSize="34sp"
-            android:inputType="textPassword"
-            app:met_baseColor="@android:color/white"
-            app:met_floatingLabel="highlight"
-            app:met_primaryColor="@android:color/white"
-            app:met_singleLineEllipsis="true"/>
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout">
 
 
     </LinearLayout>
 
     <info.hoang8f.widget.FButton
         android:id="@+id/buttonSignIn"
-        android:text="Sign In"
-        android:textColor="@android:color/white"
-        android:layout_marginRight="8dp"
-        android:layout_marginLeft="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="8dp"
+        android:layout_alignBaseline="@+id/verify"
+        android:layout_alignBottom="@+id/verify"
+        android:layout_alignParentStart="true"
+        android:text="Sign In"
+        android:textColor="@android:color/white"
+        app:cornerRadius="4dp"
         app:fButtonColor="@color/buttonSignInColor"
         app:shadowColor="@android:color/black"
         app:shadowEnabled="true"
-        app:shadowHeight="5dp"
-        app:cornerRadius="4dp"/>
+        app:shadowHeight="5dp" />
+
+    <info.hoang8f.widget.FButton
+        android:id="@+id/verify"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="15dp"
+        android:text="verify"
+        android:textColor="@android:color/white"
+        android:visibility="invisible"
+        app:cornerRadius="4dp"
+        app:fButtonColor="@color/buttonSignInColor"
+        app:shadowColor="@android:color/black"
+        app:shadowEnabled="true"
+        app:shadowHeight="5dp" />
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/editPhone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/linearLayout"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="71dp"
+        android:hint="Phone Number"
+        android:inputType="phone"
+        android:text=""
+        android:textColor="@android:color/white"
+        android:textColorHint="@android:color/white"
+        android:textSize="34sp"
+        app:met_baseColor="@android:color/white"
+        app:met_floatingLabel="highlight"
+        app:met_primaryColor="@android:color/white"
+        app:met_singleLineEllipsis="true" />
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/verification_code"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/editPhone"
+        android:layout_alignBottom="@+id/editPhone"
+        android:layout_alignParentStart="true"
+        android:hint="verification code"
+        android:inputType="text|number"
+        android:text=""
+        android:textColor="@android:color/white"
+        android:textColorHint="@android:color/white"
+        android:textSize="34sp"
+        android:visibility="invisible"
+        app:met_baseColor="@android:color/white"
+        app:met_floatingLabel="highlight"
+        app:met_primaryColor="@android:color/white"
+        app:met_singleLineEllipsis="true" />
 
 </RelativeLayout>
