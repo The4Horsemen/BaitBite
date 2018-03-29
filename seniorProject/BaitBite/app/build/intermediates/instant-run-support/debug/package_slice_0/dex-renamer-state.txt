@@ -1,0 +1,4 @@
+#Sat Mar 24 23:40:22 GMT+03:00 2018
+base.0=C\:\\Users\\MATSAH\\Documents\\GitHub\\BaitBite\\seniorProject\\BaitBite\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\38
+path.0=classes.dex
+renamed.0=classes.dex

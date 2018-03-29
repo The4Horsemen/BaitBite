@@ -1,0 +1,7 @@
+#Internal package file, do not edit.
+#Mon Mar 26 09:47:00 GMT+03:00 2018
+0.baseType=DIRECTORY
+0.base=C\:\\Users\\MATSAH\\Documents\\GitHub\\BaitBite\\seniorProject - Copy\\BaitBite\\app\\build\\intermediates\\assets\\debug
+0.path=fonts/NABILA.TTF
+0.set=ASSET
+count=1

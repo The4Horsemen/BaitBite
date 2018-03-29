@@ -1,0 +1,31 @@
+#Internal package file, do not edit.
+#Sat Mar 24 23:41:39 GMT+03:00 2018
+2.base=C\:\\Users\\MATSAH\\Documents\\GitHub\\BaitBite\\seniorProject\\BaitBite\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\52
+5.set=ASSET
+0.path=classes.dex
+2.baseType=DIRECTORY
+3.base=C\:\\Users\\MATSAH\\Documents\\GitHub\\BaitBite\\seniorProject\\BaitBite\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\53
+2.set=DEX
+1.path=classes.dex
+4.base=C\:\\Users\\MATSAH\\Documents\\GitHub\\BaitBite\\seniorProject\\BaitBite\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\50
+count=7
+5.baseType=DIRECTORY
+2.path=classes.dex
+5.base=C\:\\Users\\MATSAH\\Documents\\GitHub\\BaitBite\\seniorProject\\BaitBite\\app\\build\\intermediates\\assets\\debug
+4.set=DEX
+3.path=classes.dex
+6.base=C\:\\Users\\MATSAH\\Documents\\GitHub\\BaitBite\\seniorProject\\BaitBite\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\54
+3.baseType=DIRECTORY
+1.set=DEX
+4.path=classes.dex
+6.set=DEX
+1.baseType=DIRECTORY
+6.baseType=DIRECTORY
+5.path=fonts/NABILA.TTF
+0.base=C\:\\Users\\MATSAH\\Documents\\GitHub\\BaitBite\\seniorProject\\BaitBite\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\49
+0.baseType=DIRECTORY
+3.set=DEX
+6.path=classes.dex
+1.base=C\:\\Users\\MATSAH\\Documents\\GitHub\\BaitBite\\seniorProject\\BaitBite\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\51
+4.baseType=DIRECTORY
+0.set=DEX
