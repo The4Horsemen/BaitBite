@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.android.baitbite.Interface.ItemClicListener;
+import com.example.android.baitbite.Interface.ItemClickListener;
 import com.example.android.baitbite.R;
 
 /**
@@ -17,10 +17,10 @@ public class DishViewHolder extends RecyclerView.ViewHolder implements View.OnCl
     public TextView textViewDishName;
     public ImageView imageViewDish;
 
-    private ItemClicListener itemClicListener;
+    private ItemClickListener itemClickListener;
 
-    public void setItemClicListener(ItemClicListener itemClicListener) {
-        this.itemClicListener = itemClicListener;
+    public void setItemClickListener(ItemClickListener itemClickListener) {
+        this.itemClickListener = itemClickListener;
     }
 
     public DishViewHolder(View itemView) {
@@ -35,6 +35,6 @@ public class DishViewHolder extends RecyclerView.ViewHolder implements View.OnCl
 
     @Override
     public void onClick(View view) {
-        itemClicListener.onClick(view, getAdapterPosition(), false);
+        itemClickListener.onClick(view, getAdapterPosition(), false);
     }
 }

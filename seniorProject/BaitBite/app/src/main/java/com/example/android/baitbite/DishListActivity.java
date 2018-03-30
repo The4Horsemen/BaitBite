@@ -6,10 +6,8 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.android.baitbite.Interface.ItemClicListener;
+import com.example.android.baitbite.Interface.ItemClickListener;
 import com.example.android.baitbite.Model.Dish;
 import com.example.android.baitbite.ViewHolder.DishViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -63,7 +61,7 @@ public class DishListActivity extends AppCompatActivity {
                 Picasso.with(getBaseContext()).load(model.getImage()).into(viewHolder.imageViewDish);
 
                 final Dish local = model;
-                viewHolder.setItemClicListener(new ItemClicListener() {
+                viewHolder.setItemClickListener(new ItemClickListener() {
                     @Override
                     public void onClick(View view, int position, boolean isLongClick) {
                         // Start Dish Detail Activity

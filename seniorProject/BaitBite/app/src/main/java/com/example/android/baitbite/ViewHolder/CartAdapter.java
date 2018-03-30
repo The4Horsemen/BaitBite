@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
-import com.example.android.baitbite.Interface.ItemClicListener;
+import com.example.android.baitbite.Interface.ItemClickListener;
 import com.example.android.baitbite.Model.Order;
 import com.example.android.baitbite.R;
 
@@ -60,7 +60,7 @@ class CartViewHolder extends RecyclerView.ViewHolder implements View.OnClickList
     public TextView textView_cart_name, textView_cart_price;
     public ImageView imageView_cart_count;
 
-    private ItemClicListener itemClicListener;
+    private ItemClickListener itemClickListener;
 
     public void setTextView_cart_name(TextView textView_cart_name) {
         this.textView_cart_name = textView_cart_name;
