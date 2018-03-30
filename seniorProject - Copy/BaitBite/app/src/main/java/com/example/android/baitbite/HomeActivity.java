@@ -144,6 +144,11 @@ public class HomeActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_sign_out) {
 
+        } else if (id == R.id.nav_profile) {
+            Intent customerProfileIntent = new Intent(HomeActivity.this, CustomerProfileActivity.class);
+            startActivity(customerProfileIntent);
+
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
