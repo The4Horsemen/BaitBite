@@ -75,6 +75,7 @@ public class SignInActivity extends AppCompatActivity {
 
 
     EditText editPhone,  verification_code;
+    TextView textSignup ;
 
     //Button SignInActivity in SignInActivity page
     Button buttonSignIn, buttonVerify;
@@ -91,6 +92,8 @@ public class SignInActivity extends AppCompatActivity {
 
         buttonSignIn = (Button) findViewById(R.id.buttonSignIn);
         buttonVerify = (Button) findViewById(R.id.verify);
+
+        textSignup =  (TextView) findViewById(R.id.textSignup);
 
         //Init Firebase
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
@@ -157,10 +160,17 @@ public class SignInActivity extends AppCompatActivity {
 
         /**/
 
+        textSignup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent signUp = new Intent(SignInActivity.this, SignUpActivity.class);
+                startActivity(signUp);
+            }
+        });
+
         buttonVerify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
 
 
                 String code = verification_code.getText().toString();
