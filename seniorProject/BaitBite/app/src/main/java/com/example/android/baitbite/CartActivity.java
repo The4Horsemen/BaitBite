@@ -1,16 +1,21 @@
 package com.example.android.baitbite;
 
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.CursorAdapter;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.android.baitbite.Common.Common;
 import com.example.android.baitbite.Database.Database;
 import com.example.android.baitbite.Model.Order;
+import com.example.android.baitbite.Model.Request;
 import com.example.android.baitbite.ViewHolder.CartAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -25,7 +30,7 @@ import info.hoang8f.widget.FButton;
 public class CartActivity extends AppCompatActivity {
 
     FirebaseDatabase firebaseDatabase;
-    DatabaseReference request;
+    DatabaseReference requests;
 
     RecyclerView recyclerView_order_dishes;
     RecyclerView.LayoutManager layoutManager;
@@ -44,7 +49,7 @@ public class CartActivity extends AppCompatActivity {
 
         //Init Firebase
         firebaseDatabase = FirebaseDatabase.getInstance();
-        request = firebaseDatabase.getReference("Request");
+        requests = firebaseDatabase.getReference("OrderNow");
 
         //Load the data from Firebase DB to the RecyclerView
         recyclerView_order_dishes = (RecyclerView) findViewById(R.id.listCart);
@@ -58,11 +63,57 @@ public class CartActivity extends AppCompatActivity {
         fButton_placeOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(CartActivity.this, "Place Order", Toast.LENGTH_LONG).show();
+                showAlertDialog();
             }
         });
 
         loadDishList();
+
+    }
+
+    private void showAlertDialog() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(CartActivity.this);
+        alertDialog.setTitle("One more Step!");
+        alertDialog.setMessage("Enter your address: ");
+
+        //Add edit text to alert dialog
+        final EditText editTextAddress = new EditText(CartActivity.this);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+
+        editTextAddress.setLayoutParams(layoutParams);
+        alertDialog.setView(editTextAddress);
+        alertDialog.setIcon(R.drawable.ic_shopping_cart_black_24dp);
+
+        alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                //Create new Request
+                Request request = new Request(
+                        Common.currentCustomer.getPhone(),
+                        Common.currentCustomer.getName(),
+                        editTextAddress.getText().toString(),
+                        textView_total.getText().toString(),
+                        cartList
+                );
+
+                //Submit to Firebase using System.CurrentMilli to Key
+                requests.child(String.valueOf(System.currentTimeMillis())).setValue(request);
+
+                //Delete cart
+                new Database(getBaseContext()).cleanCart();
+                Toast.makeText(CartActivity.this, "Thank you, Order placed.", Toast.LENGTH_LONG).show();
+                finish();
+            }
+        });
+
+        alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+
+        alertDialog.show();
 
     }
 

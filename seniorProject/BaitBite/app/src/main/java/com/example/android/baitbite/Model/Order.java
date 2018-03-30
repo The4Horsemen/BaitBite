@@ -1,9 +1,5 @@
 package com.example.android.baitbite.Model;
 
-/**
- * Created by janbi on 3/25/2018.
- */
-
 public class Order {
     private String DishID;
     private String DishName;

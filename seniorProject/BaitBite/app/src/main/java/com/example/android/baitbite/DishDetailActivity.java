@@ -47,7 +47,7 @@ public class DishDetailActivity extends AppCompatActivity {
         //Init view
         elegantNumberButton_quantity = (ElegantNumberButton) findViewById(R.id.elegantNumberButton_quantity);
 
-        //FloatingActionButton CartActivity functionality
+        //FloatingActionButton Cart functionality
         button_cart = (FloatingActionButton) findViewById(R.id.button_cart);
         button_cart.setOnClickListener(new View.OnClickListener() {
             @Override
