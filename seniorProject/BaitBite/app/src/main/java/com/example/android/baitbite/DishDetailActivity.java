@@ -60,7 +60,7 @@ public class DishDetailActivity extends AppCompatActivity {
                         currentDish.getDiscount()
                 ));
 
-                Toast.makeText(DishDetailActivity.this, "Added to CartActivity", Toast.LENGTH_LONG).show();
+                Toast.makeText(DishDetailActivity.this, "Added to Cart", Toast.LENGTH_LONG).show();
             }
         });
 

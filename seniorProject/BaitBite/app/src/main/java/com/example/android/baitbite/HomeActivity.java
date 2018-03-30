@@ -16,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.baitbite.Common.Common;
 import com.example.android.baitbite.Interface.ItemClicListener;
@@ -55,8 +56,8 @@ public class HomeActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent cartIntent = new Intent(HomeActivity.this, CartActivity.class);
+                startActivity(cartIntent);
             }
         });
 
@@ -139,6 +140,8 @@ public class HomeActivity extends AppCompatActivity
         if (id == R.id.nav_menu) {
 
         } else if (id == R.id.nav_cart) {
+            Intent cartIntent = new Intent(HomeActivity.this, CartActivity.class);
+            startActivity(cartIntent);
 
         } else if (id == R.id.nav_orders) {
 
