@@ -48,5 +48,8 @@ dependencies {
 
     //Permissions
     implementation 'com.github.karanchuri:PermissionManager:0.1.0'
+
+    //Google maps
+    implementation 'com.google.android.gms:play-services:11.8.0'
 }
 apply plugin: 'com.google.gms.google-services'
