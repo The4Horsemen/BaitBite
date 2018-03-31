@@ -31,8 +31,6 @@ public class SignUpActivity extends AppCompatActivity {
 
         editPhone = (MaterialEditText) findViewById(R.id.editPhone);
         editName = (MaterialEditText) findViewById(R.id.editName);
-        editPassword = (MaterialEditText) findViewById(R.id.editPassword);
-        buttonLocation = (Button) findViewById(R.id.buttonLocation);
         buttonSignUp = (Button) findViewById(R.id.buttonSignUp);
 
         //Init Firebase
@@ -55,7 +53,7 @@ public class SignUpActivity extends AppCompatActivity {
                             Toast.makeText(SignUpActivity.this, "The phone number is already registered by a customer", Toast.LENGTH_LONG).show();
                         }else {
                             mDialog.dismiss();
-                            Customer customer = new Customer(editName.getText().toString(), editPassword.getText().toString());
+                            Customer customer = new Customer(editName.getText().toString());
                             table_customer.child(editPhone.getText().toString()).setValue(customer);
                             Toast.makeText(SignUpActivity.this, "Sign up successfully !", Toast.LENGTH_LONG).show();
                             finish();
@@ -71,7 +69,7 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
-                /*Aseel Code*/
+                /*Aseel Code
 
 
 
@@ -105,6 +103,6 @@ public class SignUpActivity extends AppCompatActivity {
 
 
 
-                /* End of Aseel Code*/
+                 End of Aseel Code*/
     }
 }
