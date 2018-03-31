@@ -49,5 +49,8 @@ dependencies {
     implementation 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
     implementation 'com.readystatesoftware.sqliteasset:sqliteassethelper:+'
 
+    //Adding Search needed Library
+    implementation 'com.github.mancj:MaterialSearchBar:0.7.1'
+
 }
 apply plugin: 'com.google.gms.google-services'

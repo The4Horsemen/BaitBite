@@ -54,13 +54,8 @@ public class HomeActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-<<<<<<< HEAD
-                Snackbar.make(view, "Hui", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-=======
                 Intent cartIntent = new Intent(HomeActivity.this, CartActivity.class);
                 startActivity(cartIntent);
->>>>>>> 0f7741248b385840354681eca8abd2f56b88ec34
             }
         });
 
