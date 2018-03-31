@@ -1,4 +1,4 @@
-package com.example.android.baitbite;
+package com.example.matsah.baitbite_chef;
 
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -8,11 +8,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class MainActivity extends AppCompatActivity {
 
     //Button SignInActivity & SignUpActivity in Main page
     Button buttonSignUp, buttonSignIn;
     TextView textSlogan;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,14 +33,6 @@ public class MainActivity extends AppCompatActivity {
         Typeface face = Typeface.createFromAsset(getAssets(), "fonts/NABILA.TTF");
         textSlogan.setTypeface(face);
 
-        buttonSignUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent signUp = new Intent(MainActivity.this, SignUpActivity.class);
-                startActivity(signUp);
-            }
-        });
-
         buttonSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -43,5 +42,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        buttonSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent signUp = new Intent(MainActivity.this, SignUpActivity.class);
+                startActivity(signUp);
+            }
+        });
     }
 }

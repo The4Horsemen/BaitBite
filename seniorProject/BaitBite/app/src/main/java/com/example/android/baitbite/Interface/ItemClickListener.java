@@ -2,6 +2,6 @@ package com.example.android.baitbite.Interface;
 
 import android.view.View;
 
-public interface ItemClicListener {
+public interface ItemClickListener {
     void onClick(View view, int position, boolean isLongClick);
 }

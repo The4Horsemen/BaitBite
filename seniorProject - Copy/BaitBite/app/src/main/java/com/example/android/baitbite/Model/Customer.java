@@ -13,9 +13,9 @@ public class Customer {
 	private String Phone_Number;
 	// delete this part after testing
     private String Password;
-	 public Customer(String Name, String Password) {
+	 public Customer(String Name) {
         this.Name = Name;
-        this.Password = Password;
+
 
     }
 	 public void setPassword(String password) {

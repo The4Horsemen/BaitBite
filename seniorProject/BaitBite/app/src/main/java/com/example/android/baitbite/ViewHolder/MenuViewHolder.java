@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.android.baitbite.Interface.ItemClicListener;
+import com.example.android.baitbite.Interface.ItemClickListener;
 import com.example.android.baitbite.R;
 
 public class MenuViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -14,7 +14,7 @@ public class MenuViewHolder extends RecyclerView.ViewHolder implements View.OnCl
     public TextView textViewMenuName;
     public ImageView imageViewMenu;
 
-    private ItemClicListener itemClicListener;
+    private ItemClickListener itemClickListener;
 
     public MenuViewHolder(View itemView) {
         super(itemView);
@@ -26,12 +26,12 @@ public class MenuViewHolder extends RecyclerView.ViewHolder implements View.OnCl
 
     }
 
-    public void setItemClicListener(ItemClicListener itemClicListener) {
-        this.itemClicListener = itemClicListener;
+    public void setItemClickListener(ItemClickListener itemClickListener) {
+        this.itemClickListener = itemClickListener;
     }
 
     @Override
     public void onClick(View view) {
-        itemClicListener.onClick(view, getAdapterPosition(), false);
+        itemClickListener.onClick(view, getAdapterPosition(), false);
     }
 }
