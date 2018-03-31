@@ -207,6 +207,8 @@ public class SignInActivity extends AppCompatActivity {
                             buttonVerify.setVisibility(View.VISIBLE);
                             editPhone.setVisibility(View.INVISIBLE);
                             verification_code.setVisibility(View.VISIBLE);
+                            textSignup.setVisibility(View.INVISIBLE);
+
 
                             //Get Customer info
                             mDialog.dismiss();
