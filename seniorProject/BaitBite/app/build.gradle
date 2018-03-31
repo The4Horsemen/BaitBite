@@ -34,6 +34,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:11.8.0'
     implementation 'com.google.firebase:firebase-database:11.8.0'
     implementation 'com.rengwuxian.materialedittext:library:2.1.4'
+    implementation 'com.google.firebase:firebase-auth:11.8.0'
+
 
     //Adding FirebaseUI, Cardview & Recyclerview Library
     implementation 'com.android.support:cardview-v7:26.1.0'
@@ -51,6 +53,12 @@ dependencies {
 
     //Adding Search needed Library
     implementation 'com.github.mancj:MaterialSearchBar:0.7.1'
+
+    //Permissions
+    implementation 'com.github.karanchuri:PermissionManager:0.1.0'
+
+    //Google maps
+    implementation 'com.google.android.gms:play-services:11.8.0'
 
 }
 apply plugin: 'com.google.gms.google-services'
