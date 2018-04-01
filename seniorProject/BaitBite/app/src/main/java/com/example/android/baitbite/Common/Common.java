@@ -12,6 +12,7 @@ public class Common {
     //TODO: public static String convertCodeToStatus(String status){}
 
     public static final String DELETE = "Delete";
+    public static final String CUSTOMER_KEY = "Customer";
 
     public static boolean isConnectedToInternet(Context context){
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -28,4 +29,6 @@ public class Common {
         }
         return false;
     }
+
+
 }

@@ -60,5 +60,9 @@ dependencies {
     //Google maps
     implementation 'com.google.android.gms:play-services:11.8.0'
 
+    //SignIn Remember me needed Library
+    implementation 'io.paperdb:paperdb:2.1'
+    implementation 'com.github.rey5137:material:1.2.4'
+
 }
 apply plugin: 'com.google.gms.google-services'

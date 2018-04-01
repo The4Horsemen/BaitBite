@@ -111,6 +111,19 @@
         android:text="@string/textSlogan"
         android:textColor="@android:color/white" />
 
+    <com.rey.material.widget.CheckBox
+        android:id="@+id/checkBox_rememberMe"
+        style="@style/Material.Drawable.CheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/linearLayout"
+        android:layout_alignTop="@+id/linearLayout"
+        android:gravity="center_vertical"
+        android:text="Remember me"
+        android:textColor="@android:color/white"
+        app:cbd_strokeColor="@android:color/white"
+        app:cbd_tickColor="@color/colorPrimaryDark" />
+
     <TextView
         android:id="@+id/textSignup"
         android:layout_width="fill_parent"
