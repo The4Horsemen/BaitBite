@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
+import com.example.android.baitbite.Common.Common;
 import com.example.android.baitbite.Database.Database;
 import com.example.android.baitbite.Model.Dish;
 import com.example.android.baitbite.Model.Order;
@@ -79,7 +80,12 @@ public class DishDetailActivity extends AppCompatActivity {
         }
 
         if(!dishID.isEmpty()){
-            getDetailDish(dishID);
+            if(Common.isConnectedToInternet(getBaseContext())) {
+                getDetailDish(dishID);
+            }else {
+                Toast.makeText(DishDetailActivity.this, "Please check your intenet connection !!!", Toast.LENGTH_LONG).show();
+                return;
+            }
         }
 
     }

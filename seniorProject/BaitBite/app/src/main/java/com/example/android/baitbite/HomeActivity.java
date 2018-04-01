@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.baitbite.Common.Common;
 import com.example.android.baitbite.Interface.ItemClickListener;
@@ -79,8 +80,16 @@ public class HomeActivity extends AppCompatActivity
         layoutManager = new LinearLayoutManager(this);
         recyclerView_menu.setLayoutManager(layoutManager);
 
-        // Calling for method loadMenu to load the data from the Firebase DB
-        loadMenu();
+        //Check internet connection
+        if(!Common.isConnectedToInternet(this)) {
+            // Calling for method loadMenu to load the data from the Firebase DB
+            loadMenu();
+        }else {
+            Toast.makeText(this, "Please check your intenet connection !!!", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        // TODO: Register Service
 
     }
 

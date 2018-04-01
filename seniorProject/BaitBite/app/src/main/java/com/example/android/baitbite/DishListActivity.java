@@ -8,7 +8,9 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.Toast;
 
+import com.example.android.baitbite.Common.Common;
 import com.example.android.baitbite.Interface.ItemClickListener;
 import com.example.android.baitbite.Model.Dish;
 import com.example.android.baitbite.ViewHolder.DishViewHolder;
@@ -62,7 +64,12 @@ public class DishListActivity extends AppCompatActivity {
         }
 
         if(!categoryId.isEmpty() && categoryId != null){
-            loadListDish(categoryId);
+            if(Common.isConnectedToInternet(getBaseContext())) {
+                loadListDish(categoryId);
+            }else {
+                Toast.makeText(DishListActivity.this, "Please check your intenet connection !!!", Toast.LENGTH_LONG).show();
+                return;
+            }
         }
 
         //Search

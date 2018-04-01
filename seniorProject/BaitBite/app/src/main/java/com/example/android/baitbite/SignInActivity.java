@@ -82,8 +82,6 @@ public class SignInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
-
-
         editPhone = (MaterialEditText) findViewById(R.id.editPhone);
         verification_code = (MaterialEditText) findViewById(R.id.verification_code);
 
@@ -184,51 +182,57 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if(editPhone.getText().toString().matches("")){
-                    Toast.makeText(SignInActivity.this, "please enter the phone number",Toast.LENGTH_LONG).show();
-                    return;
-                }
+                if (Common.isConnectedToInternet(getBaseContext())) {
 
-                final ProgressDialog mDialog = new ProgressDialog(SignInActivity.this);
-                mDialog.setMessage("Please wait...");
-                mDialog.show();
+                    if (editPhone.getText().toString().matches("")) {
+                        Toast.makeText(SignInActivity.this, "please enter the phone number", Toast.LENGTH_LONG).show();
+                        return;
+                    }
 
-                table_customer.addValueEventListener(new ValueEventListener() {
+                    final ProgressDialog mDialog = new ProgressDialog(SignInActivity.this);
+                    mDialog.setMessage("Please wait...");
+                    mDialog.show();
 
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
+                    table_customer.addValueEventListener(new ValueEventListener() {
 
-                        //Check Customer existence in Database
-                        if(dataSnapshot.child(editPhone.getText().toString()).exists()){
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
 
-                            startPhoneNumberVerification(editPhone.getText().toString());
+                            //Check Customer existence in Database
+                            if (dataSnapshot.child(editPhone.getText().toString()).exists()) {
 
-                            buttonSignIn.setVisibility(View.INVISIBLE);
-                            buttonVerify.setVisibility(View.VISIBLE);
-                            editPhone.setVisibility(View.INVISIBLE);
-                            verification_code.setVisibility(View.VISIBLE);
-                            textSignup.setVisibility(View.INVISIBLE);
+                                startPhoneNumberVerification(editPhone.getText().toString());
 
-
-                            //Get Customer info
-                            mDialog.dismiss();
-                            customer = dataSnapshot.child(editPhone.getText().toString()).getValue(Customer.class);
-                            //Set Phone number of the customer
-                            customer.setPhone(editPhone.getText().toString());
+                                buttonSignIn.setVisibility(View.INVISIBLE);
+                                buttonVerify.setVisibility(View.VISIBLE);
+                                editPhone.setVisibility(View.INVISIBLE);
+                                verification_code.setVisibility(View.VISIBLE);
+                                textSignup.setVisibility(View.INVISIBLE);
 
 
-                        }else{
-                            mDialog.dismiss();
-                            Toast.makeText(SignInActivity.this, "Customer not exist, Sign Up please!",Toast.LENGTH_LONG).show();
+                                //Get Customer info
+                                mDialog.dismiss();
+                                customer = dataSnapshot.child(editPhone.getText().toString()).getValue(Customer.class);
+                                //Set Phone number of the customer
+                                customer.setPhone(editPhone.getText().toString());
+
+
+                            } else {
+                                mDialog.dismiss();
+                                Toast.makeText(SignInActivity.this, "Customer not exist, Sign Up please!", Toast.LENGTH_LONG).show();
+                            }
+
                         }
 
-                    }
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
+                        }
+                    });
+                }else{
+                    Toast.makeText(SignInActivity.this, "Please check your intenet connection !!!", Toast.LENGTH_LONG).show();
+                    return;
+                }
             }
         });
 
@@ -288,10 +292,5 @@ public class SignInActivity extends AppCompatActivity {
         // [END verify_with_code]
         signInWithPhoneAuthCredential(credential);
     }
-
-
-
-
-
 
 }
