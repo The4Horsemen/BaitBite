@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.baitbite.Common.Common;
+import com.example.android.baitbite.Database.Database;
 import com.example.android.baitbite.Interface.ItemClickListener;
 import com.example.android.baitbite.Model.Category;
 import com.example.android.baitbite.ViewHolder.MenuViewHolder;
@@ -166,6 +167,9 @@ public class HomeActivity extends AppCompatActivity
         } else if (id == R.id.nav_sign_out) {
             //Delete Remembered Customer
             Paper.book().destroy();
+
+            //Delete cart
+            new Database(getBaseContext()).cleanCart();
 
             //Signout
             Intent signInIntent = new Intent(HomeActivity.this, SignInActivity.class);
