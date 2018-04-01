@@ -81,7 +81,7 @@ public class HomeActivity extends AppCompatActivity
         recyclerView_menu.setLayoutManager(layoutManager);
 
         //Check internet connection
-        if(!Common.isConnectedToInternet(this)) {
+        if(Common.isConnectedToInternet(this)) {
             // Calling for method loadMenu to load the data from the Firebase DB
             loadMenu();
         }else {
@@ -107,7 +107,7 @@ public class HomeActivity extends AppCompatActivity
                         //Get CategoryID & send it to DishList Activity
                         Intent dishList = new Intent(HomeActivity.this, DishListActivity.class);
                         //Get the key of CategoryID
-                        dishList.putExtra("CategoryId", categoryAdapter.getRef(position).getKey());
+                        dishList.putExtra("categoryID", categoryAdapter.getRef(position).getKey());
                         startActivity(dishList);
                     }
                 });
@@ -135,6 +135,10 @@ public class HomeActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.refresh){
+            loadMenu();
+        }
+
         return super.onOptionsItemSelected(item);
     }
 

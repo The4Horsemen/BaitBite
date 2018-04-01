@@ -76,7 +76,7 @@ public class DishDetailActivity extends AppCompatActivity {
 
         //Get Dish ID from the Intent
         if(getIntent() != null){
-            dishID = getIntent().getStringExtra("DishID");
+            dishID = getIntent().getStringExtra("dishID");
         }
 
         if(!dishID.isEmpty()){
