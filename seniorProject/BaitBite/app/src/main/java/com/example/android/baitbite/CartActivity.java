@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -63,7 +64,12 @@ public class CartActivity extends AppCompatActivity {
         fButton_placeOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showAlertDialog();
+
+                if(cartList.size() > 0) {
+                    showAlertDialog();
+                }else {
+                    Toast.makeText(CartActivity.this, "Your Cart is Empty !!!", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -120,6 +126,7 @@ public class CartActivity extends AppCompatActivity {
     private void loadDishList() {
         cartList = new Database(this).getCarts();
         cartAdapter = new CartAdapter(cartList, this);
+        cartAdapter.notifyDataSetChanged();
         recyclerView_order_dishes.setAdapter(cartAdapter);
 
         //Calculate total price
@@ -132,5 +139,29 @@ public class CartActivity extends AppCompatActivity {
         NumberFormat numberFormat = NumberFormat.getCurrencyInstance(locale);
 
         textView_total.setText(numberFormat.format(total));
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        if(item.getTitle().equals(Common.DELETE)){
+            deleteItemFromCart(item.getOrder());
+        }
+        return true;
+    }
+
+    private void deleteItemFromCart(int position) {
+        //Remove item from List<Order> by position
+        cartList.remove(position);
+
+        //Delete old data from SQLite
+        new Database(this).cleanCart();
+
+        //Update new data in List<Order> to SQLite
+        for(Order item:cartList){
+            new Database(this).addToCart(item);
+        }
+
+        //Refresh the Cart after deleting the item
+        loadDishList();
     }
 }

@@ -3,6 +3,7 @@ package com.example.android.baitbite.ViewHolder;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
+import com.example.android.baitbite.Common.Common;
 import com.example.android.baitbite.Interface.ItemClickListener;
 import com.example.android.baitbite.Model.Order;
 import com.example.android.baitbite.R;
@@ -55,7 +57,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartViewHolder>{
     }
 }
 
-class CartViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+class CartViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnCreateContextMenuListener{
 
     public TextView textView_cart_name, textView_cart_price;
     public ImageView imageView_cart_count;
@@ -73,10 +75,18 @@ class CartViewHolder extends RecyclerView.ViewHolder implements View.OnClickList
         textView_cart_price = (TextView) itemView.findViewById(R.id.textView_cart_item_price);
         imageView_cart_count = (ImageView) itemView.findViewById(R.id.imageView_cart_item_count);
 
+        itemView.setOnCreateContextMenuListener(this);
+
     }
 
     @Override
     public void onClick(View view) {
 
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
+        contextMenu.setHeaderTitle("Select Action: ");
+        contextMenu.add(0, 0, getAdapterPosition(), Common.DELETE);
     }
 }

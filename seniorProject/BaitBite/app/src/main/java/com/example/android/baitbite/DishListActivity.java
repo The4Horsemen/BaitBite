@@ -8,7 +8,9 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.Toast;
 
+import com.example.android.baitbite.Common.Common;
 import com.example.android.baitbite.Interface.ItemClickListener;
 import com.example.android.baitbite.Model.Dish;
 import com.example.android.baitbite.ViewHolder.DishViewHolder;
@@ -58,11 +60,16 @@ public class DishListActivity extends AppCompatActivity {
 
         //Get Intent
         if(getIntent() != null){
-            categoryId = getIntent().getStringExtra("CategoryId");
+            categoryId = getIntent().getStringExtra("categoryID");
         }
 
         if(!categoryId.isEmpty() && categoryId != null){
-            loadListDish(categoryId);
+            if(Common.isConnectedToInternet(getBaseContext())) {
+                loadListDish(categoryId);
+            }else {
+                Toast.makeText(DishListActivity.this, "Please check your intenet connection !!!", Toast.LENGTH_LONG).show();
+                return;
+            }
         }
 
         //Search
@@ -122,7 +129,7 @@ public class DishListActivity extends AppCompatActivity {
                 Dish.class,
                 R.layout.dish_item,
                 DishViewHolder.class,
-                dishList.orderByChild("Name").equalTo(text.toString())
+                dishList.orderByChild("name").equalTo(text.toString())
 
         ) {
             @Override
@@ -138,7 +145,7 @@ public class DishListActivity extends AppCompatActivity {
                         Intent dishDetail = new Intent(DishListActivity.this, DishDetailActivity.class);
 
                         //Send DishID to Dish Detail Activity
-                        dishDetail.putExtra("DishID", searchAdapter.getRef(position).getKey());
+                        dishDetail.putExtra("dishID", searchAdapter.getRef(position).getKey());
                         startActivity(dishDetail);
                     }
                 });
@@ -149,7 +156,7 @@ public class DishListActivity extends AppCompatActivity {
     }
 
     private void loadSuggest() {
-        dishList.orderByChild("CategoryID").equalTo(categoryId).addValueEventListener(new ValueEventListener() {
+        dishList.orderByChild("categoryID").equalTo(categoryId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot postDataSnapshot:dataSnapshot.getChildren()){
@@ -167,7 +174,7 @@ public class DishListActivity extends AppCompatActivity {
     }
 
     private void loadListDish(String categoryId) {
-        dishAdapter = new FirebaseRecyclerAdapter<Dish, DishViewHolder>(Dish.class, R.layout.dish_item, DishViewHolder.class, dishList.orderByChild("CategoryID").equalTo(categoryId)) {
+        dishAdapter = new FirebaseRecyclerAdapter<Dish, DishViewHolder>(Dish.class, R.layout.dish_item, DishViewHolder.class, dishList.orderByChild("categoryID").equalTo(categoryId)) {
             @Override
             protected void populateViewHolder(DishViewHolder viewHolder, Dish model, int position) {
                 viewHolder.textViewDishName.setText(model.getName());
@@ -181,7 +188,7 @@ public class DishListActivity extends AppCompatActivity {
                         Intent dishDetail = new Intent(DishListActivity.this, DishDetailActivity.class);
 
                         //Send DishID to Dish Detail Activity
-                        dishDetail.putExtra("DishID", dishAdapter.getRef(position).getKey());
+                        dishDetail.putExtra("dishID", dishAdapter.getRef(position).getKey());
                         startActivity(dishDetail);
                     }
                 });

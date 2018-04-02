@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 //import com.example.android.baitbite.GPS.GPSTracker;
+import com.example.android.baitbite.Common.Common;
 import com.example.android.baitbite.Model.Customer;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -40,32 +41,38 @@ public class SignUpActivity extends AppCompatActivity {
         buttonSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final ProgressDialog mDialog = new ProgressDialog(SignUpActivity.this);
-                mDialog.setMessage("Please wait...");
-                mDialog.show();
-                table_customer.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
 
-                        //check if the phone number already exist
-                        if(dataSnapshot.child(editPhone.getText().toString()).exists()){
-                            mDialog.dismiss();
-                            Toast.makeText(SignUpActivity.this, "The phone number is already registered by a customer", Toast.LENGTH_LONG).show();
-                        }else {
-                            mDialog.dismiss();
-                            Customer customer = new Customer(editName.getText().toString(), editPhone.getText().toString());
-                            table_customer.child(editPhone.getText().toString()).setValue(customer);
-                            Toast.makeText(SignUpActivity.this, "Sign up successfully !", Toast.LENGTH_LONG).show();
-                            finish();
+                if (Common.isConnectedToInternet(getBaseContext())) {
+                    final ProgressDialog mDialog = new ProgressDialog(SignUpActivity.this);
+                    mDialog.setMessage("Please wait...");
+                    mDialog.show();
+                    table_customer.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+
+                            //check if the phone number already exist
+                            if (dataSnapshot.child(editPhone.getText().toString()).exists()) {
+                                mDialog.dismiss();
+                                Toast.makeText(SignUpActivity.this, "The phone number is already registered by a customer", Toast.LENGTH_LONG).show();
+                            } else {
+                                mDialog.dismiss();
+                                Customer customer = new Customer(editName.getText().toString(), editPhone.getText().toString());
+                                table_customer.child(editPhone.getText().toString()).setValue(customer);
+                                Toast.makeText(SignUpActivity.this, "Sign up successfully !", Toast.LENGTH_LONG).show();
+                                finish();
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
 
-                    }
-                });
+                        }
+                    });
 
+                }else {
+                    Toast.makeText(SignUpActivity.this, "Please check your intenet connection !!!", Toast.LENGTH_LONG).show();
+                    return;
+                }
             }
         });
 
