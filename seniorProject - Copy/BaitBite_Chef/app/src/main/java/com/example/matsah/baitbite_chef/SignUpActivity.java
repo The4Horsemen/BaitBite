@@ -60,7 +60,7 @@ public class SignUpActivity extends AppCompatActivity {
                             Toast.makeText(SignUpActivity.this, "The phone number is already registered by a chef", Toast.LENGTH_LONG).show();
                         }else {
                             mDialog.dismiss();
-                            Chef chef = new Chef(editName.getText().toString(), editPassword.getText().toString());
+                            Chef chef = new Chef("rook",90,90,editName.getText().toString(), editPhone.getText().toString());
                             table_chef.child(editPhone.getText().toString()).setValue(chef);
                             Toast.makeText(SignUpActivity.this, "Sign up successfully !", Toast.LENGTH_LONG).show();
                             finish();

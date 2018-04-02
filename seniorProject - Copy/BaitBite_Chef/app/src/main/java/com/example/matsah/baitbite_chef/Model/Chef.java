@@ -7,13 +7,13 @@ package com.example.matsah.baitbite_chef.Model;
 public class Chef {
 
     //private String Account_ID;
-    private String Email;
+    private String Email ="";
     private int LocationX;
     private int LocationY;
     private int Mobile_Verification_Code;
     private String Name;
     private String Phone_Number;
-    private String status;
+    private String status ="";
     // delete this part after testing
     private String Password;
     public Chef(String Name, String Password) {
