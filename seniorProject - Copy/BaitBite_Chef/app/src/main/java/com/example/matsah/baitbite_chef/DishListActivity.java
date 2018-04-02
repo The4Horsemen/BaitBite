@@ -4,30 +4,26 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
+import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.matsah.baitbite_chef.Common.Common;
 import com.example.matsah.baitbite_chef.Interface.ItemClickListener;
 import com.example.matsah.baitbite_chef.Model.Category;
-import com.example.matsah.baitbite_chef.ViewHolder.MenuViewHolder;
+import com.example.matsah.baitbite_chef.Model.Dish;
+import com.example.matsah.baitbite_chef.ViewHolder.DishViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -44,90 +40,107 @@ import java.util.UUID;
 
 import info.hoang8f.widget.FButton;
 
-public class Home extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class DishListActivity extends AppCompatActivity {
 
-    TextView txtFullName;
+    RecyclerView recyclerView;
+    RecyclerView.LayoutManager layoutManager;
+
+    RelativeLayout rootLayout;
+
+    FloatingActionButton fButtonAddDish;
 
     //Firebase
     FirebaseDatabase database;
-    DatabaseReference categories;
+    DatabaseReference dishList;
     FirebaseStorage storage;
-    StorageReference storageRefrence;
-    FirebaseRecyclerAdapter<Category, MenuViewHolder> adapter;
+    StorageReference storageReference;
 
-    //View
-    RecyclerView recycler_menu;
-    RecyclerView.LayoutManager layoutManager;
+    String categoryId ="";
 
-    // Add New Mwenu Layout
-    MaterialEditText editName;
-    FButton buttonUpload, buttonSelect;
+    FirebaseRecyclerAdapter<Dish, DishViewHolder> adapter;
 
-    Category newCategory;
+    //Add new Dish
+
+    MaterialEditText editName, editDescription, editPrice, editDiscount;
+    FButton buttonSelect, buttonUpload;
+
+    Dish newDish;
 
     Uri saveUri;
-
-
-    DrawerLayout drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Menu");
-        setSupportActionBar(toolbar);
+        setContentView(R.layout.activity_dish_list);
 
         //Init Firebase
-
         database = FirebaseDatabase.getInstance();
-        categories = database.getReference("Category");
+        dishList = database.getReference("Dishes");
         storage = FirebaseStorage.getInstance();
-        storageRefrence = storage.getReference();
+        storageReference = storage.getReference();
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        //init
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView_dish);
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+
+        rootLayout = (RelativeLayout)findViewById(R.id.rootLayout);
+
+        fButtonAddDish = (FloatingActionButton) findViewById(R.id.fButtonAddDish);
+        fButtonAddDish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showDialog();
+                showAddDishDialog();
             }
         });
 
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
+        if(getIntent() != null){
+            categoryId = getIntent().getStringExtra("categoryId");
+        }
+       if(!categoryId.isEmpty() && categoryId != null){
+            loadListDish(categoryId);
+        }
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        //Toast.makeText(this,"categry ID is "+categoryId, Toast.LENGTH_SHORT).show();
 
-        // set name for chef
-
-        View headerView = navigationView.getHeaderView(0);
-        txtFullName = (TextView) headerView.findViewById(R.id.textView_chefName);
-        txtFullName.setText(Common.currentChef.getName());
-
-        //Init View
-        recycler_menu = (RecyclerView) findViewById(R.id.recyclerView_menu);
-        recycler_menu.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(this);
-        recycler_menu.setLayoutManager(layoutManager);
-        
-        loadMenu();
-        
     }
 
-    private void showDialog() {
-        AlertDialog.Builder alertedDialog = new AlertDialog.Builder(Home.this);
-        alertedDialog.setTitle("Add new category");
+    private void loadListDish(String categoryId) {
+        adapter = new FirebaseRecyclerAdapter<Dish, DishViewHolder>(Dish.class,
+                R.layout.dish_item,
+                DishViewHolder.class,
+                dishList.orderByChild("categoryID").equalTo(categoryId)) {
+            @Override
+            protected void populateViewHolder(DishViewHolder viewHolder, Dish model, int position) {
+                viewHolder.DishName.setText(model.getName());
+                Picasso.with(getBaseContext()).load(model.getImage()).into(viewHolder.DishImage);
+
+                viewHolder.setItemClicListener(new ItemClickListener() {
+                    @Override
+                    public void onClick(View view, int position, boolean isLongClick) {
+                        //later
+                    }
+                });
+            }
+        };
+        adapter.notifyDataSetChanged();
+        recyclerView.setAdapter(adapter);
+    }
+
+    private void showAddDishDialog() {
+        AlertDialog.Builder alertedDialog = new AlertDialog.Builder(DishListActivity.this);
+        alertedDialog.setTitle("Add new Dish");
         alertedDialog.setMessage("Please fill full information");
 
         LayoutInflater inflater = this.getLayoutInflater();
-        View add_menu_layout = inflater.inflate(R.layout.add_new_menu_layout,null);
+        View add_menu_layout = inflater.inflate(R.layout.add_new_dish_layout,null);
 
         editName = add_menu_layout.findViewById(R.id.editName);
+        editDescription = add_menu_layout.findViewById(R.id.editDescription);
+        editPrice = add_menu_layout.findViewById(R.id.editPrice);
+        editDiscount = add_menu_layout.findViewById(R.id.editDiscount);
+
         buttonSelect = add_menu_layout.findViewById(R.id.buttonSelect);
         buttonUpload = add_menu_layout.findViewById(R.id.buttonUpload);
 
@@ -149,20 +162,20 @@ public class Home extends AppCompatActivity
         alertedDialog.setView(add_menu_layout);
         alertedDialog.setIcon(R.drawable.ic_shopping_cart_black_24dp);
 
-        alertedDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+        alertedDialog.setPositiveButton("ADD", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
 
 
-                if(newCategory != null){
-                    categories.push().setValue(newCategory);
-                    Snackbar.make(drawer, "New Category "+newCategory.getName()+" was added", Snackbar.LENGTH_SHORT).show();
+                if(newDish != null){
+                    dishList.push().setValue(newDish);
+                    Snackbar.make(rootLayout, "New Dish "+newDish.getName()+" was added", Snackbar.LENGTH_SHORT).show();
                 }
             }
         });
 
-        alertedDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+        alertedDialog.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
@@ -172,6 +185,13 @@ public class Home extends AppCompatActivity
         alertedDialog.show();
     }
 
+    private void ChooseImage() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent,"Select Picture"), Common.PICK_IMAGE_REQUEST);
+    }
+
     private void uploadImage() {
         if(saveUri != null){
             final ProgressDialog mDialog = new ProgressDialog(this);
@@ -179,16 +199,22 @@ public class Home extends AppCompatActivity
             mDialog.show();
 
             String imageName = UUID.randomUUID().toString();
-            final StorageReference imageFolder = storageRefrence.child("images/"+imageName);
+            final StorageReference imageFolder = storageReference.child("images/"+imageName);
             imageFolder.putFile(saveUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     mDialog.dismiss();
-                    Toast.makeText(Home.this, "Uploaded !!!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DishListActivity.this, "Uploaed !!!", Toast.LENGTH_SHORT).show();
                     imageFolder.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
-                            newCategory = new Category(editName.getText().toString(),uri.toString());
+                            newDish = new Dish();
+                            newDish.setName(editName.getText().toString());
+                            newDish.setDescription(editDescription.getText().toString());
+                            newDish.setPrice(editPrice.getText().toString());
+                            newDish.setDiscount(editDiscount.getText().toString());
+                            newDish.setCategoryId(categoryId);
+                            newDish.setImage(uri.toString());
 
                         }
                     });
@@ -198,7 +224,7 @@ public class Home extends AppCompatActivity
                 @Override
                 public void onFailure(@NonNull Exception e) {
                     mDialog.dismiss();
-                    Toast.makeText(Home.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DishListActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                 @Override
@@ -211,7 +237,6 @@ public class Home extends AppCompatActivity
         }
     }
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -222,125 +247,38 @@ public class Home extends AppCompatActivity
         }
     }
 
-    private void ChooseImage() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent,"Select Picture"), Common.PICK_IMAGE_REQUEST);
-    }
-
-    private void loadMenu() {
-        adapter = new FirebaseRecyclerAdapter<Category, MenuViewHolder>(Category.class, R.layout.menu_item, MenuViewHolder.class, categories) {
-            @Override
-            protected void populateViewHolder(MenuViewHolder viewHolder, Category model, int position) {
-                viewHolder.textViewMenuName.setText(model.getName());
-                Picasso.with(Home.this).load(model.getImage()).into(viewHolder.imageViewMenu);
-
-                viewHolder.setItemClicListener(new ItemClickListener() {
-                    @Override
-                    public void onClick(View view, int position, boolean isLongClick) {
-                        // Send Category ID and Start new Activity
-                        Intent dishList = new Intent(Home.this, DishListActivity.class);
-                        dishList.putExtra("categoryId", adapter.getRef(position).getKey());
-                        startActivity(dishList);
-
-                    }
-                });
-
-            }
-        };
-
-        adapter.notifyDataSetChanged();//Refresh data if have data changed
-        recycler_menu.setAdapter(adapter);
-
-    }
-
-    @Override
-    public void onBackPressed() {
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_menu) {
-            // Handle the camera action
-        } else if (id == R.id.nav_cart) {
-
-        } else if (id == R.id.nav_orders) {
-
-        } else if (id == R.id.nav_sign_out) {
-
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
-
-    //Update / Delete
-
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-
         if(item.getTitle().equals(Common.UPDATE)){
-            showUpdateDialog(adapter.getRef(item.getOrder()).getKey(),adapter.getItem(item.getOrder()));
+            showUpdateDishDialog(adapter.getRef(item.getOrder()).getKey(), adapter.getItem(item.getOrder()));
         }else if(item.getTitle().equals(Common.DELETE)){
-            deleteCategory(adapter.getRef(item.getOrder()).getKey());
+
         }
-
         return super.onContextItemSelected(item);
+
     }
 
-    private void deleteCategory(String key) {
-        categories.child(key).removeValue();
-        Toast.makeText(this,"Item is deleted !!!", Toast.LENGTH_SHORT).show();
-    }
-
-    private void showUpdateDialog(final String key, final Category item) {
-        AlertDialog.Builder alertedDialog = new AlertDialog.Builder(Home.this);
-        alertedDialog.setTitle("Update category");
+    private void showUpdateDishDialog(final String key, final Dish item) {
+        AlertDialog.Builder alertedDialog = new AlertDialog.Builder(DishListActivity.this);
+        alertedDialog.setTitle("Edit Dish");
         alertedDialog.setMessage("Please fill full information");
 
         LayoutInflater inflater = this.getLayoutInflater();
-        View add_menu_layout = inflater.inflate(R.layout.add_new_menu_layout,null);
+        View add_menu_layout = inflater.inflate(R.layout.add_new_dish_layout,null);
 
         editName = add_menu_layout.findViewById(R.id.editName);
+        editDescription = add_menu_layout.findViewById(R.id.editDescription);
+        editPrice = add_menu_layout.findViewById(R.id.editPrice);
+        editDiscount = add_menu_layout.findViewById(R.id.editDiscount);
+
+        //set default value for view
+        editName.setText(item.getName());
+        editDiscount.setText(item.getDiscount());
+        editPrice.setText(item.getPrice());
+        editDescription.setText(item.getDescription());
+
         buttonSelect = add_menu_layout.findViewById(R.id.buttonSelect);
         buttonUpload = add_menu_layout.findViewById(R.id.buttonUpload);
-
-        //set default name
-        editName.setText(item.getName());
 
         //Event for button
         buttonSelect.setOnClickListener(new View.OnClickListener() {
@@ -365,9 +303,17 @@ public class Home extends AppCompatActivity
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
 
-                //update information
-                item.setName(editName.getText().toString());
-                categories.child(key).setValue(item);
+
+
+
+                    item.setName(editName.getText().toString());
+                    item.setPrice(editPrice.getText().toString());
+                    item.setDiscount(editDiscount.getText().toString());
+                    item.setDescription(editDescription.getText().toString());
+
+
+                    dishList.child(key).setValue(newDish);
+                    Snackbar.make(rootLayout, "Dish "+newDish.getName()+" was edited", Snackbar.LENGTH_SHORT).show();
 
             }
         });
@@ -382,19 +328,19 @@ public class Home extends AppCompatActivity
         alertedDialog.show();
     }
 
-    private void changeImage(final Category item) {
+    private void changeImage(final Dish item) {
         if(saveUri != null){
             final ProgressDialog mDialog = new ProgressDialog(this);
             mDialog.setMessage("Uploading...");
             mDialog.show();
 
             String imageName = UUID.randomUUID().toString();
-            final StorageReference imageFolder = storageRefrence.child("images/"+imageName);
+            final StorageReference imageFolder = storageReference.child("images/"+imageName);
             imageFolder.putFile(saveUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     mDialog.dismiss();
-                    Toast.makeText(Home.this, "Uploaed !!!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DishListActivity.this, "Uploaed !!!", Toast.LENGTH_SHORT).show();
                     imageFolder.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
@@ -408,7 +354,7 @@ public class Home extends AppCompatActivity
                 @Override
                 public void onFailure(@NonNull Exception e) {
                     mDialog.dismiss();
-                    Toast.makeText(Home.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DishListActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                 @Override
