@@ -12,8 +12,11 @@ import android.widget.Button;
 import android.widget.Toast;
 
 //import com.example.android.baitbite.GPS.GPSTracker;
+import com.example.matsah.baitbite_chef.GPS.GPSTracker;
 import com.example.matsah.baitbite_chef.Model.Chef;
 import com.example.matsah.baitbite_chef.Model.Chef;
+import com.firebase.geofire.GeoFire;
+import com.firebase.geofire.GeoLocation;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,7 +26,7 @@ import com.karan.churi.PermissionManager.PermissionManager;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 public class SignUpActivity extends AppCompatActivity {
-    //private GPSTracker gpsTracker;
+    private GPSTracker gpsTracker;
     MaterialEditText editPhone, editName, editPassword;
     protected PermissionManager permissionnManager;
     //Button SignUpActivity in SignUpActivity page
@@ -63,6 +66,9 @@ public class SignUpActivity extends AppCompatActivity {
                             Chef chef = new Chef("rook",90,90,editName.getText().toString(), editPhone.getText().toString());
                             table_chef.child(editPhone.getText().toString()).setValue(chef);
                             Toast.makeText(SignUpActivity.this, "Sign up successfully !", Toast.LENGTH_LONG).show();
+                            /* this will add store location for each chef created
+                            CreateStoreLocation(chef);
+                             */
                             finish();
                         }
                     }
@@ -76,7 +82,7 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
-                /*Aseel Code
+
 
 
 
@@ -90,7 +96,7 @@ public class SignUpActivity extends AppCompatActivity {
                 permissionnManager.checkAndRequestPermissions(SignUpActivity.this);
                 gpsTracker = new GPSTracker(SignUpActivity.this);
 
-                // Eger konum bilgisi alinabiliyorsa ekranda goruntulenir
+
                 if (gpsTracker.canGetLocation())
                 {
                     double latitude = gpsTracker.getLatitude();
@@ -110,6 +116,37 @@ public class SignUpActivity extends AppCompatActivity {
 
 
 
-                /* End of Aseel Code*/
+
     }
+
+
+
+
+    //function that create the store location
+    public void CreateStoreLocation(Chef chef){
+
+        GeoFire geoFire;
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("StoreLocation");
+        geoFire = new GeoFire(ref);
+
+
+            geoFire.setLocation(chef.getPhone_Number(), new GeoLocation(chef.getLocationX(), chef.getLocationY()), new GeoFire.CompletionListener(){
+            @Override
+            public void onComplete(String key, DatabaseError error) {
+                if (error != null) {
+                    System.err.println("There was an error saving the location to GeoFire: " + error);
+                } else {
+                    System.out.println("Location saved on server successfully!");
+                }
+            }
+
+
+        });
+
+
+
+
+    }
+
+
 }

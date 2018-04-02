@@ -49,5 +49,8 @@ dependencies {
 
     //Permissions
     implementation 'com.github.karanchuri:PermissionManager:0.1.0'
+
+    //GeoFire (Location)
+    implementation 'com.firebase:geofire-android:2.3.0'
 }
 apply plugin: 'com.google.gms.google-services'

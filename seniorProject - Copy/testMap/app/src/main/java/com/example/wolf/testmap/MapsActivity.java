@@ -49,6 +49,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.karan.churi.PermissionManager.PermissionManager;
 
 import java.util.Map;
 
@@ -58,7 +59,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     //Firebase database obj
     private DatabaseReference refDatabase;
-
+    protected PermissionManager permissionnManager;
     //Google maps related objects
     private GoogleMap mMap;
     private GoogleApiClient mGoogleApiClientObj;
@@ -74,52 +75,29 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-/*
-        // adding dummy chefs with geo locations
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("StoreLocation");
-        GeoFire geoFire = new GeoFire(ref);
-        geoFire.setLocation("Ibra2", new GeoLocation(37.7853889, -122.4056973), new GeoFire.CompletionListener() {
-            @Override
-            public void onComplete(String key, DatabaseError error) {
-                if (error != null) {
-                    System.err.println("There was an error saving the location to GeoFire: " + error);
-                } else {
-                    System.out.println("Location saved on server successfully!");
-                }
+        permissionnManager = new PermissionManager() {
+        };
+        if(permissionnManager.checkAndRequestPermissions(MapsActivity.this)) {
+
+
+
+            // we check if the google service is installed on the device
+            if (googleServicesAvailable()) {
+                //Toast.makeText(this, "Creating map", Toast.LENGTH_LONG).show();
+                setContentView(R.layout.activity_maps);
+            } else {
+                // no support
             }
 
-
-        });
-*/
-
-        //
-
-
-
-
-
-
-
-
-
-
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        // we check if the google service is installed on the device
-        if (googleServicesAvailable()) {
-            //Toast.makeText(this, "Creating map", Toast.LENGTH_LONG).show();
-            setContentView(R.layout.activity_maps);
-        } else {
-            // no support
+            // we check if the GPS is enabled in the device
+            manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                buildAlertMessageNoGps(); // For prompting user to enable the GPS
+            }
+            mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+            // initialize the map
+            initMap();
         }
-
-        // we check if the GPS is enabled in the device
-        manager = (LocationManager) getSystemService( Context.LOCATION_SERVICE );
-        if ( !manager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
-            buildAlertMessageNoGps(); // For prompting user to enable the GPS
-        }
-
-        // initialize the map
-        initMap();
 
     }
 
