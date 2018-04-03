@@ -20,6 +20,11 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.firebase.geofire.GeoFire;
+import com.firebase.geofire.GeoLocation;
+import com.firebase.geofire.GeoQuery;
+import com.firebase.geofire.GeoQueryDataEventListener;
+import com.firebase.geofire.GeoQueryEventListener;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -44,15 +49,17 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.karan.churi.PermissionManager.PermissionManager;
 
 import java.util.Map;
 
 import static com.google.android.gms.location.LocationServices.getFusedLocationProviderClient;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+
     //Firebase database obj
     private DatabaseReference refDatabase;
-
+    protected PermissionManager permissionnManager;
     //Google maps related objects
     private GoogleMap mMap;
     private GoogleApiClient mGoogleApiClientObj;
@@ -68,23 +75,29 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        // we check if the google service is installed on the device
-        if (googleServicesAvailable()) {
-            //Toast.makeText(this, "Creating map", Toast.LENGTH_LONG).show();
-            setContentView(R.layout.activity_maps);
-        } else {
-            // no support
-        }
+        permissionnManager = new PermissionManager() {
+        };
+        if(permissionnManager.checkAndRequestPermissions(MapsActivity.this)) {
 
-        // we check if the GPS is enabled in the device
-        manager = (LocationManager) getSystemService( Context.LOCATION_SERVICE );
-        if ( !manager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
-            buildAlertMessageNoGps(); // For prompting user to enable the GPS
-        }
 
-        // initialize the map
-        initMap();
+
+            // we check if the google service is installed on the device
+            if (googleServicesAvailable()) {
+                //Toast.makeText(this, "Creating map", Toast.LENGTH_LONG).show();
+                setContentView(R.layout.activity_maps);
+            } else {
+                // no support
+            }
+
+            // we check if the GPS is enabled in the device
+            manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                buildAlertMessageNoGps(); // For prompting user to enable the GPS
+            }
+            mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+            // initialize the map
+            initMap();
+        }
 
     }
 
@@ -175,6 +188,83 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     // Operations
     private void addStoresToMap(){
+Log.d("TAG","X  "+x + "Y  "+y);
+        GeoFire geoFire;
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("StoreLocation");
+        final DatabaseReference Chefref = FirebaseDatabase.getInstance().getReference("Chef");
+        geoFire = new GeoFire(ref);
+/*
+
+            geoFire.setLocation("firebase-hq4", new GeoLocation(x, y), new GeoFire.CompletionListener(){
+            @Override
+            public void onComplete(String key, DatabaseError error) {
+                if (error != null) {
+                    System.err.println("There was an error saving the location to GeoFire: " + error);
+                } else {
+                    System.out.println("Location saved on server successfully!");
+                }
+            }
+
+
+        });
+*/
+        final GeoQuery geoQuery = geoFire.queryAtLocation(new GeoLocation(x,  y), 100);
+        geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
+            @Override
+            public void onKeyEntered(String key, GeoLocation location) {
+                System.out.println(String.format("Key %s entered the search area at [%f,%f]", key, location.latitude, location.longitude));
+                FirebaseDatabase.getInstance().getReference("Chef").child(key)
+                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                Chef user = dataSnapshot.getValue(Chef.class);
+                                //Log.d("Results!",user.getName());
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+
+            }
+
+            @Override
+            public void onKeyExited(String key) {
+                System.out.println(String.format("Key %s is no longer in the search area", key));
+            }
+
+            @Override
+            public void onKeyMoved(String key, GeoLocation location) {
+                System.out.println(String.format("Key %s moved within the search area to [%f,%f]", key, location.latitude, location.longitude));
+            }
+
+            @Override
+            public void onGeoQueryReady() {
+                System.out.println("All initial data has been loaded and events have been fired!");
+                geoQuery.removeAllListeners();
+            }
+
+            @Override
+            public void onGeoQueryError(DatabaseError error) {
+                System.err.println("There was an error with this query: " + error);
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         FirebaseDatabase.getInstance().getReference().child("Chef")
@@ -183,11 +273,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             Chef user = snapshot.getValue(Chef.class);
-                            LatLng newLocation = new LatLng(user.locationX,user.locationY);
+                            LatLng newLocation = new LatLng(user.getLocationX(),user.getLocationY());
                             mMap.addMarker(new MarkerOptions()
                                     .position(newLocation)
-                                    .title(user.name));
-                            Log.d("TAG","X"+user.locationX + "Y"+user.locationY);
+                                    .title(user.getName()));
+                            //Log.d("TAG","X  "+user.getLocationX() + "Y  "+user.getLocationY());
+                            //Log.d("TAG","X   "+user.getEmail() + "Y   "+ user.getPhone_Number());
                         }
                     }
                     @Override

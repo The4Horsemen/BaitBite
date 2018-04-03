@@ -67,7 +67,7 @@ public class Home extends AppCompatActivity
     Category newCategory;
 
     Uri saveUri;
-    private final int PICK_IMAGE_REQUEST = 71;
+
 
     DrawerLayout drawer;
 
@@ -76,7 +76,7 @@ public class Home extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Menu Management");
+        toolbar.setTitle("Menu");
         setSupportActionBar(toolbar);
 
         //Init Firebase
@@ -184,7 +184,7 @@ public class Home extends AppCompatActivity
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     mDialog.dismiss();
-                    Toast.makeText(Home.this, "Uploaed !!!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Home.this, "Uploaded !!!", Toast.LENGTH_SHORT).show();
                     imageFolder.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
@@ -215,7 +215,7 @@ public class Home extends AppCompatActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null){
+        if(requestCode == Common.PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null){
 
             saveUri = data.getData();
             buttonSelect.setText("Image Selected !");
@@ -226,7 +226,7 @@ public class Home extends AppCompatActivity
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent,"Select Picture"), PICK_IMAGE_REQUEST);
+        startActivityForResult(Intent.createChooser(intent,"Select Picture"), Common.PICK_IMAGE_REQUEST);
     }
 
     private void loadMenu() {
@@ -239,6 +239,10 @@ public class Home extends AppCompatActivity
                 viewHolder.setItemClicListener(new ItemClickListener() {
                     @Override
                     public void onClick(View view, int position, boolean isLongClick) {
+                        // Send Category ID and Start new Activity
+                        Intent dishList = new Intent(Home.this, DishListActivity.class);
+                        dishList.putExtra("categoryId", adapter.getRef(position).getKey());
+                        startActivity(dishList);
 
                     }
                 });

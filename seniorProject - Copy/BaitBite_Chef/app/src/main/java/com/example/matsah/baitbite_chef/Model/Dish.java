@@ -5,18 +5,18 @@ package com.example.matsah.baitbite_chef.Model;
  */
 
 public class Dish {
-    private String Name, Image, Description, Price, Discount, CategoryId;
+    private String Name, Image, Description, Price, Discount, CategoryID;
 
     public Dish() {
     }
 
-    public Dish(String name, String image, String description, String price, String discount, String categoryId) {
+    public Dish(String name, String image, String description, String price, String discount, String categoryID) {
         Name = name;
         Image = image;
         Description = description;
         Price = price;
         Discount = discount;
-        CategoryId = categoryId;
+        CategoryID = categoryID;
     }
 
     public String getName() {
@@ -60,10 +60,10 @@ public class Dish {
     }
 
     public String getCategoryId() {
-        return CategoryId;
+        return CategoryID;
     }
 
-    public void setCategoryId(String categoryId) {
-        CategoryId = categoryId;
+    public void setCategoryId(String categoryID) {
+        CategoryID = categoryID;
     }
 }

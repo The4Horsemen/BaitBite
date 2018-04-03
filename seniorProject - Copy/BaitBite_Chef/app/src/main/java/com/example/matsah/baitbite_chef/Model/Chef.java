@@ -7,13 +7,13 @@ package com.example.matsah.baitbite_chef.Model;
 public class Chef {
 
     //private String Account_ID;
-    private String Email;
-    private int LocationX;
-    private int LocationY;
+    private String Email ="";
+    private double LocationX;
+    private double LocationY;
     private int Mobile_Verification_Code;
     private String Name;
     private String Phone_Number;
-    private String status;
+    private String status ="";
     // delete this part after testing
     private String Password;
     public Chef(String Name, String Password) {
@@ -32,7 +32,7 @@ public class Chef {
     public Chef() {
     }
 
-    public Chef(String email, int locationX,int locationY, String name, String phone_number){
+    public Chef(String email, double locationX,double locationY, String name, String phone_number){
         this.Email = email;
         this.LocationX = locationX;
         this.LocationY = locationY;
@@ -64,18 +64,18 @@ public class Chef {
         Email = email;
     }
 
-    public int getLocationX() {
+    public double getLocationX() {
         return LocationX;
     }
 
-    public void setLocationX(int locationX) {
+    public void setLocationX(double locationX) {
         LocationX = locationX;
     }
-    public int getLocationY() {
+    public double getLocationY() {
         return LocationY;
     }
 
-    public void setLocationY(int locationY) {
+    public void setLocationY(double locationY) {
         LocationY = locationY;
     }
 

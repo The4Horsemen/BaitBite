@@ -189,6 +189,7 @@ public class DishListActivity extends AppCompatActivity {
         };
 
         //Set Adapter
+
         recyclerView_dish.setAdapter(dishAdapter);
     }
 }
