@@ -24,10 +24,7 @@
             android:name=".Home"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme" />
-<<<<<<< HEAD
-        <activity android:name=".DishListActivity" />
-        <activity android:name=".SignUP_WithVerify"></activity>
-=======
+
         <activity android:name=".DishListActivity"></activity>
 
         <activity android:name=".SplashActivity"
@@ -38,7 +35,7 @@
             </intent-filter>
         </activity>
 
->>>>>>> cf69ee8d8b95f0e4541f858f12588816631ae03e
+
     </application>
 
 </manifest>

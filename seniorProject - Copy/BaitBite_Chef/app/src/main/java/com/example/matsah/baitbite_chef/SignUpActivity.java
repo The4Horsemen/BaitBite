@@ -51,6 +51,11 @@ public class SignUpActivity extends AppCompatActivity {
 
 
 
+        permissionnManager = new PermissionManager() {
+        };
+        permissionnManager.checkAndRequestPermissions(SignUpActivity.this);
+
+
         buttonSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -96,9 +101,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     public void GetLocation(){
         gpsTracker = new GPSTracker(SignUpActivity.this);
-        permissionnManager = new PermissionManager() {
-        };
-        permissionnManager.checkAndRequestPermissions(SignUpActivity.this);
+
 
 
 
