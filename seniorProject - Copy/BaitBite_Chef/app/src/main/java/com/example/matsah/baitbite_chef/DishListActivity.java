@@ -110,7 +110,7 @@ public class DishListActivity extends AppCompatActivity {
         adapter = new FirebaseRecyclerAdapter<Dish, DishViewHolder>(Dish.class,
                 R.layout.dish_item,
                 DishViewHolder.class,
-                dishList.orderByChild("categoryID").equalTo(categoryId)) {
+                dishList.orderByChild("chefID").equalTo(Common.currentChef.getPhone_Number())) {
             @Override
             protected void populateViewHolder(DishViewHolder viewHolder, Dish model, int position) {
                 viewHolder.DishName.setText(model.getName());
@@ -215,6 +215,8 @@ public class DishListActivity extends AppCompatActivity {
                             newDish.setDiscount(editDiscount.getText().toString());
                             newDish.setCategoryId(categoryId);
                             newDish.setImage(uri.toString());
+                            newDish.setChefID(Common.currentChef.getPhone_Number());
+                            newDish.setQuantity(0);
 
                         }
                     });
@@ -247,15 +249,21 @@ public class DishListActivity extends AppCompatActivity {
         }
     }
 
+
+
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         if(item.getTitle().equals(Common.UPDATE)){
             showUpdateDishDialog(adapter.getRef(item.getOrder()).getKey(), adapter.getItem(item.getOrder()));
         }else if(item.getTitle().equals(Common.DELETE)){
-
+            deleteDish(adapter.getRef(item.getOrder()).getKey());
         }
         return super.onContextItemSelected(item);
 
+    }
+
+    private void deleteDish(String key) {
+        dishList.child(key).removeValue();
     }
 
     private void showUpdateDishDialog(final String key, final Dish item) {
@@ -298,7 +306,7 @@ public class DishListActivity extends AppCompatActivity {
         alertedDialog.setView(add_menu_layout);
         alertedDialog.setIcon(R.drawable.ic_shopping_cart_black_24dp);
 
-        alertedDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+        alertedDialog.setPositiveButton("EDIT", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
@@ -312,13 +320,13 @@ public class DishListActivity extends AppCompatActivity {
                     item.setDescription(editDescription.getText().toString());
 
 
-                    dishList.child(key).setValue(newDish);
-                    Snackbar.make(rootLayout, "Dish "+newDish.getName()+" was edited", Snackbar.LENGTH_SHORT).show();
+                    dishList.child(key).setValue(item);
+                    Snackbar.make(rootLayout, "Dish "+item.getName()+" was edited", Snackbar.LENGTH_SHORT).show();
 
             }
         });
 
-        alertedDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+        alertedDialog.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();

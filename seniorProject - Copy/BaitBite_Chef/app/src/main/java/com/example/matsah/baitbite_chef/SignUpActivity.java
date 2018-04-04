@@ -27,30 +27,35 @@ import com.karan.churi.PermissionManager.PermissionManager;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 public class SignUpActivity extends AppCompatActivity {
-    private GPSTracker gpsTracker;
+    private GPSTracker  gpsTracker ;
     MaterialEditText editPhone, editName, editPassword;
     protected PermissionManager permissionnManager;
     //Button SignUpActivity in SignUpActivity page
     Button buttonSignUp;
     Button buttonLocation;
+    Chef chef;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
+
         editPhone = (MaterialEditText) findViewById(R.id.editPhone);
         editName = (MaterialEditText) findViewById(R.id.editName);
-        editPassword = (MaterialEditText) findViewById(R.id.editPassword);
-        buttonLocation = (Button) findViewById(R.id.buttonLocation);
         buttonSignUp = (Button) findViewById(R.id.buttonSignUp);
 
         //Init Firebase
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         final DatabaseReference table_chef = firebaseDatabase.getReference("Chef");
 
+
+
         buttonSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
                 final ProgressDialog mDialog = new ProgressDialog(SignUpActivity.this);
                 mDialog.setMessage("Please wait...");
                 mDialog.show();
@@ -59,12 +64,14 @@ public class SignUpActivity extends AppCompatActivity {
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
                         //check if the phone number already exist
-                        if(dataSnapshot.child(editPhone.getText().toString()).exists()){
+                        if (dataSnapshot.child(editPhone.getText().toString()).exists()) {
                             mDialog.dismiss();
                             Toast.makeText(SignUpActivity.this, "The phone number is already registered by a chef", Toast.LENGTH_LONG).show();
-                        }else {
+                        } else {
                             mDialog.dismiss();
-                            Chef chef = new Chef("rook",90,90,editName.getText().toString(), editPhone.getText().toString());
+                            chef = new Chef("rook", 90, 90, editName.getText().toString(), editPhone.getText().toString());
+                            Log.d("teast" ,"Location :" );
+                           GetLocation();
                             table_chef.child(editPhone.getText().toString()).setValue(chef);
                             Toast.makeText(SignUpActivity.this, "Sign up successfully !", Toast.LENGTH_LONG).show();
                             /* this will add store location for each chef created
@@ -84,41 +91,35 @@ public class SignUpActivity extends AppCompatActivity {
         });
 
 
+    }
+
+
+    public void GetLocation(){
+        gpsTracker = new GPSTracker(SignUpActivity.this);
+        permissionnManager = new PermissionManager() {
+        };
+        permissionnManager.checkAndRequestPermissions(SignUpActivity.this);
 
 
 
-        buttonLocation.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View arg0)
-            {
-                permissionnManager = new PermissionManager() {
-                };
-                permissionnManager.checkAndRequestPermissions(SignUpActivity.this);
-                gpsTracker = new GPSTracker(SignUpActivity.this);
-                Log.d("loc",gpsTracker.canGetLocation()+"");
+        if (gpsTracker.canGetLocation()) {
+            chef.setLocationX(gpsTracker.getLatitude()) ;
+            chef.setLocationY(gpsTracker.getLongitude());
 
-                if (gpsTracker.canGetLocation())
-                {
-                    double latitude = gpsTracker.getLatitude();
-                    double longitude = gpsTracker.getLongitude();
+            Log.d("teast" ,"Location : \nX " + gpsTracker.getLatitude() + "\nY " + gpsTracker.getLongitude());
+        } else {
 
-                    Toast.makeText(getApplicationContext(), "Location : \nX " + latitude + "\nY " + longitude, Toast.LENGTH_LONG).show();
-                }
-                else
-                {
-
-                    gpsTracker.showSettingsAlert();
-                }
-            }
-        });
-
-
-
-
-
+            gpsTracker.showSettingsAlert();
+        }
+        Log.d("teast" ,"Location : \nX " + gpsTracker.getLatitude() + "\nY " + gpsTracker.getLongitude());
 
     }
+
+
+
+
+
+
 
 
 

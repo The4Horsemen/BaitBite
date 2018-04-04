@@ -77,6 +77,7 @@ public class SignInActivity extends AppCompatActivity {
 
 
     EditText editPhone,  verification_code;
+    TextView textSignup ;
 
     //Button SignInActivity in SignInActivity page
     Button buttonSignIn, buttonVerify;
@@ -93,6 +94,8 @@ public class SignInActivity extends AppCompatActivity {
 
         buttonSignIn = (Button) findViewById(R.id.buttonSignIn);
         buttonVerify = (Button) findViewById(R.id.verify);
+
+        textSignup =  (TextView) findViewById(R.id.textSignup);
 
         //Init Firebase
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
@@ -159,6 +162,16 @@ public class SignInActivity extends AppCompatActivity {
 
         /**/
 
+        textSignup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent signUp = new Intent(SignInActivity.this, SignUpActivity.class);
+                startActivity(signUp);
+            }
+        });
+
+
+
         buttonVerify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -202,10 +215,12 @@ public class SignInActivity extends AppCompatActivity {
                             buttonVerify.setVisibility(View.VISIBLE);
                             editPhone.setVisibility(View.INVISIBLE);
                             verification_code.setVisibility(View.VISIBLE);
+                            textSignup.setVisibility(View.INVISIBLE);
 
                             //Get chef info
                             mDialog.dismiss();
                             chef = dataSnapshot.child(editPhone.getText().toString()).getValue(Chef.class);
+                            chef.setPhone_Number(editPhone.getText().toString());
 
 
                         }else{
