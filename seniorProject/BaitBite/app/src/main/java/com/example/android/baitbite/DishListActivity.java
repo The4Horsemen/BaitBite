@@ -60,7 +60,7 @@ public class DishListActivity extends AppCompatActivity {
 
         //Get Intent
         if(getIntent() != null){
-            categoryId = getIntent().getStringExtra("categoryID");
+            categoryId = getIntent().getStringExtra("categoryId");
         }
 
         if(!categoryId.isEmpty() && categoryId != null){
@@ -145,7 +145,7 @@ public class DishListActivity extends AppCompatActivity {
                         Intent dishDetail = new Intent(DishListActivity.this, DishDetailActivity.class);
 
                         //Send DishID to Dish Detail Activity
-                        dishDetail.putExtra("dishID", searchAdapter.getRef(position).getKey());
+                        dishDetail.putExtra("dishId", searchAdapter.getRef(position).getKey());
                         startActivity(dishDetail);
                     }
                 });
@@ -156,7 +156,7 @@ public class DishListActivity extends AppCompatActivity {
     }
 
     private void loadSuggest() {
-        dishList.orderByChild("categoryID").equalTo(categoryId).addValueEventListener(new ValueEventListener() {
+        dishList.orderByChild("categoryId").equalTo(categoryId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot postDataSnapshot:dataSnapshot.getChildren()){
@@ -174,7 +174,7 @@ public class DishListActivity extends AppCompatActivity {
     }
 
     private void loadListDish(String categoryId) {
-        dishAdapter = new FirebaseRecyclerAdapter<Dish, DishViewHolder>(Dish.class, R.layout.dish_item, DishViewHolder.class, dishList.orderByChild("categoryID").equalTo(categoryId)) {
+        dishAdapter = new FirebaseRecyclerAdapter<Dish, DishViewHolder>(Dish.class, R.layout.dish_item, DishViewHolder.class, dishList.orderByChild("categoryId").equalTo(categoryId)) {
             @Override
             protected void populateViewHolder(DishViewHolder viewHolder, Dish model, int position) {
                 viewHolder.textViewDishName.setText(model.getName());
@@ -188,7 +188,7 @@ public class DishListActivity extends AppCompatActivity {
                         Intent dishDetail = new Intent(DishListActivity.this, DishDetailActivity.class);
 
                         //Send DishID to Dish Detail Activity
-                        dishDetail.putExtra("dishID", dishAdapter.getRef(position).getKey());
+                        dishDetail.putExtra("dishId", dishAdapter.getRef(position).getKey());
                         startActivity(dishDetail);
                     }
                 });

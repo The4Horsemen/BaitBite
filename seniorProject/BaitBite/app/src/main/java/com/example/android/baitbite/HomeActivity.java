@@ -113,7 +113,7 @@ public class HomeActivity extends AppCompatActivity
                         //Get CategoryID & send it to DishList Activity
                         Intent dishList = new Intent(HomeActivity.this, DishListActivity.class);
                         //Get the key of CategoryID
-                        dishList.putExtra("categoryID", categoryAdapter.getRef(position).getKey());
+                        dishList.putExtra("categoryId", categoryAdapter.getRef(position).getKey());
                         startActivity(dishList);
                     }
                 });
