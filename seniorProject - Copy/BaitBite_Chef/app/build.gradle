@@ -52,6 +52,7 @@ dependencies {
 
     //GeoFire (Location)
     implementation 'com.firebase:geofire-android:2.3.0'
+    implementation 'com.google.android.gms:play-services-location:11.8.0'
 
     //SignIn Remember me needed Library
     implementation 'io.paperdb:paperdb:2.1'

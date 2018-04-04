@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -18,6 +19,8 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -44,7 +47,9 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.ChildEventListener;
@@ -152,6 +157,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
     private void initMap() {
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -170,7 +176,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
 
         mMap = googleMap;
+        try {
+            // Customise the styling of the base map using a JSON object defined
+            // in a raw resource file.
+            boolean success = googleMap.setMapStyle(
+                    MapStyleOptions.loadRawResourceStyle(
+                            this, R.raw.style_json));
 
+            if (!success) {
+                Log.e("TAG", "Style parsing failed.");
+            }
+        } catch (Resources.NotFoundException e) {
+            Log.e("TAG", "Can't find style. Error: ", e);
+        }
 
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -186,6 +204,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setMyLocationEnabled(true); // this for showing the locate me icon on the map ( top right corner)
         Start();
 
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                Chef tmp = (Chef) marker.getTag();
+                /*
+
+               Pass the chef object or the phone number or etc
+                 */
+
+
+
+                return false;
+            }
+        });
 
 
         // Add a marker in Sydney and move the camera
@@ -203,7 +236,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         final DatabaseReference Chefref = FirebaseDatabase.getInstance().getReference("Chef");
         geoFire = new GeoFire(ref);
 
-        final GeoQuery geoQuery = geoFire.queryAtLocation(new GeoLocation(x,  y), 100);
+        final GeoQuery geoQuery = geoFire.queryAtLocation(new GeoLocation(x,  y), 7);
         geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
             @Override
             public void onKeyEntered(String key, GeoLocation location) {
@@ -213,7 +246,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 Chef user = dataSnapshot.getValue(Chef.class);
-                                //Log.d("Results!",user.getName());
+                                //if(what ever condition is here){
+                                SetMarker(user);
+                                //}
+
                             }
 
                             @Override
@@ -260,7 +296,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
 
-
+/*
 
         FirebaseDatabase.getInstance().getReference().child("Chef")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -280,7 +316,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     }
                 });
 
-
+*/
 
 
     }
@@ -291,26 +327,29 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Marker M = mMap.addMarker(new MarkerOptions()
                 .position(newLocation)
         );
+        M.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_launcher_map));
         M.setTag(user);
 
         mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
             @Override
             public View getInfoWindow(Marker marker) {
-                return null;
+               return null;
             }
 
             @Override
             public View getInfoContents(Marker marker) {
+
                 View v = getLayoutInflater().inflate(R.layout.info_window,null);
+
                 TextView Name = (TextView) v.findViewById((R.id.tv_locality ));
+                TextView phone = (TextView) v.findViewById((R.id.tv_locality2 ));
                 ImageView img = (ImageView) v.findViewById(R.id.imageView1) ;
                 Chef Tmp = (Chef)marker.getTag();
                 Name.setText(Tmp.getName());
+                phone.setText(Tmp.getPhone_Number());
                 Picasso.with(MapsActivity.this).load("https://png.icons8.com/ios/50/000000/baguette.png").into(img);
-
-
-
                 return v;
+
             }
         });
 
@@ -370,7 +409,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     @Override
                     public void onLocationResult(LocationResult locationResult) {
 
-                        goToLocationZoom(locationResult.getLastLocation().getLatitude(),locationResult.getLastLocation().getLongitude(), 10);
+                        goToLocationZoom(locationResult.getLastLocation().getLatitude(),locationResult.getLastLocation().getLongitude(), 15);
 
                         onLocationChanged(locationResult.getLastLocation());
                     }

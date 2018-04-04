@@ -12,12 +12,14 @@ import android.widget.Toast;
 //import com.example.android.baitbite.Common.Common;
 //import com.example.android.baitbite.Model.Customer;
 import com.example.matsah.baitbite_chef.Common.Common;
+import com.example.matsah.baitbite_chef.GPS.GPSTracker;
 import com.example.matsah.baitbite_chef.Model.Chef;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.karan.churi.PermissionManager.PermissionManager;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 /*added by Ibra*/
@@ -48,7 +50,8 @@ import java.util.concurrent.TimeUnit;
 /**/
 
 public class SignInActivity extends AppCompatActivity {
-
+    //added by aseel
+    protected PermissionManager permissionnManager;
     /*added by Ibra*/
     private static final String TAG = "PhoneAuthActivity";
 
@@ -165,8 +168,14 @@ public class SignInActivity extends AppCompatActivity {
         textSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent signUp = new Intent(SignInActivity.this, SignUpActivity.class);
-                startActivity(signUp);
+               // permissionnManager = new PermissionManager() {
+               // };
+               // GPSTracker gpsTracker = new GPSTracker(SignInActivity.this);
+               // if(permissionnManager.checkAndRequestPermissions(SignInActivity.this) && gpsTracker.canGetLocation()) {
+                    Intent signUp = new Intent(SignInActivity.this, SignUpActivity.class);
+                    startActivity(signUp);
+               // }
+
             }
         });
 
