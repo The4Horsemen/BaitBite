@@ -7,6 +7,7 @@ package com.example.matsah.baitbite_chef;
 import android.app.ProgressDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -95,7 +96,7 @@ public class SignUpActivity extends AppCompatActivity {
                 };
                 permissionnManager.checkAndRequestPermissions(SignUpActivity.this);
                 gpsTracker = new GPSTracker(SignUpActivity.this);
-
+                Log.d("loc",gpsTracker.canGetLocation()+"");
 
                 if (gpsTracker.canGetLocation())
                 {
