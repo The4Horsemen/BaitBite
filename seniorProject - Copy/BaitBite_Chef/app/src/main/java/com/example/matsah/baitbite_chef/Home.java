@@ -27,6 +27,8 @@ import android.widget.Toast;
 import com.example.matsah.baitbite_chef.Common.Common;
 import com.example.matsah.baitbite_chef.Interface.ItemClickListener;
 import com.example.matsah.baitbite_chef.Model.Category;
+import com.example.matsah.baitbite_chef.Model.Dish;
+import com.example.matsah.baitbite_chef.ViewHolder.DishViewHolder;
 import com.example.matsah.baitbite_chef.ViewHolder.MenuViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -51,20 +53,20 @@ public class Home extends AppCompatActivity
 
     //Firebase
     FirebaseDatabase database;
-    DatabaseReference categories;
+    DatabaseReference dishList;
     FirebaseStorage storage;
     StorageReference storageRefrence;
-    FirebaseRecyclerAdapter<Category, MenuViewHolder> adapter;
+    FirebaseRecyclerAdapter<Dish, DishViewHolder> adapter;
 
     //View
-    RecyclerView recycler_menu;
+    RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
 
     // Add New Mwenu Layout
-    MaterialEditText editName;
+    MaterialEditText editName, editDescription, editPrice, editDiscount;
     FButton buttonUpload, buttonSelect;
 
-    Category newCategory;
+    Dish newDish;
 
     Uri saveUri;
 
@@ -82,7 +84,7 @@ public class Home extends AppCompatActivity
         //Init Firebase
 
         database = FirebaseDatabase.getInstance();
-        categories = database.getReference("Category");
+        dishList = database.getReference("Dishes");
         storage = FirebaseStorage.getInstance();
         storageRefrence = storage.getReference();
 
@@ -90,7 +92,7 @@ public class Home extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showDialog();
+                showAddDishDialog();
             }
         });
 
@@ -110,26 +112,31 @@ public class Home extends AppCompatActivity
         txtFullName.setText(Common.currentChef.getName());
 
         //Init View
-        recycler_menu = (RecyclerView) findViewById(R.id.recyclerView_menu);
-        recycler_menu.setHasFixedSize(true);
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView_menu);
+        recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
-        recycler_menu.setLayoutManager(layoutManager);
-        
-        loadMenu();
+        recyclerView.setLayoutManager(layoutManager);
+
+        loadListDish();
         
     }
 
-    private void showDialog() {
+    private void showAddDishDialog() {
         AlertDialog.Builder alertedDialog = new AlertDialog.Builder(Home.this);
-        alertedDialog.setTitle("Add new category");
+        alertedDialog.setTitle("Add new Dish");
         alertedDialog.setMessage("Please fill full information");
 
         LayoutInflater inflater = this.getLayoutInflater();
-        View add_menu_layout = inflater.inflate(R.layout.add_new_menu_layout,null);
+        View add_menu_layout = inflater.inflate(R.layout.add_new_dish_layout,null);
 
         editName = add_menu_layout.findViewById(R.id.editName);
+        editDescription = add_menu_layout.findViewById(R.id.editDescription);
+        editPrice = add_menu_layout.findViewById(R.id.editPrice);
+        editDiscount = add_menu_layout.findViewById(R.id.editDiscount);
+
         buttonSelect = add_menu_layout.findViewById(R.id.buttonSelect);
         buttonUpload = add_menu_layout.findViewById(R.id.buttonUpload);
+        newDish = new Dish();
 
         //Event for button
         buttonSelect.setOnClickListener(new View.OnClickListener() {
@@ -149,20 +156,27 @@ public class Home extends AppCompatActivity
         alertedDialog.setView(add_menu_layout);
         alertedDialog.setIcon(R.drawable.ic_shopping_cart_black_24dp);
 
-        alertedDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+        alertedDialog.setPositiveButton("ADD", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
+                newDish.setName(editName.getText().toString());
+                newDish.setDescription(editDescription.getText().toString());
+                newDish.setPrice(editPrice.getText().toString());
+                newDish.setDiscount(editDiscount.getText().toString());
+                newDish.setCategoryId("");
+                newDish.setChefID(Common.currentChef.getPhone_Number());
+                newDish.setQuantity(0);
 
 
-                if(newCategory != null){
-                    categories.push().setValue(newCategory);
-                    Snackbar.make(drawer, "New Category "+newCategory.getName()+" was added", Snackbar.LENGTH_SHORT).show();
+                if(newDish != null){
+                    dishList.push().setValue(newDish);
+                    Snackbar.make(drawer, "New Dish "+newDish.getName()+" was added", Snackbar.LENGTH_SHORT).show();
                 }
             }
         });
 
-        alertedDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+        alertedDialog.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
@@ -171,6 +185,7 @@ public class Home extends AppCompatActivity
 
         alertedDialog.show();
     }
+
 
     private void uploadImage() {
         if(saveUri != null){
@@ -184,11 +199,12 @@ public class Home extends AppCompatActivity
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     mDialog.dismiss();
-                    Toast.makeText(Home.this, "Uploaded !!!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Home.this, "Uploaed !!!", Toast.LENGTH_SHORT).show();
                     imageFolder.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
-                            newCategory = new Category(editName.getText().toString(),uri.toString());
+                            newDish.setImage(uri.toString());
+
 
                         }
                     });
@@ -212,6 +228,10 @@ public class Home extends AppCompatActivity
     }
 
 
+
+
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -229,31 +249,29 @@ public class Home extends AppCompatActivity
         startActivityForResult(Intent.createChooser(intent,"Select Picture"), Common.PICK_IMAGE_REQUEST);
     }
 
-    private void loadMenu() {
-        adapter = new FirebaseRecyclerAdapter<Category, MenuViewHolder>(Category.class, R.layout.menu_item, MenuViewHolder.class, categories) {
+
+    private void loadListDish() {
+        adapter = new FirebaseRecyclerAdapter<Dish, DishViewHolder>(Dish.class,
+                R.layout.dish_item,
+                DishViewHolder.class,
+                dishList.orderByChild("chefID").equalTo(Common.currentChef.getPhone_Number())) {
             @Override
-            protected void populateViewHolder(MenuViewHolder viewHolder, Category model, int position) {
-                viewHolder.textViewMenuName.setText(model.getName());
-                Picasso.with(Home.this).load(model.getImage()).into(viewHolder.imageViewMenu);
+            protected void populateViewHolder(DishViewHolder viewHolder, Dish model, int position) {
+                viewHolder.DishName.setText(model.getName());
+                Picasso.with(getBaseContext()).load(model.getImage()).into(viewHolder.DishImage);
 
                 viewHolder.setItemClicListener(new ItemClickListener() {
                     @Override
                     public void onClick(View view, int position, boolean isLongClick) {
-                        // Send Category ID and Start new Activity
-                        Intent dishList = new Intent(Home.this, DishListActivity.class);
-                        dishList.putExtra("categoryId", adapter.getRef(position).getKey());
-                        startActivity(dishList);
-
+                        //later
                     }
                 });
-
             }
         };
-
-        adapter.notifyDataSetChanged();//Refresh data if have data changed
-        recycler_menu.setAdapter(adapter);
-
+        adapter.notifyDataSetChanged();
+        recyclerView.setAdapter(adapter);
     }
+
 
     @Override
     public void onBackPressed() {
@@ -271,6 +289,10 @@ public class Home extends AppCompatActivity
         getMenuInflater().inflate(R.menu.home, menu);
         return true;
     }
+
+
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -310,37 +332,42 @@ public class Home extends AppCompatActivity
 
     //Update / Delete
 
-    @Override
     public boolean onContextItemSelected(MenuItem item) {
-
         if(item.getTitle().equals(Common.UPDATE)){
-            showUpdateDialog(adapter.getRef(item.getOrder()).getKey(),adapter.getItem(item.getOrder()));
+            showUpdateDishDialog(adapter.getRef(item.getOrder()).getKey(), adapter.getItem(item.getOrder()));
         }else if(item.getTitle().equals(Common.DELETE)){
-            deleteCategory(adapter.getRef(item.getOrder()).getKey());
+            deleteDish(adapter.getRef(item.getOrder()).getKey());
         }
-
         return super.onContextItemSelected(item);
+
     }
 
-    private void deleteCategory(String key) {
-        categories.child(key).removeValue();
-        Toast.makeText(this,"Item is deleted !!!", Toast.LENGTH_SHORT).show();
+
+    private void deleteDish(String key) {
+        dishList.child(key).removeValue();
     }
 
-    private void showUpdateDialog(final String key, final Category item) {
+    private void showUpdateDishDialog(final String key, final Dish item) {
         AlertDialog.Builder alertedDialog = new AlertDialog.Builder(Home.this);
-        alertedDialog.setTitle("Update category");
+        alertedDialog.setTitle("Edit Dish");
         alertedDialog.setMessage("Please fill full information");
 
         LayoutInflater inflater = this.getLayoutInflater();
-        View add_menu_layout = inflater.inflate(R.layout.add_new_menu_layout,null);
+        View add_menu_layout = inflater.inflate(R.layout.add_new_dish_layout,null);
 
         editName = add_menu_layout.findViewById(R.id.editName);
+        editDescription = add_menu_layout.findViewById(R.id.editDescription);
+        editPrice = add_menu_layout.findViewById(R.id.editPrice);
+        editDiscount = add_menu_layout.findViewById(R.id.editDiscount);
+
+        //set default value for view
+        editName.setText(item.getName());
+        editDiscount.setText(item.getDiscount());
+        editPrice.setText(item.getPrice());
+        editDescription.setText(item.getDescription());
+
         buttonSelect = add_menu_layout.findViewById(R.id.buttonSelect);
         buttonUpload = add_menu_layout.findViewById(R.id.buttonUpload);
-
-        //set default name
-        editName.setText(item.getName());
 
         //Event for button
         buttonSelect.setOnClickListener(new View.OnClickListener() {
@@ -360,19 +387,27 @@ public class Home extends AppCompatActivity
         alertedDialog.setView(add_menu_layout);
         alertedDialog.setIcon(R.drawable.ic_shopping_cart_black_24dp);
 
-        alertedDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+        alertedDialog.setPositiveButton("EDIT", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
 
-                //update information
+
+
+
                 item.setName(editName.getText().toString());
-                categories.child(key).setValue(item);
+                item.setPrice(editPrice.getText().toString());
+                item.setDiscount(editDiscount.getText().toString());
+                item.setDescription(editDescription.getText().toString());
+
+
+                dishList.child(key).setValue(item);
+                Snackbar.make(drawer, "Dish "+item.getName()+" was edited", Snackbar.LENGTH_SHORT).show();
 
             }
         });
 
-        alertedDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+        alertedDialog.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
@@ -382,7 +417,7 @@ public class Home extends AppCompatActivity
         alertedDialog.show();
     }
 
-    private void changeImage(final Category item) {
+    private void changeImage(final Dish item) {
         if(saveUri != null){
             final ProgressDialog mDialog = new ProgressDialog(this);
             mDialog.setMessage("Uploading...");

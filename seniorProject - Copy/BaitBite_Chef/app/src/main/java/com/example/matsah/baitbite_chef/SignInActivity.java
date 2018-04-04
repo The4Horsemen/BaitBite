@@ -206,6 +206,7 @@ public class SignInActivity extends AppCompatActivity {
                             //Get chef info
                             mDialog.dismiss();
                             chef = dataSnapshot.child(editPhone.getText().toString()).getValue(Chef.class);
+                            chef.setPhone_Number(editPhone.getText().toString());
 
 
                         }else{

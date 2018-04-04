@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.matsah.baitbite_chef">
+
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
     /*Ibra*/
     <uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAGE"
@@ -29,7 +29,8 @@
             android:name=".Home"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme" />
-        <activity android:name=".DishListActivity"></activity>
+        <activity android:name=".DishListActivity" />
+        <activity android:name=".SignUP_WithVerify"></activity>
     </application>
 
 </manifest>

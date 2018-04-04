@@ -1,0 +1,788 @@
+{
+  "Category" : {
+    "01" : {
+      "image" : "https://firebasestorage.googleapis.com/v0/b/androidbaitbite.appspot.com/o/images%2F5ad6f209-2541-4851-a0d5-ea060cf2540c?alt=media&token=aea29d8c-7e0c-4365-baf7-edad7987914c",
+      "name" : "FINGErs"
+    },
+    "02" : {
+      "image" : "http://medifoods.my/wp-content/uploads/2015/03/cover-menu-westernsoup1.jpg",
+      "name" : "WESTERN SOUPS"
+    },
+    "03" : {
+      "image" : "http://medifoods.my/wp-content/uploads/2015/03/cover-menu-easternsoup.jpg",
+      "name" : "EASTERN SOUPS"
+    },
+    "04" : {
+      "image" : "http://medifoods.my/wp-content/uploads/2015/03/cover-menu-sandwich.jpg",
+      "name" : "SANDWICHES"
+    },
+    "05" : {
+      "image" : "http://medifoods.my/wp-content/uploads/2015/03/cover-menu-pizza.jpg",
+      "name" : "PIZZA"
+    },
+    "06" : {
+      "image" : "http://medifoods.my/wp-content/uploads/2015/03/cover-menu-pasta1.jpg",
+      "name" : "PASTA"
+    },
+    "07" : {
+      "image" : "http://medifoods.my/wp-content/uploads/2015/03/cover-menu-chicken.jpg",
+      "name" : "CHICKEN"
+    },
+    "08" : {
+      "image" : "http://medifoods.my/wp-content/uploads/2015/03/cover-menu-fish.jpg",
+      "name" : "FISH"
+    },
+    "09" : {
+      "image" : "http://medifoods.my/wp-content/uploads/2015/03/cover-menu-vegetarian.jpg",
+      "name" : "CHINESE VEGETARIAN"
+    },
+    "10" : {
+      "image" : "http://medifoods.my/wp-content/uploads/2015/03/cover-menu-delights.jpg",
+      "name" : "MEDIFOODS DELIGHTS"
+    },
+    "11" : {
+      "image" : "http://medifoods.my/wp-content/uploads/2015/03/cover-menu-snacks.jpg",
+      "name" : "SNACKS"
+    },
+    "-L8vY4VKnGzGSVstKaS6" : {
+      "image" : "https://firebasestorage.googleapis.com/v0/b/androidbaitbite.appspot.com/o/images%2F1ca77355-354b-4bf3-8f06-b4ec1af790da?alt=media&token=a07b70e5-1ad9-4a5a-b946-5eee39fe1f7e",
+      "name" : "ironman"
+    },
+    "-L95Krx6XG36GgJ44wTJ" : {
+      "image" : "https://firebasestorage.googleapis.com/v0/b/androidbaitbite.appspot.com/o/images%2Ff2b39fe6-ce34-476d-876b-248be0312dc2?alt=media&token=7b21f079-356d-4284-b966-b4d1bba33ca2",
+      "name" : "ironman 2"
+    }
+  },
+  "Chef" : {
+    "0567602509" : {
+      "email" : "rook",
+      "locationX" : 90,
+      "locationY" : 90,
+      "mobile_Verification_Code" : 0,
+      "name" : "Janbi",
+      "phone_Number" : "0567602509"
+    },
+    "+966541462055" : {
+      "locationX" : 26.3132144,
+      "locationY" : 50.1442288,
+      "name" : "ibrachef2",
+      "password" : "2580"
+    },
+    "05414620555" : {
+      "locationX" : 26.3132145,
+      "locationY" : 50.1442289,
+      "name" : "IbraChef",
+      "password" : "6879"
+    }
+  },
+  "Customer" : {
+    "0541462055" : {
+      "name" : "Ibra",
+      "password" : "6878"
+    },
+    "0563603661" : {
+      "name" : "Abody",
+      "password" : "abodybig"
+    },
+    "1112223334" : {
+      "name" : "DumyNull",
+      "password" : ""
+    },
+    "1234567890" : {
+      "name" : "Dummy",
+      "password" : "12345"
+    },
+    "+966536360044" : {
+      "name" : "mezo",
+      "password" : "6878"
+    },
+    "+966541462055" : {
+      "name" : "ibra2",
+      "password" : "6878"
+    },
+    "+966555171715" : {
+      "name" : "abdo",
+      "password" : "red",
+      "phone" : "+966555171715"
+    },
+    "+966563603661" : {
+      "locationX" : 0,
+      "locationY" : 0,
+      "mobile_Verification_Code" : 0,
+      "name" : "abody",
+      "phone" : "+966563603661"
+    },
+    "+966567602509" : {
+      "locationX" : 0,
+      "locationY" : 0,
+      "mobile_Verification_Code" : 0,
+      "name" : "janbisama"
+    },
+    "+966567677671" : {
+      "locationX" : 0,
+      "locationY" : 0,
+      "mobile_Verification_Code" : 0,
+      "name" : "aseel",
+      "password" : "6833"
+    },
+    "966541462055" : {
+      "name" : "Ibra3",
+      "password" : "6878"
+    }
+  },
+  "Dishes" : {
+    "01" : {
+      "categoryId" : "11",
+      "description" : "",
+      "discount" : "0",
+      "image" : "http://medifoods.my/images/menu/p1_ginger_pao.jpg",
+      "name" : "GINGER PAO",
+      "price" : "200"
+    },
+    "02" : {
+      "categoryId" : "11",
+      "description" : "",
+      "discount" : "0",
+      "image" : "http://medifoods.my/images/menu/p2_coconut_pao.jpg",
+      "name" : "COCONUT PAO",
+      "price" : "20"
+    },
+    "03" : {
+      "categoryId" : "11",
+      "description" : "",
+      "discount" : "0",
+      "image" : "http://medifoods.my/images/menu/p3_red_bean_pao.jpg",
+      "name" : "RED BEAN PAO",
+      "price" : "1000"
+    },
+    "04" : {
+      "categoryId" : "11",
+      "description" : "",
+      "discount" : "0",
+      "image" : "http://medifoods.my/images/menu/p4_char_siew_pao.jpg",
+      "name" : "CHAR SIEW PAO",
+      "price" : "1000"
+    },
+    "05" : {
+      "categoryId" : "11",
+      "description" : "",
+      "discount" : "0",
+      "image" : "http://medifoods.my/images/menu/p5_chai_pao.jpg",
+      "name" : "CHAI PAO",
+      "price" : "1000"
+    },
+    "06" : {
+      "categoryId" : "11",
+      "description" : "",
+      "discount" : "0",
+      "image" : "http://medifoods.my/images/menu/d1_onde_onde.jpg",
+      "name" : "ONDE ONDE",
+      "price" : "1000"
+    },
+    "07" : {
+      "categoryId" : "11",
+      "description" : "",
+      "discount" : "0",
+      "image" : "http://medifoods.my/images/menu/d2_chai_kuih.jpg",
+      "name" : "CHAI KUIH",
+      "price" : "1000"
+    },
+    "08" : {
+      "categoryId" : "11",
+      "description" : "",
+      "discount" : "0",
+      "image" : "http://medifoods.my/images/menu/d5_yam_cake.jpg",
+      "name" : "YAM CAKE",
+      "price" : "1000"
+    },
+    "09" : {
+      "categoryId" : "11",
+      "description" : "",
+      "discount" : "0",
+      "image" : "http://medifoods.my/images/menu/d6_radish_cake.jpg",
+      "name" : "RADISH CAKE",
+      "price" : "1000"
+    },
+    "10" : {
+      "categoryId" : "11",
+      "description" : "",
+      "discount" : "0",
+      "image" : "http://medifoods.my/images/menu/d7_pumpkin_cake.jpg",
+      "name" : "PUMPKIN CAKE",
+      "price" : "1000"
+    },
+    "11" : {
+      "categoryId" : "11",
+      "description" : "",
+      "discount" : "0",
+      "image" : "http://medifoods.my/images/menu/d8_d9_angku.jpg",
+      "name" : "ANG KU",
+      "price" : "1000"
+    },
+    "12" : {
+      "categoryId" : "11",
+      "description" : "",
+      "discount" : "0",
+      "image" : "http://medifoods.my/images/menu/d10_fatt_ko.jpg",
+      "name" : "FATT KO",
+      "price" : "1000"
+    },
+    "13" : {
+      "categoryId" : "11",
+      "description" : "",
+      "discount" : "0",
+      "image" : "http://medifoods.my/images/menu/d11_three_layer_cake.jpg",
+      "name" : "3 LAYER CAKE",
+      "price" : "1000"
+    },
+    "14" : {
+      "categoryId" : "01",
+      "description" : "Bamboo fungus in spicy thai style sauce",
+      "discount" : "0",
+      "image" : "http://medifoods.my/images/menu/a1_thai_style_salad.jpg",
+      "name" : "THAI STYLE SALAD",
+      "price" : "1000"
+    },
+    "15" : {
+      "categoryId" : "01",
+      "description" : "Glutinous rice ball with black sesame paste filling coated with minced peanuts",
+      "discount" : "0",
+      "image" : "http://medifoods.my/images/menu/a2_sesame_ball_peanut.jpg",
+      "name" : "BLACK SESAME BALL",
+      "price" : "1000"
+    },
+    "16" : {
+      "categoryId" : "01",
+      "description" : "Golden fried spinach potato ball",
+      "discount" : "0",
+      "image" : "http://medifoods.my/images/menu/a3_potato_ball.jpg",
+      "name" : "SPINACH POTATO BALL",
+      "price" : "1000"
+    },
+    "17" : {
+      "categoryId" : "01",
+      "description" : "Apple in yoghurt sauce with walnut & sunflower seeds coated with cane sugar and sesame seeds",
+      "discount" : "0",
+      "image" : "http://medifoods.my/images/menu/a4_caramelised_sunflower_seeds.jpg",
+      "name" : "DOUBLE DELIGHT",
+      "price" : "1000"
+    },
+    "18" : {
+      "categoryId" : "01",
+      "description" : "Tofu in spicy thai style sauce",
+      "discount" : "0",
+      "image" : "http://medifoods.my/images/menu/a5_sour_and_spicy_tofu.jpg",
+      "name" : "SOUR & SPICY TOFU",
+      "price" : "1000"
+    },
+    "19" : {
+      "categoryId" : "02",
+      "description" : "Flavourful blend of 3 types of mushrooms, onion and herbs",
+      "discount" : "0",
+      "image" : "http://medifoods.my/images/menu/s3_mushroom_soup_western_soup.jpg",
+      "name" : "CREAM OF MUSHROOM",
+      "price" : "1000"
+    },
+    "20" : {
+      "categoryId" : "02",
+      "description" : "Delicious blend of pumpkin, carrot and onion",
+      "discount" : "0",
+      "image" : "http://medifoods.my/images/menu/s4_pumpkin_soup_western_soup.jpg",
+      "name" : "CREAM OF PUMPKIN",
+      "price" : "1000"
+    },
+    "21" : {
+      "categoryId" : "02",
+      "description" : "Refreshing blend of root and vine vegetables",
+      "discount" : "0",
+      "image" : "http://medifoods.my/images/menu/s2_mf_garden_blend_western_soup.jpg",
+      "name" : "MF GARDEN BLEND",
+      "price" : "1000"
+    },
+    "22" : {
+      "categoryId" : "02",
+      "description" : "Clear tomato based soup with chunky vegetables and herbs",
+      "discount" : "0",
+      "image" : "http://medifoods.my/images/menu/s1_minestrone_western_soup.jpg",
+      "name" : "MINESTRONE",
+      "price" : "1000"
+    },
+    "23" : {
+      "categoryId" : "03",
+      "description" : "Lotus root, ground nuts and kombu",
+      "discount" : "0",
+      "image" : "http://medifoods.my/images/menu/s5_lotus_chinese_soup.jpg",
+      "name" : "LOTUS ROOT",
+      "price" : "1000"
+    },
+    "24" : {
+      "categoryId" : "03",
+      "description" : "Old cucumber and longan",
+      "discount" : "0",
+      "image" : "http://medifoods.my/images/menu/s6_old_cucumber_chinese_soup.jpg",
+      "name" : "OLD CUCUMBER",
+      "price" : "130"
+    },
+    "25" : {
+      "categoryId" : "03",
+      "description" : "Burdock, fig, longan and goji berry",
+      "discount" : "0",
+      "image" : "http://medifoods.my/images/menu/s7_bur_dock_chinese_soup.jpg",
+      "name" : "BURDOCK",
+      "price" : "1000"
+    },
+    "26" : {
+      "categoryId" : "03",
+      "description" : "Carrot, potato, onion, and tomato",
+      "discount" : "0",
+      "image" : "http://medifoods.my/images/menu/s8_abc_chinese_soup.jpg",
+      "name" : "ABC",
+      "price" : "1000"
+    },
+    "27" : {
+      "categoryId" : "04",
+      "description" : "2 organic eggs with only 1 yolk served with fresh organic vegetables and low fat mayonnaise on panini bread",
+      "discount" : "0",
+      "image" : "http://medifoods.my/images/menu/22_egg_mayo.jpg",
+      "name" : "EGG MAYO SANDWICH",
+      "price" : "1000"
+    },
+    "28" : {
+      "categoryId" : "04",
+      "description" : "A patty made of organic mushrooms, lentils and spices, topped with an organic sunny side up egg",
+      "discount" : "0",
+      "image" : "http://medifoods.my/images/menu/22_egg_mayo.jpg",
+      "name" : "LENTIL SANDWICH",
+      "price" : "1000"
+    },
+    "29" : {
+      "categoryId" : "04",
+      "description" : "A refreshing dip made with chickpeas, tahini (sesame paste), and served with crackers, pita bread, fruit and an assortment of salads",
+      "discount" : "0",
+      "image" : "http://medifoods.my/images/menu/23_hummus_platter.jpg",
+      "name" : "HUMMUS PLATTER",
+      "price" : "1000"
+    },
+    "30" : {
+      "categoryId" : "05",
+      "description" : "Mushrooms and onion",
+      "discount" : "0",
+      "image" : "http://medifoods.my/images/menu/21_mushroom_pizza.jpg",
+      "name" : "MUSHROOM PIZZA",
+      "price" : "1000"
+    },
+    "31" : {
+      "categoryId" : "05",
+      "description" : "Tomatoes, capsicum and pesto",
+      "discount" : "0",
+      "image" : "http://medifoods.my/images/menu/20_margherita_pizza.jpg",
+      "name" : "MUSHROOM PIZZA",
+      "price" : "1000"
+    },
+    "32" : {
+      "categoryId" : "05",
+      "description" : "Pineapple, beancurd sheet and onion",
+      "discount" : "0",
+      "image" : "http://medifoods.my/images/menu/19_hawaiian_pizza.jpg",
+      "name" : "HAWAIIAN PIZZA",
+      "price" : "1000"
+    },
+    "33" : {
+      "categoryId" : "06",
+      "description" : "Pasta tossed with capsicum, tofu, soybean chunks and special herb-infused olive oil",
+      "discount" : "0",
+      "image" : "http://medifoods.my/images/menu/15_garden_aglio_olio.jpg",
+      "name" : "GARDEN AGLIO OLIO",
+      "price" : "1000"
+    },
+    "34" : {
+      "categoryId" : "06",
+      "description" : "Pasta tossed with traditional Asian spices and served with pan fried diced vegetables",
+      "discount" : "0",
+      "image" : "http://medifoods.my/images/menu/17_spicy_aglio_olio.jpg",
+      "name" : "SPICY AGLIO OLIO",
+      "price" : "1000"
+    },
+    "35" : {
+      "categoryId" : "06",
+      "description" : "Bolognese spaghetti with chunky vegetables",
+      "discount" : "0",
+      "image" : "http://medifoods.my/images/menu/18_spaghetti_bolognese.jpg",
+      "name" : "BOLOGNESE AGLIO OLIO",
+      "price" : "1000"
+    },
+    "36" : {
+      "categoryId" : "06",
+      "description" : "Creamy fettuccine served with green peas, cauliflower and long beans",
+      "discount" : "0",
+      "image" : "http://medifoods.my/images/menu/14_cauliflower_fettucine.jpg",
+      "name" : "CAULIFLOWER FETTUCCINE",
+      "price" : "1000"
+    },
+    "37" : {
+      "categoryId" : "06",
+      "description" : "It's unique and one of a kind!",
+      "discount" : "0",
+      "image" : "http://medifoods.my/images/menu/16_medifoods_fusion_spaghetti.jpg",
+      "name" : "FUSION SPAGHETTI",
+      "price" : "1000"
+    },
+    "38" : {
+      "categoryId" : "07",
+      "description" : "Served with mushroom gravy, cranberry & mint sauces",
+      "discount" : "0",
+      "image" : "http://medifoods.my/images/menu/4_roasted_quarter_chicken_with_special_sauces.jpg",
+      "name" : "ROASTED QUARTER CHICKEN",
+      "price" : "1000"
+    },
+    "39" : {
+      "categoryId" : "07",
+      "description" : "Chicken served in curry that is made from more than 10 spices to bring out the authentic traditional taste. Served with rice and 3 side dishes",
+      "discount" : "0",
+      "image" : "http://medifoods.my/images/menu/2_curry_chic.jpg",
+      "name" : "CURRY CHICKEN",
+      "price" : "1000"
+    },
+    "40" : {
+      "categoryId" : "07",
+      "description" : "Chicken served in curry that is made from more than 10 spices to bring out the authentic traditional taste. Served with rice and 3 side dishes",
+      "discount" : "0",
+      "image" : "http://medifoods.my/images/menu/2_curry_chic.jpg",
+      "name" : "RENDANG CHICKEN",
+      "price" : "1000"
+    },
+    "41" : {
+      "categoryId" : "07",
+      "description" : "Steamed chicken with red dates and mushroom. Served with rice and 3 side dishes",
+      "discount" : "0",
+      "image" : "http://medifoods.my/images/menu/3_herbal_steamed_chic.jpg",
+      "name" : "HERBAL STEAMED CHICKEN",
+      "price" : "1000"
+    },
+    "42" : {
+      "categoryId" : "08",
+      "description" : "Half a salmon fish head cooked in an asam broth. Served with rice and 3 side dishes",
+      "discount" : "0",
+      "image" : "http://medifoods.my/images/menu/9_asam_salmon_fish_head.jpg",
+      "name" : "ASAM FISH HEAD",
+      "price" : "1000"
+    },
+    "43" : {
+      "categoryId" : "08",
+      "description" : "Golden fried salmon stuffed bread puffs. Served with mashed potato & salad",
+      "discount" : "0",
+      "image" : "http://medifoods.my/images/menu/10_duo_season_salmon_puff.jpg",
+      "name" : "DUO SEASON SALMON PUFFS",
+      "price" : "1000"
+    },
+    "44" : {
+      "categoryId" : "08",
+      "description" : "Breaded fried toman fish slices in pumpkin sauce. Served with rice and 3 side dishes",
+      "discount" : "0",
+      "image" : "http://medifoods.my/images/menu/11_pumpkin_sauce_fish.jpg",
+      "name" : "TOMAN IN PUMPKIN SAUCE",
+      "price" : "1000"
+    },
+    "45" : {
+      "categoryId" : "09",
+      "description" : "Breaded fried toman fish slices in pumpkin sauce. Served with rice and 3 side dishes",
+      "discount" : "0",
+      "image" : "http://medifoods.my/images/menu/5_ginger_vegetarian_fish.jpg",
+      "name" : "GINGER SOY FISH CAKE",
+      "price" : "1000"
+    },
+    "46" : {
+      "categoryId" : "09",
+      "description" : "Fried mushroom served in a sweet and savoury sauce",
+      "discount" : "0",
+      "image" : "http://medifoods.my/images/menu/6_kung_po_mushroom_tofu.jpg",
+      "name" : "GONG BAO MUSHROOM TOFU",
+      "price" : "1000"
+    },
+    "47" : {
+      "categoryId" : "09",
+      "description" : "An assortment of mushrooms, vegetables and white silken tofu in pumpkin sauce",
+      "discount" : "0",
+      "image" : "http://medifoods.my/images/menu/7_pumpkin_luo_han_zhai.jpg",
+      "name" : "PUMPKIN LUO HAN ZHAI",
+      "price" : "1000"
+    },
+    "48" : {
+      "categoryId" : "09",
+      "description" : "Fried breaded monkey head mushroom on a bed of tofu topped with homemade sweet and sour cranberry sauce",
+      "discount" : "0",
+      "image" : "http://medifoods.my/images/menu/8_sweet_sour_cranberry_monkey_head_mushroom.jpg",
+      "name" : "SWEET & SOUR MONKEY HEAD MUSHROOM",
+      "price" : "1000"
+    },
+    "49" : {
+      "categoryId" : "10",
+      "description" : "Enjoy the healthy version of the classic malaysian delight we all love",
+      "discount" : "0",
+      "image" : "http://medifoods.my/images/menu/34_nasi_lemak_veg.jpg",
+      "name" : "MEDIFOODS NASI LEMAK",
+      "price" : "1000"
+    },
+    "50" : {
+      "categoryId" : "10",
+      "description" : "Assortment of vegetables & nut served with rice and our signature basil blended soup",
+      "discount" : "0",
+      "image" : "http://medifoods.my/images/menu/13_lui_cha.jpg",
+      "name" : "LEI CHA",
+      "price" : "1000"
+    },
+    "51" : {
+      "categoryId" : "10",
+      "description" : "Udon noodle stir fried with blackpepper, soy sauce and mixed vegetables",
+      "discount" : "0",
+      "image" : "http://medifoods.my/images/menu/26_black_pepper_udon.jpg",
+      "name" : "BLACK PEPPER UDON",
+      "price" : "1000"
+    },
+    "52" : {
+      "categoryId" : "10",
+      "description" : "Rice vermicelli cooked in vegetable soup infused with organic egg",
+      "discount" : "0",
+      "image" : "http://medifoods.my/images/menu/27_cantonese_style_mee_sua.jpg",
+      "name" : "CANTONESE STYLE MEE SUA",
+      "price" : "1000"
+    },
+    "53" : {
+      "categoryId" : "10",
+      "description" : "Fried rice with egg, textured soy protein, capsicum and our own lui cha sauce",
+      "discount" : "0",
+      "image" : "http://medifoods.my/images/menu/29_mf_special_fried_rice.jpg",
+      "name" : "MF SPECIAL FRIED RICE",
+      "price" : "1000"
+    },
+    "54" : {
+      "categoryId" : "10",
+      "description" : "Bittergourd braised in vegatble soup along with tofu, bamboo fungus and rice vermicilli",
+      "discount" : "0",
+      "image" : "http://medifoods.my/images/menu/30_bittergourd_meehun.jpg",
+      "name" : "BITTERGOURD MEE HOON",
+      "price" : "1000"
+    },
+    "55" : {
+      "categoryId" : "10",
+      "description" : "Udon noodles served in a light miso soup with egg, japanese tofu, oyster mushroom and seaweed",
+      "discount" : "0",
+      "image" : "http://medifoods.my/images/menu/31_japanese_ramen.jpg",
+      "name" : "JAPANESE RAMEN",
+      "price" : "1000"
+    },
+    "56" : {
+      "categoryId" : "10",
+      "description" : "Boiled calrose rice with pumpkin, textured soy protein, tofu, toman fish and topped with fried meehoon",
+      "discount" : "0",
+      "image" : "http://medifoods.my/images/menu/33_porridge_nonveg.jpg",
+      "name" : "MEDIFOODS PORRIDGE",
+      "price" : "1000"
+    },
+    "57" : {
+      "categoryId" : "10",
+      "description" : "Fried rice vermicili with cloud ear, carrot and topped with vegetarian fish",
+      "discount" : "0",
+      "image" : "http://medifoods.my/images/menu/36_mf_hokkien_vegetarian_fried_meehoon.jpg",
+      "name" : "HOKKIEN VEGETARIAN FRIED MEE HOON",
+      "price" : "1000"
+    },
+    "58" : {
+      "categoryId" : "10",
+      "description" : "Rice vermicilli served in santan-free curry with chicken, long beans , tau pok and enoki mushrooms",
+      "discount" : "0",
+      "image" : "http://medifoods.my/images/menu/12_curry_mee.jpg",
+      "name" : "CURRY MEE HOON",
+      "price" : "1000"
+    },
+    "59" : {
+      "categoryId" : "10",
+      "description" : "Long grain Basmati rice with lentil and millets",
+      "discount" : "0",
+      "image" : "http://medifoods.my/images/menu/38_mf_rice.jpg",
+      "name" : "MEDIFOODS RICE",
+      "price" : "1000"
+    },
+    "-L95KQcjGml8Q52v0A-r" : {
+      "categoryId" : "-L8vY4VKnGzGSVstKaS6",
+      "description" : "",
+      "discount" : "",
+      "image" : "https://firebasestorage.googleapis.com/v0/b/androidbaitbite.appspot.com/o/images%2Fbe55983e-5d01-43c9-9238-9433248945f1?alt=media&token=59e2f755-6548-44b8-896a-ba0c317934bd",
+      "name" : "",
+      "price" : ""
+    },
+    "-L95KXrw9wUYSH9HNlvu" : {
+      "categoryId" : "-L8vY4VKnGzGSVstKaS6",
+      "description" : "vv",
+      "discount" : "0",
+      "image" : "https://firebasestorage.googleapis.com/v0/b/androidbaitbite.appspot.com/o/images%2Fc05126de-cded-481a-99c5-c2e8447f928e?alt=media&token=30ac74a9-876d-4725-af88-823432b57a3c",
+      "name" : "hgf",
+      "price" : "5"
+    },
+    "-L95NlS2DSrSWPP_nizi" : {
+      "categoryId" : "01",
+      "description" : "gg",
+      "discount" : "0",
+      "image" : "https://firebasestorage.googleapis.com/v0/b/androidbaitbite.appspot.com/o/images%2F5542e236-01f8-4827-ab84-231026870d0e?alt=media&token=8f5362be-fb40-410a-9dcd-0b76d1df9893",
+      "name" : "gg",
+      "price" : "8"
+    },
+    "-L95QTLBaealUml03co_" : {
+      "categoryId" : "-L8vY4VKnGzGSVstKaS6",
+      "description" : "gg",
+      "discount" : "",
+      "image" : "https://firebasestorage.googleapis.com/v0/b/androidbaitbite.appspot.com/o/images%2F693c48e7-0388-4a5a-b859-63c646ef28cc?alt=media&token=223ce4b8-b22e-4099-809f-9e07fb279fd4",
+      "name" : "l7sa",
+      "price" : "5"
+    }
+  },
+  "OrderNow" : {
+    "1522447407573" : {
+      "address" : "KFUPM 833",
+      "dishes" : [ {
+        "discount" : "0",
+        "dishID" : "30",
+        "dishname" : "MUSHROOM PIZZA",
+        "price" : "1000",
+        "quantity" : "2"
+      }, {
+        "discount" : "0",
+        "dishID" : "19",
+        "dishname" : "CREAM OF MUSHROOM",
+        "price" : "1000",
+        "quantity" : "1"
+      } ],
+      "name" : "Dummy",
+      "phone" : "1234567890",
+      "status" : "0",
+      "total" : "$3,000.00"
+    },
+    "1522447780256" : {
+      "address" : "KFUPM 833",
+      "dishes" : [ {
+        "discount" : "0",
+        "dishID" : "31",
+        "dishname" : "MUSHROOM PIZZA",
+        "price" : "1000",
+        "quantity" : "5"
+      } ],
+      "name" : "Dummy",
+      "phone" : "1234567890",
+      "status" : "0",
+      "total" : "$5,000.00"
+    },
+    "1522508622568" : {
+      "address" : "KFUPM 833 306",
+      "dishes" : [ {
+        "discount" : "0",
+        "dishID" : "10",
+        "dishname" : "PUMPKIN CAKE",
+        "price" : "1000",
+        "quantity" : "2"
+      }, {
+        "discount" : "0",
+        "dishID" : "27",
+        "dishname" : "EGG MAYO SANDWICH",
+        "price" : "1000",
+        "quantity" : "1"
+      } ],
+      "name" : "Dummy",
+      "phone" : "1234567890",
+      "status" : "0",
+      "total" : "$3,000.00"
+    },
+    "1522508838046" : {
+      "address" : "KFUPM833-306",
+      "dishes" : [ {
+        "discount" : "0",
+        "dishID" : "27",
+        "dishname" : "EGG MAYO SANDWICH",
+        "price" : "1000",
+        "quantity" : "1"
+      } ],
+      "name" : "abdo",
+      "phone" : "+966555171715",
+      "status" : "0",
+      "total" : "$1,000.00"
+    },
+    "1522526785451" : {
+      "address" : "I will get it",
+      "dishes" : [ {
+        "discount" : "0",
+        "dishID" : "24",
+        "dishname" : "OLD CUCUMBER",
+        "price" : "1000",
+        "quantity" : "1"
+      } ],
+      "name" : "janbisama",
+      "phone" : "+966567602509",
+      "status" : "0",
+      "total" : "$1,000.00"
+    },
+    "1522623049630" : {
+      "address" : "KFUPM",
+      "dishes" : [ {
+        "discount" : "0",
+        "dishID" : "19",
+        "dishName" : "CREAM OF MUSHROOM",
+        "price" : "1000",
+        "quantity" : "1"
+      } ],
+      "name" : "janbisama",
+      "phone" : "+966567602509",
+      "status" : "0",
+      "total" : "$1,000.00"
+    },
+    "1522624024091" : {
+      "address" : "833-309",
+      "dishes" : [ {
+        "discount" : "0",
+        "dishID" : "16",
+        "dishName" : "SPINACH POTATO BALL",
+        "price" : "1000",
+        "quantity" : "1"
+      } ],
+      "name" : "abody",
+      "phone" : "+966563603661",
+      "status" : "0",
+      "total" : "$1,000.00"
+    }
+  },
+  "StoreLocation" : {
+    "05414620555" : {
+      ".priority" : "dusmf8s4zy",
+      "g" : "dusmf8s4zy",
+      "l" : [ 37.7853889, 122.405973 ]
+    },
+    "05414620556" : {
+      ".priority" : "dusmf8s4zp",
+      "g" : "dusmf8s4zp",
+      "l" : [ 37.7853889, -122.4056973 ]
+    },
+    "firebase-hq" : {
+      ".priority" : "thetubcbk5",
+      "g" : "thetubcbk5",
+      "l" : [ 26.327422, 50.133197 ]
+    },
+    "firebase-hq2" : {
+      ".priority" : "thettn1vsc",
+      "g" : "thettn1vsc",
+      "l" : [ 26.3132058, 50.144218 ]
+    },
+    "firebase-hq4" : {
+      ".priority" : "thettn1vsf",
+      "g" : "thettn1vsf",
+      "l" : [ 26.3132111, 50.1442096 ]
+    }
+  },
+  "dishes" : {
+    "-L95M4krfcm2ZKXCfw9Z" : {
+      "categoryId" : "-L8vY4VKnGzGSVstKaS6",
+      "description" : "goood",
+      "discount" : "",
+      "image" : "https://firebasestorage.googleapis.com/v0/b/androidbaitbite.appspot.com/o/images%2F7d36b042-fd3e-46f3-853e-6697cd00f936?alt=media&token=a9e7bd7a-7827-476e-8694-de57d329ca0e",
+      "name" : "l7sa",
+      "price" : "15"
+    }
+  }
+}

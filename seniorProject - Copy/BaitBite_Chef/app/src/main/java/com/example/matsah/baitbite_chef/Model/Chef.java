@@ -41,20 +41,12 @@ public class Chef {
 
     }
 
-
-
     public void Get_GPS_Location() {
 
 
 
 
     }
-
-
-
-
-
-
 
     public String getEmail() {
         return Email;
