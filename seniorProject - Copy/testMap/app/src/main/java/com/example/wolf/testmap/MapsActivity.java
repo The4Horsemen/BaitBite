@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -18,6 +19,11 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.geofire.GeoFire;
@@ -41,7 +47,10 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -50,6 +59,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.karan.churi.PermissionManager.PermissionManager;
+import com.squareup.picasso.Picasso;
 
 import java.util.Map;
 
@@ -71,7 +81,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     //Current Location
     private Double x;
     private Double y;
-
+//tmp
+    //Chef user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -146,6 +157,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
     private void initMap() {
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -164,6 +176,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
 
         mMap = googleMap;
+        try {
+            // Customise the styling of the base map using a JSON object defined
+            // in a raw resource file.
+            boolean success = googleMap.setMapStyle(
+                    MapStyleOptions.loadRawResourceStyle(
+                            this, R.raw.style_json));
+
+            if (!success) {
+                Log.e("TAG", "Style parsing failed.");
+            }
+        } catch (Resources.NotFoundException e) {
+            Log.e("TAG", "Can't find style. Error: ", e);
+        }
+
+
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
@@ -177,6 +204,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setMyLocationEnabled(true); // this for showing the locate me icon on the map ( top right corner)
         Start();
 
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                Chef tmp = (Chef) marker.getTag();
+                /*
+
+               Pass the chef object or the phone number or etc
+                 */
+
+
+
+                return false;
+            }
+        });
 
 
         // Add a marker in Sydney and move the camera
@@ -188,27 +230,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     // Operations
     private void addStoresToMap(){
-Log.d("TAG","X  "+x + "Y  "+y);
+        Log.d("TAG","X  "+x + "Y  "+y);
         GeoFire geoFire;
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("StoreLocation");
         final DatabaseReference Chefref = FirebaseDatabase.getInstance().getReference("Chef");
         geoFire = new GeoFire(ref);
-/*
 
-            geoFire.setLocation("firebase-hq4", new GeoLocation(x, y), new GeoFire.CompletionListener(){
-            @Override
-            public void onComplete(String key, DatabaseError error) {
-                if (error != null) {
-                    System.err.println("There was an error saving the location to GeoFire: " + error);
-                } else {
-                    System.out.println("Location saved on server successfully!");
-                }
-            }
-
-
-        });
-*/
-        final GeoQuery geoQuery = geoFire.queryAtLocation(new GeoLocation(x,  y), 100);
+        final GeoQuery geoQuery = geoFire.queryAtLocation(new GeoLocation(x,  y), 7);
         geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
             @Override
             public void onKeyEntered(String key, GeoLocation location) {
@@ -218,7 +246,10 @@ Log.d("TAG","X  "+x + "Y  "+y);
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 Chef user = dataSnapshot.getValue(Chef.class);
-                                //Log.d("Results!",user.getName());
+                                //if(what ever condition is here){
+                                SetMarker(user);
+                                //}
+
                             }
 
                             @Override
@@ -265,18 +296,17 @@ Log.d("TAG","X  "+x + "Y  "+y);
 
 
 
-
+/*
 
         FirebaseDatabase.getInstance().getReference().child("Chef")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            Chef user = snapshot.getValue(Chef.class);
-                            LatLng newLocation = new LatLng(user.getLocationX(),user.getLocationY());
-                            mMap.addMarker(new MarkerOptions()
-                                    .position(newLocation)
-                                    .title(user.getName()));
+                              Chef user = snapshot.getValue(Chef.class);
+                                SetMarker(user);
+
+
                             //Log.d("TAG","X  "+user.getLocationX() + "Y  "+user.getLocationY());
                             //Log.d("TAG","X   "+user.getEmail() + "Y   "+ user.getPhone_Number());
                         }
@@ -286,12 +316,47 @@ Log.d("TAG","X  "+x + "Y  "+y);
                     }
                 });
 
-
+*/
 
 
     }
 
+    private void SetMarker(Chef user){
 
+        LatLng newLocation = new LatLng(user.getLocationX(),user.getLocationY());
+        Marker M = mMap.addMarker(new MarkerOptions()
+                .position(newLocation)
+        );
+        M.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_launcher_map));
+        M.setTag(user);
+
+        mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+            @Override
+            public View getInfoWindow(Marker marker) {
+               return null;
+            }
+
+            @Override
+            public View getInfoContents(Marker marker) {
+
+                View v = getLayoutInflater().inflate(R.layout.info_window,null);
+
+                TextView Name = (TextView) v.findViewById((R.id.tv_locality ));
+                TextView phone = (TextView) v.findViewById((R.id.tv_locality2 ));
+                ImageView img = (ImageView) v.findViewById(R.id.imageView1) ;
+                Chef Tmp = (Chef)marker.getTag();
+                Name.setText(Tmp.getName());
+                phone.setText(Tmp.getPhone_Number());
+                Picasso.with(MapsActivity.this).load("https://png.icons8.com/ios/50/000000/baguette.png").into(img);
+                return v;
+
+            }
+        });
+
+
+
+
+    }
 
     // Operations
     private void goToLocation(double lat, double lng) {
@@ -344,7 +409,7 @@ Log.d("TAG","X  "+x + "Y  "+y);
                     @Override
                     public void onLocationResult(LocationResult locationResult) {
 
-                        goToLocationZoom(locationResult.getLastLocation().getLatitude(),locationResult.getLastLocation().getLongitude(), 10);
+                        goToLocationZoom(locationResult.getLastLocation().getLatitude(),locationResult.getLastLocation().getLongitude(), 15);
 
                         onLocationChanged(locationResult.getLastLocation());
                     }

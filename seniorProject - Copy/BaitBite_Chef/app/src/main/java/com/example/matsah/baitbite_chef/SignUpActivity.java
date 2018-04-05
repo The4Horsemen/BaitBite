@@ -32,13 +32,13 @@ public class SignUpActivity extends AppCompatActivity {
     protected PermissionManager permissionnManager;
     //Button SignUpActivity in SignUpActivity page
     Button buttonSignUp;
-    Button buttonLocation;
     Chef chef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+
 
 
         editPhone = (MaterialEditText) findViewById(R.id.editPhone);
@@ -49,79 +49,55 @@ public class SignUpActivity extends AppCompatActivity {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         final DatabaseReference table_chef = firebaseDatabase.getReference("Chef");
 
+        // Checking the service of GPS
 
+
+
+        // End of checking
 
         buttonSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                permissionnManager = new PermissionManager() {
+                     };
+                gpsTracker = new GPSTracker(SignUpActivity.this);
+                if (permissionnManager.checkAndRequestPermissions(SignUpActivity.this) && gpsTracker.canGetLocation()) {
 
+                    final ProgressDialog mDialog = new ProgressDialog(SignUpActivity.this);
+                    mDialog.setMessage("Please wait...");
+                    mDialog.show();
+                    table_chef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
 
-                final ProgressDialog mDialog = new ProgressDialog(SignUpActivity.this);
-                mDialog.setMessage("Please wait...");
-                mDialog.show();
-                table_chef.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
+                            //check if the phone number already exist
+                            if (dataSnapshot.child(editPhone.getText().toString()).exists()) {
+                                mDialog.dismiss();
+                                Toast.makeText(SignUpActivity.this, "The phone number is already registered by a chef", Toast.LENGTH_LONG).show();
+                            } else {
+                                mDialog.dismiss();
+                                chef = new Chef("rook", gpsTracker.getLatitude(), gpsTracker.getLongitude(), editName.getText().toString(), editPhone.getText().toString());
+                                table_chef.child(editPhone.getText().toString()).setValue(chef);
+                                Toast.makeText(SignUpActivity.this, "Sign up successfully !", Toast.LENGTH_LONG).show();
 
-                        //check if the phone number already exist
-                        if (dataSnapshot.child(editPhone.getText().toString()).exists()) {
-                            mDialog.dismiss();
-                            Toast.makeText(SignUpActivity.this, "The phone number is already registered by a chef", Toast.LENGTH_LONG).show();
-                        } else {
-                            mDialog.dismiss();
-                            chef = new Chef("rook", 90, 90, editName.getText().toString(), editPhone.getText().toString());
-                            Log.d("teast" ,"Location :" );
-                           GetLocation();
-                            table_chef.child(editPhone.getText().toString()).setValue(chef);
-                            Toast.makeText(SignUpActivity.this, "Sign up successfully !", Toast.LENGTH_LONG).show();
-                            /* this will add store location for each chef created
                             CreateStoreLocation(chef);
-                             */
-                            finish();
+
+                                finish();
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
 
-                    }
-                });
+                        }
+                    });
 
+                }
             }
         });
 
 
     }
-
-
-    public void GetLocation(){
-        gpsTracker = new GPSTracker(SignUpActivity.this);
-        permissionnManager = new PermissionManager() {
-        };
-        permissionnManager.checkAndRequestPermissions(SignUpActivity.this);
-
-
-
-
-        if (gpsTracker.canGetLocation()) {
-            chef.setLocationX(gpsTracker.getLatitude()) ;
-            chef.setLocationY(gpsTracker.getLongitude());
-
-            Log.d("teast" ,"Location : \nX " + gpsTracker.getLatitude() + "\nY " + gpsTracker.getLongitude());
-        } else {
-
-            gpsTracker.showSettingsAlert();
-        }
-        Log.d("teast" ,"Location : \nX " + gpsTracker.getLatitude() + "\nY " + gpsTracker.getLongitude());
-
-    }
-
-
-
-
-
-
-
 
 
 

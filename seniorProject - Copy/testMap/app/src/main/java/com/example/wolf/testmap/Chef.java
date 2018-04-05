@@ -7,34 +7,21 @@ package com.example.wolf.testmap;
 public class Chef {
 
     //private String Account_ID;
-    private String Email;
-    private Double LocationX;
-    private Double LocationY;
+    private String Email ="";
+    private double LocationX;
+    private double LocationY;
     private int Mobile_Verification_Code;
     private String Name;
     private String Phone_Number;
-    private String status;
+    private String status ="";
     // delete this part after testing
-    private String Password;
-    /*
-    public Chef(String Name, String Password) {
-        this.Name = Name;
-        this.Password = Password;
 
-    }
-    */
-    public void setPassword(String password) {
-        Password = password;
-    }
-    public String getPassword() {
-        return Password;
-    }
 
     //..........................................
     public Chef() {
     }
 
-    public Chef(String email, Double locationX,Double locationY, String name, String phone_number){
+    public Chef(String email, double locationX,double locationY, String name, String phone_number){
         this.Email = email;
         this.LocationX = locationX;
         this.LocationY = locationY;
@@ -43,20 +30,12 @@ public class Chef {
 
     }
 
-
-
     public void Get_GPS_Location() {
 
 
 
 
     }
-
-
-
-
-
-
 
     public String getEmail() {
         return Email;
@@ -66,18 +45,18 @@ public class Chef {
         Email = email;
     }
 
-    public Double getLocationX() {
+    public double getLocationX() {
         return LocationX;
     }
 
-    public void setLocationX(Double locationX) {
+    public void setLocationX(double locationX) {
         LocationX = locationX;
     }
-    public Double getLocationY() {
+    public double getLocationY() {
         return LocationY;
     }
 
-    public void setLocationY(Double locationY) {
+    public void setLocationY(double locationY) {
         LocationY = locationY;
     }
 
@@ -104,6 +83,7 @@ public class Chef {
     public void setPhone_Number(String phone_Number) {
         Phone_Number = phone_Number;
     }
+
 
 
 
