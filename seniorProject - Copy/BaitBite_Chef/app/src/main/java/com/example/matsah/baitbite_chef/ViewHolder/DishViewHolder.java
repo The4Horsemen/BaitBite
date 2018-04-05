@@ -16,7 +16,7 @@ import com.example.matsah.baitbite_chef.R;
 
 public class DishViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnCreateContextMenuListener{
 
-    public TextView DishName;
+    public TextView DishName, DishPrice, DishQuantity;
     public ImageView DishImage;
 
     private ItemClickListener itemClicListener;
@@ -25,7 +25,9 @@ public class DishViewHolder extends RecyclerView.ViewHolder implements View.OnCl
         super(itemView);
 
         DishName = (TextView) itemView.findViewById(R.id.dish_name);
+        DishPrice = (TextView) itemView.findViewById(R.id.dish_price);
         DishImage = (ImageView) itemView.findViewById(R.id.dish_image);
+        DishQuantity = (TextView) itemView.findViewById(R.id.dish_quantity);
 
 
         itemView.setOnCreateContextMenuListener(this);

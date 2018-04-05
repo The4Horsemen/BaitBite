@@ -24,6 +24,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 import com.example.matsah.baitbite_chef.Common.Common;
 import com.example.matsah.baitbite_chef.Interface.ItemClickListener;
 import com.example.matsah.baitbite_chef.Model.Category;
@@ -64,6 +65,7 @@ public class Home extends AppCompatActivity
 
     // Add New Mwenu Layout
     MaterialEditText editName, editDescription, editPrice, editDiscount;
+    ElegantNumberButton editQuantity;
     FButton buttonUpload, buttonSelect;
 
     Dish newDish;
@@ -134,6 +136,8 @@ public class Home extends AppCompatActivity
         editPrice = add_menu_layout.findViewById(R.id.editPrice);
         editDiscount = add_menu_layout.findViewById(R.id.editDiscount);
 
+
+
         buttonSelect = add_menu_layout.findViewById(R.id.buttonSelect);
         buttonUpload = add_menu_layout.findViewById(R.id.buttonUpload);
         newDish = new Dish();
@@ -143,6 +147,7 @@ public class Home extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 ChooseImage();
+
             }
         });
 
@@ -166,7 +171,7 @@ public class Home extends AppCompatActivity
                 newDish.setDiscount(editDiscount.getText().toString());
                 newDish.setCategoryId("");
                 newDish.setChefID(Common.currentChef.getPhone_Number());
-                newDish.setQuantity(0);
+                newDish.setQuantity("0");
 
 
                 if(newDish != null){
@@ -220,7 +225,7 @@ public class Home extends AppCompatActivity
                 @Override
                 public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
                     double progress =  (100.0 * (taskSnapshot.getBytesTransferred()/taskSnapshot.getTotalByteCount()));
-                    mDialog.setMessage("Upload "+progress+"%");
+                    mDialog.setMessage("Uploading "+progress+"%");
                 }
             });
 
@@ -247,6 +252,7 @@ public class Home extends AppCompatActivity
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent,"Select Picture"), Common.PICK_IMAGE_REQUEST);
+
     }
 
 
@@ -258,12 +264,19 @@ public class Home extends AppCompatActivity
             @Override
             protected void populateViewHolder(DishViewHolder viewHolder, Dish model, int position) {
                 viewHolder.DishName.setText(model.getName());
+                viewHolder.DishPrice.setText(model.getPrice()+" SAR");
+                viewHolder.DishQuantity.setText("QTY: "+model.getQuantity());
                 Picasso.with(getBaseContext()).load(model.getImage()).into(viewHolder.DishImage);
 
                 viewHolder.setItemClicListener(new ItemClickListener() {
                     @Override
                     public void onClick(View view, int position, boolean isLongClick) {
-                        //later
+                        // Start Dish Detail Activity
+                        Intent dishDetail = new Intent(Home.this, DishDetailActivity.class);
+
+                        //Send DishID to Dish Detail Activity
+                        dishDetail.putExtra("DishID", adapter.getRef(position).getKey());
+                        startActivity(dishDetail);
                     }
                 });
             }
@@ -353,21 +366,25 @@ public class Home extends AppCompatActivity
         alertedDialog.setMessage("Please fill full information");
 
         LayoutInflater inflater = this.getLayoutInflater();
-        View add_menu_layout = inflater.inflate(R.layout.add_new_dish_layout,null);
+        View edit_menu_layout = inflater.inflate(R.layout.edit_dish_layout,null);
 
-        editName = add_menu_layout.findViewById(R.id.editName);
-        editDescription = add_menu_layout.findViewById(R.id.editDescription);
-        editPrice = add_menu_layout.findViewById(R.id.editPrice);
-        editDiscount = add_menu_layout.findViewById(R.id.editDiscount);
+        editName = edit_menu_layout.findViewById(R.id.editName);
+        editDescription = edit_menu_layout.findViewById(R.id.editDescription);
+        editPrice = edit_menu_layout.findViewById(R.id.editPrice);
+        editDiscount = edit_menu_layout.findViewById(R.id.editDiscount);
+        editQuantity = edit_menu_layout.findViewById(R.id.elegantNumberButton_quantity);
+
 
         //set default value for view
         editName.setText(item.getName());
         editDiscount.setText(item.getDiscount());
         editPrice.setText(item.getPrice());
         editDescription.setText(item.getDescription());
+        editQuantity.setNumber(item.getQuantity());
 
-        buttonSelect = add_menu_layout.findViewById(R.id.buttonSelect);
-        buttonUpload = add_menu_layout.findViewById(R.id.buttonUpload);
+
+        buttonSelect = edit_menu_layout.findViewById(R.id.buttonSelect);
+        buttonUpload = edit_menu_layout.findViewById(R.id.buttonUpload);
 
         //Event for button
         buttonSelect.setOnClickListener(new View.OnClickListener() {
@@ -384,7 +401,7 @@ public class Home extends AppCompatActivity
             }
         });
 
-        alertedDialog.setView(add_menu_layout);
+        alertedDialog.setView(edit_menu_layout);
         alertedDialog.setIcon(R.drawable.ic_shopping_cart_black_24dp);
 
         alertedDialog.setPositiveButton("EDIT", new DialogInterface.OnClickListener() {
@@ -399,6 +416,7 @@ public class Home extends AppCompatActivity
                 item.setPrice(editPrice.getText().toString());
                 item.setDiscount(editDiscount.getText().toString());
                 item.setDescription(editDescription.getText().toString());
+                item.setQuantity(editQuantity.getNumber());
 
 
                 dishList.child(key).setValue(item);

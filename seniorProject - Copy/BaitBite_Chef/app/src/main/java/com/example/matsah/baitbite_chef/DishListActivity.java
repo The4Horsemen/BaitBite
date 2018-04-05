@@ -216,7 +216,7 @@ public class DishListActivity extends AppCompatActivity {
                             newDish.setCategoryId(categoryId);
                             newDish.setImage(uri.toString());
                             newDish.setChefID(Common.currentChef.getPhone_Number());
-                            newDish.setQuantity(0);
+                            newDish.setQuantity("0");
 
                         }
                     });

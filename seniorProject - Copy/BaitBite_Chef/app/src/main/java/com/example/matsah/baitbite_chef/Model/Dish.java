@@ -5,8 +5,8 @@ package com.example.matsah.baitbite_chef.Model;
  */
 
 public class Dish {
-    private String Name, Image, Description, Price, Discount, CategoryID, ChefID;
-    private int quantity;
+    private String Name, Image, Description, Price, Discount, CategoryID, ChefID, quantity;
+
 
 
     public Dish() {
@@ -23,11 +23,11 @@ public class Dish {
         ChefID = chefID;
     }
 
-    public int getQuantity() {
+    public String getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(String quantity) {
         this.quantity = quantity;
     }
 

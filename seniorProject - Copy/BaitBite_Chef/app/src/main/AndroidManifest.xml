@@ -16,29 +16,25 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-
         <activity android:name=".SignInActivity" />
         <activity android:name=".SignUpActivity" />
         <activity
             android:name=".Home"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme" />
-<<<<<<< HEAD
         <activity android:name=".DishListActivity" />
-        <activity android:name=".SignUP_WithVerify"></activity>
-=======
-        <activity android:name=".DishListActivity"></activity>
-
-        <activity android:name=".SplashActivity"
+        <activity android:name=".SignUP_WithVerify" />
+        <activity android:name=".DishListActivity" />
+        <activity
+            android:name=".SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
->>>>>>> cf69ee8d8b95f0e4541f858f12588816631ae03e
+        <activity android:name=".DishDetailActivity"></activity>
     </application>
 
 </manifest>
