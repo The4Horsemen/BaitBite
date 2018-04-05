@@ -27,6 +27,8 @@
 
         <activity android:name=".DishListActivity"></activity>
 
+        <activity android:name=".ChefProfileActivity"></activity>
+
         <activity android:name=".SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
