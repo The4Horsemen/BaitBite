@@ -47,6 +47,8 @@ import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 
 import java.util.concurrent.TimeUnit;
+
+import io.paperdb.Paper;
 /**/
 
 public class SignInActivity extends AppCompatActivity {
@@ -82,6 +84,9 @@ public class SignInActivity extends AppCompatActivity {
     EditText editPhone,  verification_code;
     TextView textSignup ;
 
+    //Remember me
+    com.rey.material.widget.CheckBox checkBoxRememberMe;
+
     //Button SignInActivity in SignInActivity page
     Button buttonSignIn, buttonVerify;
 
@@ -99,6 +104,12 @@ public class SignInActivity extends AppCompatActivity {
         buttonVerify = (Button) findViewById(R.id.verify);
 
         textSignup =  (TextView) findViewById(R.id.textSignup);
+
+        //Remeber me
+        checkBoxRememberMe = (com.rey.material.widget.CheckBox) findViewById(R.id.checkBox_rememberMe);
+
+        //Init Paper
+        Paper.init(this);
 
         //Init Firebase
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
@@ -201,6 +212,11 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                if(checkBoxRememberMe.isChecked()) {
+                    //Save Chef
+                    Paper.book().write(Common.CHEF_KEY, editPhone.getText().toString());
+                }
+
                 if(editPhone.getText().toString().matches("")){
                     Toast.makeText(SignInActivity.this, "please enter the phone number",Toast.LENGTH_LONG).show();
                     return;
@@ -247,7 +263,68 @@ public class SignInActivity extends AppCompatActivity {
             }
         });
 
+        //Check remember me
+        String customer = Paper.book().read(Common.CHEF_KEY);
+        if(customer != null){
+            if(!customer.isEmpty()){
+                signIn(customer);
+            }
+        }
 
+    }
+
+    private void signIn(final String phone) {
+        //Init Firebase
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        final DatabaseReference table_customer = firebaseDatabase.getReference("Customer");
+
+        if (Common.isConnectedToInternet(getBaseContext())) {
+
+            if (phone.matches("")) {
+                Toast.makeText(SignInActivity.this, "please enter the phone number", Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            final ProgressDialog mDialog = new ProgressDialog(SignInActivity.this);
+            mDialog.setMessage("Please wait...");
+            mDialog.show();
+
+            table_customer.addValueEventListener(new ValueEventListener() {
+
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                    //Check Customer existence in Database
+                    if (dataSnapshot.child(phone).exists()) {
+
+                        //Get Customer info
+                        mDialog.dismiss();
+                        chef = dataSnapshot.child(phone).getValue(Chef.class);
+                        //Set Phone number of the customer
+                        chef.setPhone_Number(phone);
+
+                        Intent homeIntent = new Intent(SignInActivity.this, Home.class);
+                        Common.currentChef = chef;
+                        startActivity(homeIntent);
+                        finish();
+
+
+                    } else {
+                        mDialog.dismiss();
+                        Toast.makeText(SignInActivity.this, "Customer not exist, Sign Up please!", Toast.LENGTH_LONG).show();
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }else{
+            Toast.makeText(SignInActivity.this, "Please check your intenet connection !!!", Toast.LENGTH_LONG).show();
+            return;
+        }
     }
 
     private void startPhoneNumberVerification(String phoneNumber) {

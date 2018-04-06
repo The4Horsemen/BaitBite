@@ -194,7 +194,7 @@ public class SignInActivity extends AppCompatActivity {
                 if (Common.isConnectedToInternet(getBaseContext())) {
 
                     if(checkBoxRememberMe.isChecked()) {
-                        //Save Customer & Password
+                        //Save Customer
                         Paper.book().write(Common.CUSTOMER_KEY, editPhone.getText().toString());
                     }
                     if (editPhone.getText().toString().matches("")) {

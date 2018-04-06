@@ -40,8 +40,6 @@ public class Chef {
         this.Profile_Image = "";
         this.Status = false;
 
-
-
     }
 
     public Chef(String email, double locationX,double locationY, String name, String phone_number){
@@ -57,7 +55,6 @@ public class Chef {
 
 
     }
-
 
     public String getStore_Summary() {
         return Store_Summary;
