@@ -289,7 +289,7 @@ public class SignInActivity extends AppCompatActivity {
                         //Set Phone number of the customer
                         customer.setPhone(phone);
 
-                        Intent homeIntent = new Intent(SignInActivity.this, HomeActivity.class);
+                        Intent homeIntent = new Intent(SignInActivity.this, MapsActivity.class);
                         Common.currentCustomer = customer;
                         startActivity(homeIntent);
                         finish();

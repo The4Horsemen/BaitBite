@@ -1,6 +1,7 @@
 package com.example.android.baitbite;
 
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,7 +26,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DishListActivity extends AppCompatActivity {
+public class ChefDishListActivity extends AppCompatActivity {
 
     FirebaseDatabase firebaseDatabase;
     DatabaseReference dishList;
@@ -33,7 +34,7 @@ public class DishListActivity extends AppCompatActivity {
     RecyclerView recyclerView_dish;
     RecyclerView.LayoutManager layoutManager;
 
-    String categoryId ="";
+    String chefID ="";
 
     FirebaseRecyclerAdapter<Dish, DishViewHolder> dishAdapter;
 
@@ -45,34 +46,43 @@ public class DishListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dish_list);
+        setContentView(R.layout.activity_chef_dish_list);
 
         //Init Firebase
         firebaseDatabase = FirebaseDatabase.getInstance();
         dishList = firebaseDatabase.getReference("Dishes");
 
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_chefDishList);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent cartIntent = new Intent(ChefDishListActivity.this, CartActivity.class);
+                startActivity(cartIntent);
+            }
+        });
+
         //Load the data from Firebase DB to the RecyclerView
-        recyclerView_dish = (RecyclerView) findViewById(R.id.recyclerView_dish);
+        recyclerView_dish = (RecyclerView) findViewById(R.id.recyclerView_chefDishList);
         recyclerView_dish.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerView_dish.setLayoutManager(layoutManager);
 
         //Get Intent
         if(getIntent() != null){
-            categoryId = getIntent().getStringExtra("categoryId");
+            chefID = getIntent().getStringExtra("chefID");
         }
 
-        if(!categoryId.isEmpty() && categoryId != null){
+        if(!chefID.isEmpty() && chefID != null){
             if(Common.isConnectedToInternet(getBaseContext())) {
-                loadListDish(categoryId);
+                loadListDish(chefID);
             }else {
-                Toast.makeText(DishListActivity.this, "Please check your intenet connection !!!", Toast.LENGTH_LONG).show();
+                Toast.makeText(ChefDishListActivity.this, "Please check your intenet connection !!!", Toast.LENGTH_LONG).show();
                 return;
             }
         }
 
         //Search
-        materialSearchBar = (MaterialSearchBar) findViewById(R.id.searchBar_dishList);
+        materialSearchBar = (MaterialSearchBar) findViewById(R.id.searchBar_chefDishList);
         materialSearchBar.setHint("Enter your Dish");
         loadSuggest();
         materialSearchBar.setLastSuggestions(suggestList);
@@ -141,7 +151,7 @@ public class DishListActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view, int position, boolean isLongClick) {
                         // Start Dish Detail Activity
-                        Intent dishDetail = new Intent(DishListActivity.this, DishDetailActivity.class);
+                        Intent dishDetail = new Intent(ChefDishListActivity.this, DishDetailActivity.class);
 
                         //Send DishID to Dish Detail Activity
                         dishDetail.putExtra("dishId", searchAdapter.getRef(position).getKey());
@@ -155,7 +165,7 @@ public class DishListActivity extends AppCompatActivity {
     }
 
     private void loadSuggest() {
-        dishList.orderByChild("categoryId").equalTo(categoryId).addValueEventListener(new ValueEventListener() {
+        dishList.orderByChild("chefID").equalTo(chefID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot postDataSnapshot:dataSnapshot.getChildren()){
@@ -172,8 +182,8 @@ public class DishListActivity extends AppCompatActivity {
         });
     }
 
-    private void loadListDish(String categoryId) {
-        dishAdapter = new FirebaseRecyclerAdapter<Dish, DishViewHolder>(Dish.class, R.layout.dish_item, DishViewHolder.class, dishList.orderByChild("categoryId").equalTo(categoryId)) {
+    private void loadListDish(String chefID) {
+        dishAdapter = new FirebaseRecyclerAdapter<Dish, DishViewHolder>(Dish.class, R.layout.dish_item, DishViewHolder.class, dishList.orderByChild("chefID").equalTo(chefID)) {
             @Override
             protected void populateViewHolder(DishViewHolder viewHolder, Dish model, int position) {
                 viewHolder.textViewDishName.setText(model.getName());
@@ -184,7 +194,7 @@ public class DishListActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view, int position, boolean isLongClick) {
                         // Start Dish Detail Activity
-                        Intent dishDetail = new Intent(DishListActivity.this, DishDetailActivity.class);
+                        Intent dishDetail = new Intent(ChefDishListActivity.this, DishDetailActivity.class);
 
                         //Send DishID to Dish Detail Activity
                         dishDetail.putExtra("dishId", dishAdapter.getRef(position).getKey());

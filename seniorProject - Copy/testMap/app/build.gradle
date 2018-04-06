@@ -20,7 +20,7 @@ android {
 
 dependencies {
     //Permissions
-    compile 'com.github.karanchuri:PermissionManager:0.1.0'
+    implementation 'com.github.karanchuri:PermissionManager:0.1.0'
     //....
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:26.1.0'
