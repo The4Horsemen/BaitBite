@@ -203,23 +203,39 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
         mMap.setMyLocationEnabled(true); // this for showing the locate me icon on the map ( top right corner)
         Start();
-
+        /*  if we need to do something when the marker is clicked
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
 
             @Override
             public boolean onMarkerClick(Marker marker) {
                 Chef tmp = (Chef) marker.getTag();
-                /*
 
-               Pass the chef object or the phone number or etc
-                 */
 
+               //Pass the chef object or the phone number or etc
+
+                Log.d("clicked","am clicked");
+                Toast.makeText(MapsActivity.this, "clicked", Toast.LENGTH_SHORT).show();
+            //TODO: chefdishlistActivity
 
 
                 return false;
             }
         });
+        */
+        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener(){
 
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                Chef tmp = (Chef) marker.getTag();
+                /*
+
+               Pass the chef object or the phone number or etc
+                 */
+                Log.d("clicked","am clicked");
+                Toast.makeText(MapsActivity.this, "clicked", Toast.LENGTH_SHORT).show();
+                //TODO: chefdishlistActivity
+            }
+        });
 
         // Add a marker in Sydney and move the camera
         // LatLng sydney = new LatLng(26.31330705, 50.14426388);
@@ -347,7 +363,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 Chef Tmp = (Chef)marker.getTag();
                 Name.setText(Tmp.getName());
                 phone.setText(Tmp.getPhone_Number());
-                Picasso.with(MapsActivity.this).load("https://png.icons8.com/ios/50/000000/baguette.png").into(img);
+                if(!Tmp.getProfile_Image().isEmpty()) {
+                    Picasso.with(MapsActivity.this).load(Tmp.getProfile_Image()).into(img);
+                }
+                else{
+                    Picasso.with(MapsActivity.this).load("https://png.icons8.com/ios/50/000000/baguette.png").into(img);
+
+                }
+
                 return v;
 
             }
