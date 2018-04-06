@@ -5,11 +5,19 @@ package com.example.matsah.baitbite_chef.Model;
  */
 
 public class Dish {
-    private String Name, Image, Description, Price, Discount, CategoryID, ChefID, quantity;
+    private String Name, Image, Description, Price, Discount, CategoryID, ChefID, Quantity;
 
 
 
     public Dish() {
+        /*this.Name = "";
+        this.Image = "";
+        this.Description ="";
+        this.Price = "";
+        this.Discount = "";
+        this.CategoryID="";
+        this.ChefID = "";
+        this.Quantity = "";*/
     }
 
 
@@ -21,14 +29,15 @@ public class Dish {
         Discount = discount;
         CategoryID = categoryID;
         ChefID = chefID;
+        this.Quantity = "";
     }
 
     public String getQuantity() {
-        return quantity;
+        return Quantity;
     }
 
     public void setQuantity(String quantity) {
-        this.quantity = quantity;
+        this.Quantity = quantity;
     }
 
     public void setChefID(String chefID) {
