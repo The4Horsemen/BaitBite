@@ -213,7 +213,7 @@ public class DishDetailActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
 
-                
+
 
                 item.setName(editName.getText().toString());
                 item.setPrice(editPrice.getText().toString());

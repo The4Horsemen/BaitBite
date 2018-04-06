@@ -22,6 +22,7 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.rengwuxian.materialedittext.MaterialEditText;
+import com.squareup.picasso.Picasso;
 
 import java.util.UUID;
 
@@ -75,12 +76,15 @@ public class ChefProfileActivity extends AppCompatActivity {
         editName.setText(Common.currentChef.getName());
         editEmail.setText(Common.currentChef.getEmail());
         editStoreSummary.setText(Common.currentChef.getStore_Summary());
+        if(!Common.currentChef.getProfile_Image().isEmpty()){
+            Picasso.with(getBaseContext()).load(Common.currentChef.getProfile_Image()).into(profile_picture);
+        }
 
         choosePic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ChooseImage();
-                changeImage();
+
             }
         });
 
@@ -95,7 +99,14 @@ public class ChefProfileActivity extends AppCompatActivity {
         updateProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Common.currentChef.setName(editName.getText().toString());
+                Common.currentChef.setEmail(editEmail.getText().toString());
+                Common.currentChef.setStore_Summary(editStoreSummary.getText().toString());
 
+                chefs.child(Common.currentChef.getPhone_Number()).setValue(Common.currentChef);
+                Toast.makeText(ChefProfileActivity.this, "The profile is Updated", Toast.LENGTH_SHORT).show();
+                Intent homeIntent = new Intent(ChefProfileActivity.this, Home.class);
+                startActivity(homeIntent);
             }
         });
 
@@ -105,10 +116,8 @@ public class ChefProfileActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == Common.PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null){
-
             saveUri = data.getData();
-            //buttonSelect.setText("Image Selected !");
-            Toast.makeText(ChefProfileActivity.this,"Image Selected !" , Toast.LENGTH_SHORT).show();
+            changeImage();
         }
     }
 
@@ -137,6 +146,8 @@ public class ChefProfileActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(Uri uri) {
                             Common.currentChef.setProfile_Image((uri.toString()));
+                            //profile_picture.setImageResource();
+                            Picasso.with(getBaseContext()).load(Common.currentChef.getProfile_Image()).into(profile_picture);
 
                         }
                     });

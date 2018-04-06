@@ -21,6 +21,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,6 +53,7 @@ public class Home extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     TextView txtFullName;
+    ImageView profile_pic;
 
     //Firebase
     FirebaseDatabase database;
@@ -116,6 +118,11 @@ public class Home extends AppCompatActivity
         View headerView = navigationView.getHeaderView(0);
         txtFullName = (TextView) headerView.findViewById(R.id.textView_chefName);
         txtFullName.setText(Common.currentChef.getName());
+        profile_pic = (ImageView) headerView.findViewById(R.id.profile_picture);
+        if(!Common.currentChef.getProfile_Image().isEmpty()){
+            Picasso.with(getBaseContext()).load(Common.currentChef.getProfile_Image()).into(profile_pic);
+        }
+
 
         //Init View
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView_menu);
