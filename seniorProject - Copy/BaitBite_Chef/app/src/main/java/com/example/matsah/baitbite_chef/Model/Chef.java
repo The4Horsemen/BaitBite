@@ -15,6 +15,7 @@ public class Chef {
     private String Store_Summary;
     private String Profile_Image;
     private boolean Status;
+    private int availability;
 
 
     //..........................................
@@ -120,9 +121,18 @@ public class Chef {
         Phone_Number = phone_Number;
     }
 
+    public int getAvailability() {
+        return availability;
+    }
 
+    public void setAvailability(int availability) {
+        this.availability = availability;
+    }
 
-
-
-
+    public void increaseAvailability(){
+        availability++;
+    }
+    public void decreaseAvailability(){
+        availability--;
+    }
 }

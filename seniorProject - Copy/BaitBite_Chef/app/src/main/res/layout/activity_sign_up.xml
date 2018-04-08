@@ -31,7 +31,7 @@
         android:id="@+id/editPhone"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:hint="Phone Number"
+        android:hint="Phone Number e.g(0523456789)"
         android:inputType="phone"
         android:text=""
         android:textColor="@android:color/white"

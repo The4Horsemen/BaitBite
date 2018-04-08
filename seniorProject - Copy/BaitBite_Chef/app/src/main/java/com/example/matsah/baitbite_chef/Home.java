@@ -57,7 +57,7 @@ public class Home extends AppCompatActivity
 
     //Firebase
     FirebaseDatabase database;
-    DatabaseReference dishList;
+    DatabaseReference dishList, chefs;
     FirebaseStorage storage;
     StorageReference storageRefrence;
     FirebaseRecyclerAdapter<Dish, DishViewHolder> adapter;
@@ -69,6 +69,7 @@ public class Home extends AppCompatActivity
     // Add New Mwenu Layout
     MaterialEditText editName, editDescription, editPrice, editDiscount;
     ElegantNumberButton editQuantity;
+    //FloatingActionButton choosePic;
     FButton buttonUpload, buttonSelect;
 
     Dish newDish;
@@ -77,6 +78,8 @@ public class Home extends AppCompatActivity
 
 
     DrawerLayout drawer;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +96,7 @@ public class Home extends AppCompatActivity
 
         database = FirebaseDatabase.getInstance();
         dishList = database.getReference("Dishes");
+        chefs = database.getReference("Chef");
         storage = FirebaseStorage.getInstance();
         storageRefrence = storage.getReference();
 
@@ -151,6 +155,7 @@ public class Home extends AppCompatActivity
 
         buttonSelect = add_menu_layout.findViewById(R.id.buttonSelect);
         buttonUpload = add_menu_layout.findViewById(R.id.buttonUpload);
+        //choosePic = add_menu_layout.findViewById(R.id.choosePic);
         newDish = new Dish();
 
         //Event for button
@@ -347,6 +352,8 @@ public class Home extends AppCompatActivity
             startActivity(ChefProfile);
 
         } else if (id == R.id.nav_orders) {
+            Intent orders = new Intent(Home.this, OrderStatusActivity.class);
+            startActivity(orders);
 
         } else if (id == R.id.nav_sign_out) {
             //Delete Remembered Chef
@@ -370,15 +377,20 @@ public class Home extends AppCompatActivity
         if(item.getTitle().equals(Common.UPDATE)){
             showUpdateDishDialog(adapter.getRef(item.getOrder()).getKey(), adapter.getItem(item.getOrder()));
         }else if(item.getTitle().equals(Common.DELETE)){
-            deleteDish(adapter.getRef(item.getOrder()).getKey());
+            deleteDish(adapter.getRef(item.getOrder()).getKey(), adapter.getItem(item.getOrder()));
         }
         return super.onContextItemSelected(item);
 
     }
 
 
-    private void deleteDish(String key) {
+    private void deleteDish(String key, Dish item) {
+        int itemOldQuantity = Common.currentChef.getAvailability();
         dishList.child(key).removeValue();
+        //remove the dish quantity from the chef availability
+        Common.currentChef.setAvailability(itemOldQuantity - Integer.parseInt(item.getQuantity()));
+        chefs.child(Common.currentChef.getPhone_Number()).setValue(Common.currentChef);
+
     }
 
     private void showUpdateDishDialog(final String key, final Dish item) {
@@ -402,6 +414,8 @@ public class Home extends AppCompatActivity
         editPrice.setText(item.getPrice());
         editDescription.setText(item.getDescription());
         editQuantity.setNumber(item.getQuantity());
+
+        final int dishOldQuantity = Integer.parseInt(item.getQuantity());
 
 
         buttonSelect = edit_menu_layout.findViewById(R.id.buttonSelect);
@@ -439,6 +453,8 @@ public class Home extends AppCompatActivity
                 item.setDescription(editDescription.getText().toString());
                 item.setQuantity(editQuantity.getNumber());
 
+                updateChefAvailability(dishOldQuantity, Integer.parseInt(editQuantity.getNumber()));
+
 
                 dishList.child(key).setValue(item);
                 Snackbar.make(drawer, "Dish "+item.getName()+" was edited", Snackbar.LENGTH_SHORT).show();
@@ -468,7 +484,7 @@ public class Home extends AppCompatActivity
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     mDialog.dismiss();
-                    Toast.makeText(Home.this, "Uploaed !!!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Home.this, "Uploaded !!!", Toast.LENGTH_SHORT).show();
                     imageFolder.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
@@ -493,5 +509,15 @@ public class Home extends AppCompatActivity
             });
 
         }
+    }
+
+    private void updateChefAvailability(int OldQuan, int newQuan) {
+        int oldAvailability = Common.currentChef.getAvailability();
+        if(newQuan > OldQuan){
+            Common.currentChef.setAvailability(oldAvailability + (newQuan-OldQuan));
+        }else if(newQuan < OldQuan){
+            Common.currentChef.setAvailability(oldAvailability - (OldQuan-newQuan));
+        }
+        chefs.child(Common.currentChef.getPhone_Number()).setValue(Common.currentChef);
     }
 }
