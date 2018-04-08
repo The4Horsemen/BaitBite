@@ -12,15 +12,20 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.matsah.baitbite_chef.Common.Common;
+import com.example.matsah.baitbite_chef.GPS.GPSTracker;
 import com.example.matsah.baitbite_chef.Model.Dish;
+import com.firebase.geofire.GeoFire;
+import com.firebase.geofire.GeoLocation;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.karan.churi.PermissionManager.PermissionManager;
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.squareup.picasso.Picasso;
 
@@ -45,6 +50,10 @@ public class ChefProfileActivity extends AppCompatActivity {
 
 
     Uri saveUri;
+    //GPS
+    private GPSTracker gpsTracker ;
+    protected PermissionManager permissionnManager;
+
 
 
     @Override
@@ -91,7 +100,30 @@ public class ChefProfileActivity extends AppCompatActivity {
         setLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Aseel
+                permissionnManager = new PermissionManager() {
+                };
+                gpsTracker = new GPSTracker(ChefProfileActivity.this);
+                if (permissionnManager.checkAndRequestPermissions(ChefProfileActivity.this) && gpsTracker.canGetLocation()) {
+
+                    GeoFire geoFire;
+                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference("StoreLocation");
+                    geoFire = new GeoFire(ref);
+
+
+                    geoFire.setLocation(Common.currentChef.getPhone_Number(), new GeoLocation(gpsTracker.getLatitude(), gpsTracker.getLongitude()), new GeoFire.CompletionListener(){
+                        @Override
+                        public void onComplete(String key, DatabaseError error) {
+                            if (error != null) {
+                                System.err.println("There was an error saving the location to GeoFire: " + error);
+                            } else {
+                                System.out.println("Location saved on server successfully!");
+                            }
+                        }
+
+
+                    });
+
+                }
             }
         });
 
