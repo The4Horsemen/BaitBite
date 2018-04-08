@@ -30,6 +30,7 @@ import com.example.matsah.baitbite_chef.Common.Common;
 import com.example.matsah.baitbite_chef.Interface.ItemClickListener;
 import com.example.matsah.baitbite_chef.Model.Category;
 import com.example.matsah.baitbite_chef.Model.Dish;
+import com.example.matsah.baitbite_chef.Service.ListenOrder;
 import com.example.matsah.baitbite_chef.ViewHolder.DishViewHolder;
 import com.example.matsah.baitbite_chef.ViewHolder.MenuViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -135,6 +136,9 @@ public class Home extends AppCompatActivity
         recyclerView.setLayoutManager(layoutManager);
 
         loadListDish();
+
+        Intent service = new Intent(Home.this, ListenOrder.class);
+        startService(service);
         
     }
 

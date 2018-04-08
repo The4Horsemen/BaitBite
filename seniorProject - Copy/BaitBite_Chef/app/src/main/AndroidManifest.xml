@@ -37,7 +37,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".DishDetailActivity" />
-        <activity android:name=".OrderStatusActivity"></activity>
+        <activity android:name=".OrderStatusActivity" />
+
+        <service
+            android:name=".Service.ListenOrder"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>

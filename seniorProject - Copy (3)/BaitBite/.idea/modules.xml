@@ -3,9 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/BaitBite.iml" filepath="$PROJECT_DIR$/BaitBite.iml" />
-      <module fileurl="file://C:\Users\MATSAH\Documents\GitHub\BaitBite\seniorProject - Copy (3)\BaitBite\BaitBite.iml" filepath="C:\Users\MATSAH\Documents\GitHub\BaitBite\seniorProject - Copy (3)\BaitBite\BaitBite.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://C:\Users\MATSAH\Documents\GitHub\BaitBite\seniorProject - Copy (3)\BaitBite\app\app.iml" filepath="C:\Users\MATSAH\Documents\GitHub\BaitBite\seniorProject - Copy (3)\BaitBite\app\app.iml" />
     </modules>
   </component>
 </project>
