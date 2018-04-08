@@ -28,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.baitbite.Model.Chef;
+import com.example.android.baitbite.Service.ListenOrder;
 import com.firebase.geofire.GeoFire;
 import com.firebase.geofire.GeoLocation;
 import com.firebase.geofire.GeoQuery;
@@ -111,6 +112,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             // initialize the map
             initMap();
         }
+
+        //Register Service
+        Intent service = new Intent(MapsActivity.this, ListenOrder.class);
+        startService(service);
 
     }
 

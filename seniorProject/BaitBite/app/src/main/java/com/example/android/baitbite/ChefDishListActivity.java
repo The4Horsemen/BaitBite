@@ -74,6 +74,7 @@ public class ChefDishListActivity extends AppCompatActivity {
 
         if(!chefID.isEmpty() && chefID != null){
             if(Common.isConnectedToInternet(getBaseContext())) {
+                Common.chefId = chefID;
                 loadListDish(chefID);
             }else {
                 Toast.makeText(ChefDishListActivity.this, "Please check your intenet connection !!!", Toast.LENGTH_LONG).show();

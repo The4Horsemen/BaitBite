@@ -12,6 +12,8 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import static com.example.android.baitbite.Common.Common.convertCodeToStatus;
+
 public class OrderStatusActivity extends AppCompatActivity {
 
     FirebaseDatabase firebaseDatabase;
@@ -36,7 +38,11 @@ public class OrderStatusActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView_orderList.setLayoutManager(layoutManager);
 
-        loadOrder(Common.currentCustomer.getPhone());
+        if(getIntent() == null) {
+            loadOrder(Common.currentCustomer.getPhone());
+        }else {
+            loadOrder(getIntent().getStringExtra("customerId"));
+        }
     }
 
     private void loadOrder(String phone) {
@@ -58,13 +64,4 @@ public class OrderStatusActivity extends AppCompatActivity {
         recyclerView_orderList.setAdapter(adapter);
     }
 
-    private String convertCodeToStatus(String status) {
-        if(status.equals("0")){
-            return "Placed";
-        }else if(status.equals("1")){
-            return "Shipping";
-        }else {
-            return "Shipped";
-        }
-    }
 }

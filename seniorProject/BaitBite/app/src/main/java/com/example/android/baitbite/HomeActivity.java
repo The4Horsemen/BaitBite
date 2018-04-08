@@ -21,6 +21,7 @@ import com.example.android.baitbite.Common.Common;
 import com.example.android.baitbite.Database.Database;
 import com.example.android.baitbite.Interface.ItemClickListener;
 import com.example.android.baitbite.Model.Category;
+import com.example.android.baitbite.Service.ListenOrder;
 import com.example.android.baitbite.ViewHolder.MenuViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
@@ -95,7 +96,9 @@ public class HomeActivity extends AppCompatActivity
             return;
         }
 
-        // TODO: Register Service
+        //Register Service
+        Intent service = new Intent(HomeActivity.this, ListenOrder.class);
+        startService(service);
 
     }
 

@@ -8,8 +8,7 @@ import com.example.android.baitbite.Model.Customer;
 
 public class Common {
     public static Customer currentCustomer;
-
-    //TODO: public static String convertCodeToStatus(String status){}
+    public static String chefId;
 
     public static final String DELETE = "Delete";
     public static final String CUSTOMER_KEY = "Customer";
@@ -28,6 +27,16 @@ public class Common {
             }
         }
         return false;
+    }
+
+    public static String convertCodeToStatus(String status) {
+        if(status.equals("0")){
+            return "Placed";
+        }else if(status.equals("1")){
+            return "Shipping";
+        }else {
+            return "Shipped";
+        }
     }
 
 

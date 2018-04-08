@@ -17,6 +17,7 @@ public class Dish {
         Price = price;
         Discount = discount;
         CategoryId = categoryId;
+
     }
 
     public String getName() {

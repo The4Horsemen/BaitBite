@@ -96,6 +96,7 @@ public class CartActivity extends AppCompatActivity {
                 //Create new Request
                 Request request = new Request(
                         Common.currentCustomer.getPhone(),
+                        Common.chefId,
                         Common.currentCustomer.getName(),
                         editTextAddress.getText().toString(),
                         textView_total.getText().toString(),
