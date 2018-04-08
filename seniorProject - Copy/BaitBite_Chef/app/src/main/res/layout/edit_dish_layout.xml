@@ -19,6 +19,51 @@
             android:scrollbars="vertical">
 
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+
+                <info.hoang8f.widget.FButton
+                    android:id="@+id/buttonSelect"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_margin="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_weight="1"
+                    android:text="SELECT"
+                    android:textColor="@android:color/white"
+                    app:cornerRadius="4dp"
+                    app:fButtonColor="@color/buttonSignUpColor"
+                    app:shadowColor="@android:color/black"
+                    app:shadowEnabled="true"
+                    app:shadowHeight="5dp" />
+
+                <info.hoang8f.widget.FButton
+                    android:id="@+id/buttonUpload"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_margin="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_weight="1"
+                    android:text="UPLOAD"
+                    android:textColor="@android:color/white"
+                    app:cornerRadius="4dp"
+                    app:fButtonColor="@color/buttonSignInColor"
+                    app:shadowColor="@android:color/black"
+                    app:shadowEnabled="true"
+                    app:shadowHeight="5dp" />
+
+            </LinearLayout>
+
+
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/editName"
                 android:layout_width="match_parent"
@@ -95,16 +140,19 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingBottom="25dp">
+
 
                 <TextView
-                    android:id="@+id/dish_amount"
+                    android:id="@+id/dish_quantity"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:lineSpacingMultiplier="1.5"
-                    android:text="Dish Amount"
+                    android:text="Dish quantity"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="25sp" />
+                    android:textSize="25sp"
+                    android:paddingTop="3dp"/>
 
                 <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
                     android:id="@+id/elegantNumberButton_quantity"
@@ -121,49 +169,7 @@
             </LinearLayout>
 
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:orientation="horizontal"
-                android:weightSum="2">
 
-
-                <info.hoang8f.widget.FButton
-                    android:id="@+id/buttonSelect"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_margin="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_weight="1"
-                    android:text="SELECT"
-                    android:textColor="@android:color/white"
-                    app:cornerRadius="4dp"
-                    app:fButtonColor="@color/buttonSignUpColor"
-                    app:shadowColor="@android:color/black"
-                    app:shadowEnabled="true"
-                    app:shadowHeight="5dp" />
-
-                <info.hoang8f.widget.FButton
-                    android:id="@+id/buttonUpload"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_margin="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
-                    android:layout_weight="1"
-                    android:text="UPLOAD"
-                    android:textColor="@android:color/white"
-                    app:cornerRadius="4dp"
-                    app:fButtonColor="@color/buttonSignInColor"
-                    app:shadowColor="@android:color/black"
-                    app:shadowEnabled="true"
-                    app:shadowHeight="5dp" />
-
-            </LinearLayout>
 
 
         </LinearLayout>

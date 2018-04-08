@@ -49,7 +49,7 @@
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:hint="Phone Number"
+        android:hint="Phone Number e.g(0523456789)"
         android:inputType="phone"
         android:text=""
         android:textAlignment="viewStart"

@@ -22,16 +22,13 @@
             android:name=".Home"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme" />
-
         <activity android:name=".DishListActivity" />
         <activity android:name=".SignUP_WithVerify" />
         <activity android:name=".DishListActivity" />
-
-        <activity android:name=".DishListActivity"></activity>
-
-        <activity android:name=".ChefProfileActivity"></activity>
-
-        <activity android:name=".SplashActivity"
+        <activity android:name=".DishListActivity" />
+        <activity android:name=".ChefProfileActivity" />
+        <activity
+            android:name=".SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -39,10 +36,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".DishDetailActivity"></activity>
-
-
+        <activity android:name=".DishDetailActivity" />
+        <activity android:name=".OrderStatusActivity"></activity>
     </application>
 
 </manifest>

@@ -84,6 +84,8 @@ public class SignInActivity extends AppCompatActivity {
     EditText editPhone,  verification_code;
     TextView textSignup ;
 
+    String phone;
+
     //Remember me
     com.rey.material.widget.CheckBox checkBoxRememberMe;
 
@@ -212,12 +214,15 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                //Toast.makeText(SignInActivity.this, editPhone.getText().toString().substring(1),Toast.LENGTH_LONG).show();
+                phone = "+966"+editPhone.getText().toString().substring(1);
+
                 if(checkBoxRememberMe.isChecked()) {
                     //Save Chef
-                    Paper.book().write(Common.CHEF_KEY, editPhone.getText().toString());
+                    Paper.book().write(Common.CHEF_KEY, phone);
                 }
 
-                if(editPhone.getText().toString().matches("")){
+                if(phone.matches("")){
                     Toast.makeText(SignInActivity.this, "please enter the phone number",Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -232,20 +237,21 @@ public class SignInActivity extends AppCompatActivity {
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
                         //Check chef existence in Database
-                        if(dataSnapshot.child(editPhone.getText().toString()).exists()){
+                        if(dataSnapshot.child(phone).exists()){
 
-                            startPhoneNumberVerification(editPhone.getText().toString());
+                            startPhoneNumberVerification(phone);
 
                             buttonSignIn.setVisibility(View.INVISIBLE);
                             buttonVerify.setVisibility(View.VISIBLE);
                             editPhone.setVisibility(View.INVISIBLE);
                             verification_code.setVisibility(View.VISIBLE);
                             textSignup.setVisibility(View.INVISIBLE);
+                            checkBoxRememberMe.setVisibility(View.INVISIBLE);
 
                             //Get chef info
                             mDialog.dismiss();
-                            chef = dataSnapshot.child(editPhone.getText().toString()).getValue(Chef.class);
-                            chef.setPhone_Number(editPhone.getText().toString());
+                            chef = dataSnapshot.child(phone).getValue(Chef.class);
+                            chef.setPhone_Number(phone);
 
 
                         }else{
@@ -276,7 +282,7 @@ public class SignInActivity extends AppCompatActivity {
     private void signIn(final String phone) {
         //Init Firebase
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        final DatabaseReference table_customer = firebaseDatabase.getReference("Customer");
+        final DatabaseReference table_customer = firebaseDatabase.getReference("Chef");
 
         if (Common.isConnectedToInternet(getBaseContext())) {
 
@@ -294,13 +300,13 @@ public class SignInActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
 
-                    //Check Customer existence in Database
+                    //Check Chef existence in Database
                     if (dataSnapshot.child(phone).exists()) {
 
-                        //Get Customer info
+                        //Get Chef info
                         mDialog.dismiss();
                         chef = dataSnapshot.child(phone).getValue(Chef.class);
-                        //Set Phone number of the customer
+                        //Set Phone number of the chef
                         chef.setPhone_Number(phone);
 
                         Intent homeIntent = new Intent(SignInActivity.this, Home.class);
@@ -311,7 +317,7 @@ public class SignInActivity extends AppCompatActivity {
 
                     } else {
                         mDialog.dismiss();
-                        Toast.makeText(SignInActivity.this, "Customer not exist, Sign Up please!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(SignInActivity.this, "Chef not exist, Sign Up please!", Toast.LENGTH_LONG).show();
                     }
 
                 }
@@ -351,7 +357,7 @@ public class SignInActivity extends AppCompatActivity {
                             Log.d(TAG, "signInWithCredential:success");
 
                             Toast.makeText(SignInActivity.this, "the code is verified successfully",Toast.LENGTH_LONG).show();
-                            //Customer customer = dataSnapshot.child(editPhone.getText().toString()).getValue(Customer.class);
+
 
                             Intent homeIntent = new Intent(SignInActivity.this, Home.class);
                             Common.currentChef = chef;

@@ -79,6 +79,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="76dp"
         android:layout_marginTop="76dp"
+        app:backgroundTint="@color/buttonSignUpColor"
         android:clickable="true"
         app:layout_constraintStart_toStartOf="@+id/profile_picture"
         app:layout_constraintTop_toTopOf="@+id/profile_picture"
