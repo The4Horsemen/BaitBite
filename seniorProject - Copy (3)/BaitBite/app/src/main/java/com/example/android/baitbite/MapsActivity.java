@@ -264,7 +264,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 Chef user = dataSnapshot.getValue(Chef.class);
-                                //if(what ever condition is here){
+                                //if(user.){ // Add usre function here IBRA !!!!!!!!!!!
                                 SetMarker(user);
                                 //}
 
