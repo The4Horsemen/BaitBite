@@ -7,18 +7,39 @@ package com.example.wolf.testmap;
 public class Chef {
 
     //private String Account_ID;
+    private String Phone_Number;
+    private String Name;
     private String Email ="";
     private double LocationX;
     private double LocationY;
-    private int Mobile_Verification_Code;
-    private String Name;
-    private String Phone_Number;
-    private String status ="";
-    // delete this part after testing
+    private String Store_Summary;
+    private String Profile_Image;
+    private boolean Status;
 
 
     //..........................................
+    /*register constructor*/
+    public Chef(String Phone_Number, String Name, double LocationX, double LocationY){
+        this.Phone_Number = Phone_Number;
+        this.Name = Name;
+        this.LocationX = LocationX;
+        this.LocationY = LocationY;
+        this.Store_Summary = "";
+        this.Profile_Image = "";
+        this.Status = false;
+
+    }
+
     public Chef() {
+        this.Phone_Number ="";
+        this.Name = "";
+        this.Email = "";
+        this.LocationX = 0;
+        this.LocationY = 0;
+        this.Store_Summary = "";
+        this.Profile_Image = "";
+        this.Status = false;
+
     }
 
     public Chef(String email, double locationX,double locationY, String name, String phone_number){
@@ -33,8 +54,30 @@ public class Chef {
     public void Get_GPS_Location() {
 
 
+    }
 
+    public String getStore_Summary() {
+        return Store_Summary;
+    }
 
+    public void setStore_Summary(String store_Summary) {
+        Store_Summary = store_Summary;
+    }
+
+    public String getProfile_Image() {
+        return Profile_Image;
+    }
+
+    public void setProfile_Image(String profile_Image) {
+        this.Profile_Image = profile_Image;
+    }
+
+    public boolean isStatus() {
+        return Status;
+    }
+
+    public void setStatus(boolean status) {
+        this.Status = status;
     }
 
     public String getEmail() {
@@ -60,13 +103,6 @@ public class Chef {
         LocationY = locationY;
     }
 
-    public int getMobile_Verification_Code() {
-        return Mobile_Verification_Code;
-    }
-
-    public void setMobile_Verification_Code(int mobile_Verification_Code) {
-        Mobile_Verification_Code = mobile_Verification_Code;
-    }
 
     public String getName() {
         return Name;
@@ -83,6 +119,8 @@ public class Chef {
     public void setPhone_Number(String phone_Number) {
         Phone_Number = phone_Number;
     }
+
+
 
 
 
