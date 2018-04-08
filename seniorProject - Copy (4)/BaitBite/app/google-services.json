@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "377565326001",
+    "firebase_url": "https://androidbaitbite.firebaseio.com",
+    "project_id": "androidbaitbite",
+    "storage_bucket": "androidbaitbite.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:377565326001:android:a2ef6901fb75e431",
+        "android_client_info": {
+          "package_name": "com.example.android.baitbite"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "377565326001-v2qgn3m5ploa874iptdfdp4digjsqumm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.android.baitbite",
+            "certificate_hash": "925a324ead51d9ff67f689e92200c66d2d0cccf8"
+          }
+        },
+        {
+          "client_id": "377565326001-tms8ji2bh4stpaelked625v8ugkh13br.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDACSgplQNS1g46WK3jnU4IOaVY35sx1XE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "377565326001-tms8ji2bh4stpaelked625v8ugkh13br.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
