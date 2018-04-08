@@ -23,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,12 +32,14 @@ import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 import com.example.matsah.baitbite_chef.Common.Common;
 import com.example.matsah.baitbite_chef.Model.Dish;
 //import com.example.android.baitbite.Model.Order;
+import com.example.matsah.baitbite_chef.Model.Rate;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
@@ -63,11 +66,12 @@ public class DishDetailActivity extends AppCompatActivity implements NavigationV
     CollapsingToolbarLayout collapsingToolbarLayout;
     FloatingActionButton button_cart, fButtonEditDish;
     ElegantNumberButton elegantNumberButton_quantity;
+    RatingBar ratingBar;
 
     String dishID = "";
 
     FirebaseDatabase firebaseDatabase;
-    DatabaseReference dishes, chefs;
+    DatabaseReference dishes, chefs, rating_table;
 
     Dish currentDish;
 
@@ -79,6 +83,8 @@ public class DishDetailActivity extends AppCompatActivity implements NavigationV
     DrawerLayout drawer;
 
     int dishOldQuantity;
+
+
 
 
     @Override
@@ -95,6 +101,7 @@ public class DishDetailActivity extends AppCompatActivity implements NavigationV
         firebaseDatabase = FirebaseDatabase.getInstance();
         dishes = firebaseDatabase.getReference("Dishes");
         chefs = firebaseDatabase.getReference("Chef");
+        rating_table = firebaseDatabase.getReference("Rating");
 
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
@@ -104,6 +111,7 @@ public class DishDetailActivity extends AppCompatActivity implements NavigationV
 
         dishDetailLayout = (CoordinatorLayout) findViewById(R.id.dishDetailLayout);
 
+        ratingBar = (RatingBar) findViewById(R.id.ratingBar);
         /*
         drawer = (DrawerLayout) findViewById(R.id.dishDetailLayout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -136,6 +144,7 @@ public class DishDetailActivity extends AppCompatActivity implements NavigationV
 
         if(!dishID.isEmpty()){
             getDetailDish(dishID);
+            getRatingDish(dishID);
         }
 
 
@@ -368,5 +377,33 @@ public class DishDetailActivity extends AppCompatActivity implements NavigationV
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void getRatingDish(String dishID) {
+
+        Query dishRating = rating_table.orderByChild("dishID").equalTo(dishID);
+
+        dishRating.addValueEventListener(new ValueEventListener() {
+            int counter = 0, sum = 0;
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot postDataSnapshot:dataSnapshot.getChildren()){
+                    Rate item = postDataSnapshot.getValue(Rate.class);
+                    sum += Integer.parseInt(item.getRateValue());
+                    counter++;
+                }
+
+                if(counter != 0){
+                    float averageRating = sum/counter;
+                    ratingBar.setRating(averageRating);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 }
