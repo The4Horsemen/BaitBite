@@ -179,7 +179,8 @@
                         android:max="5"
                         android:isIndicator="true"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:theme="@style/RatingBar"/>
 
                     <TextView
                         android:id="@+id/dish_description"
