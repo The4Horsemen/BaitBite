@@ -54,7 +54,7 @@ public class OrderStatusActivity extends AppCompatActivity {
     }
 
     private void loadOrders() {
-        adapter = new FirebaseRecyclerAdapter<Request, OrderViewHolder>(Request.class, R.layout.order_layout, OrderViewHolder.class, requests/*.orderByChild("phone").equalTo(Common.currentChef.getPhone_Number())*/) {
+        adapter = new FirebaseRecyclerAdapter<Request, OrderViewHolder>(Request.class, R.layout.order_layout, OrderViewHolder.class, requests.orderByChild("chefId").equalTo(Common.currentChef.getPhone_Number())) {
             @Override
             protected void populateViewHolder(OrderViewHolder viewHolder, Request model, int position) {
                 viewHolder.textViewOrderID.setText(adapter.getRef(position).getKey());
