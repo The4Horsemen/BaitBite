@@ -1,8 +1,11 @@
 package com.example.android.baitbite;
 
+import android.app.FragmentManager;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -14,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +44,8 @@ public class HomeActivity extends AppCompatActivity
 
     RecyclerView recyclerView_menu;
     RecyclerView.LayoutManager layoutManager;
+
+    boolean isDelete = false;
 
     FirebaseRecyclerAdapter<Category, MenuViewHolder> categoryAdapter;
 
@@ -131,8 +137,44 @@ public class HomeActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            showAlertDialog();
+
+            if (isDelete) {
+                super.onBackPressed();
+            }
         }
+    }
+
+    private void showAlertDialog() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(HomeActivity.this);
+        alertDialog.setTitle("Are sure you want to go back?");
+        alertDialog.setMessage("Your cart will be deleted !!!");
+
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+
+        alertDialog.setIcon(R.drawable.ic_shopping_cart_black_24dp);
+
+        alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                //Delete cart
+                new Database(getBaseContext()).cleanCart();
+
+                Toast.makeText(HomeActivity.this, "Your cart items have been deleted !", Toast.LENGTH_SHORT).show();
+                isDelete = true;
+                finish();
+            }
+        });
+
+        alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+
+        alertDialog.show();
+
     }
 
     @Override
@@ -156,7 +198,10 @@ public class HomeActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_menu) {
+        if (id == R.id.nav_map) {
+//            MapFragment mapFragment = new MapFragment();
+//            android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+//            fragmentManager.beginTransaction().replace();
 
         } else if (id == R.id.nav_cart) {
             Intent cartIntent = new Intent(HomeActivity.this, CartActivity.class);

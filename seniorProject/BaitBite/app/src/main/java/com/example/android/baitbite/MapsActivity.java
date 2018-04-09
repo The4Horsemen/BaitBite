@@ -15,18 +15,28 @@ import android.location.LocationManager;
 import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.android.baitbite.Database.Database;
 import com.example.android.baitbite.Model.Chef;
 import com.example.android.baitbite.Service.ListenOrder;
 import com.firebase.geofire.GeoFire;
@@ -66,9 +76,12 @@ import com.squareup.picasso.Picasso;
 
 import java.util.Map;
 
+import info.hoang8f.widget.FButton;
+import io.paperdb.Paper;
+
 import static com.google.android.gms.location.LocationServices.getFusedLocationProviderClient;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, NavigationView.OnNavigationItemSelectedListener {
 
     //Firebase database obj
     private DatabaseReference refDatabase;
@@ -84,11 +97,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     //Current Location
     private Double x;
     private Double y;
-    //tmp
-    //Chef user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         permissionnManager = new PermissionManager() {
         };
         if(permissionnManager.checkAndRequestPermissions(MapsActivity.this)) {
@@ -97,8 +110,30 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             // we check if the google service is installed on the device
             if (googleServicesAvailable()) {
-                //Toast.makeText(this, "Creating map", Toast.LENGTH_LONG).show();
                 setContentView(R.layout.activity_maps);
+
+                Toolbar toolbar = (Toolbar) findViewById(R.id.mapToolbar);
+                //setSupportActionBar(toolbar);
+                toolbar.setTitle("Menu");
+
+                FButton fab = (FButton) findViewById(R.id.buttonSpecialOrder);
+                fab.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent homeIntent = new Intent(MapsActivity.this, HomeActivity.class);
+                        startActivity(homeIntent);
+                    }
+                });
+
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_mapLayout);
+                ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                        this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                drawer.addDrawerListener(toggle);
+                toggle.syncState();
+
+                NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+                navigationView.setNavigationItemSelectedListener(this);
+
             } else {
                 // no support
             }
@@ -269,7 +304,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 Chef user = dataSnapshot.getValue(Chef.class);
-                                //if(what ever condition is here){
+                                //if(user.getAvailability() > 0){
                                 SetMarker(user);
                                 //}
 
@@ -506,10 +541,64 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-
     @Override
     public void onConnectionSuspended(int i) {
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.home, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.refresh){
+
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.nav_map) {
+//            MapFragment mapFragment = new MapFragment();
+//            android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+//            fragmentManager.beginTransaction().replace();
+
+        } else if (id == R.id.nav_cart) {
+            Intent cartIntent = new Intent(MapsActivity.this, CartActivity.class);
+            startActivity(cartIntent);
+
+        } else if (id == R.id.nav_orders) {
+            Intent orderStatusIntent = new Intent(MapsActivity.this, OrderStatusActivity.class);
+            startActivity(orderStatusIntent);
+
+        } else if (id == R.id.nav_sign_out) {
+            //Delete Remembered Customer
+            Paper.book().destroy();
+
+            //Delete cart
+            new Database(getBaseContext()).cleanCart();
+
+            //Signout
+            Intent signInIntent = new Intent(MapsActivity.this, SignInActivity.class);
+            signInIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(signInIntent);
+
+        } else if (id == R.id.nav_profile) {
+
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_mapLayout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 }
 

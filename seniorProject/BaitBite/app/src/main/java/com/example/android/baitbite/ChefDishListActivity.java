@@ -1,7 +1,11 @@
 package com.example.android.baitbite;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,10 +13,14 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 import com.example.android.baitbite.Common.Common;
+import com.example.android.baitbite.Database.Database;
 import com.example.android.baitbite.Interface.ItemClickListener;
 import com.example.android.baitbite.Model.Dish;
+import com.example.android.baitbite.Model.Request;
 import com.example.android.baitbite.ViewHolder.DishViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DataSnapshot;
@@ -35,6 +43,8 @@ public class ChefDishListActivity extends AppCompatActivity {
     RecyclerView.LayoutManager layoutManager;
 
     String chefID ="";
+
+    boolean isDelete = false;
 
     FirebaseRecyclerAdapter<Dish, DishViewHolder> dishAdapter;
 
@@ -207,5 +217,47 @@ public class ChefDishListActivity extends AppCompatActivity {
 
         //Set Adapter
         recyclerView_dish.setAdapter(dishAdapter);
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        showAlertDialog();
+
+        if (isDelete) {
+            super.onBackPressed();
+        }
+    }
+
+    private void showAlertDialog() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(ChefDishListActivity.this);
+        alertDialog.setTitle("Are sure you want to go back?");
+        alertDialog.setMessage("Your cart will be deleted !!!");
+
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+
+        alertDialog.setIcon(R.drawable.ic_shopping_cart_black_24dp);
+
+        alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                //Delete cart
+                new Database(getBaseContext()).cleanCart();
+
+                Toast.makeText(ChefDishListActivity.this, "Your cart items have been deleted !", Toast.LENGTH_SHORT).show();
+                isDelete = true;
+                finish();
+            }
+        });
+
+        alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+
+        alertDialog.show();
+
     }
 }
