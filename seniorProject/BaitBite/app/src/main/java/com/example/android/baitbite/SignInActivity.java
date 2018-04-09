@@ -78,6 +78,8 @@ public class SignInActivity extends AppCompatActivity {
     TextView textSignup ;
     com.rey.material.widget.CheckBox checkBoxRememberMe;
 
+    String phone;
+
     //Button SignInActivity in SignInActivity page
     Button buttonSignIn, buttonVerify;
 
@@ -191,11 +193,13 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                phone = "+966"+editPhone.getText().toString().substring(1);
+
                 if (Common.isConnectedToInternet(getBaseContext())) {
 
                     if(checkBoxRememberMe.isChecked()) {
                         //Save Customer
-                        Paper.book().write(Common.CUSTOMER_KEY, editPhone.getText().toString());
+                        Paper.book().write(Common.CUSTOMER_KEY, phone);
                     }
                     if (editPhone.getText().toString().matches("")) {
                         Toast.makeText(SignInActivity.this, "please enter the phone number", Toast.LENGTH_LONG).show();
@@ -212,9 +216,9 @@ public class SignInActivity extends AppCompatActivity {
                         public void onDataChange(DataSnapshot dataSnapshot) {
 
                             //Check Customer existence in Database
-                            if (dataSnapshot.child(editPhone.getText().toString()).exists()) {
+                            if (dataSnapshot.child(phone).exists()) {
 
-                                startPhoneNumberVerification(editPhone.getText().toString());
+                                startPhoneNumberVerification(phone);
 
                                 buttonSignIn.setVisibility(View.INVISIBLE);
                                 buttonVerify.setVisibility(View.VISIBLE);
@@ -225,9 +229,9 @@ public class SignInActivity extends AppCompatActivity {
 
                                 //Get Customer info
                                 mDialog.dismiss();
-                                customer = dataSnapshot.child(editPhone.getText().toString()).getValue(Customer.class);
+                                customer = dataSnapshot.child(phone).getValue(Customer.class);
                                 //Set Phone number of the customer
-                                customer.setPhone(editPhone.getText().toString());
+                                customer.setPhone(phone);
 
 
                             } else {

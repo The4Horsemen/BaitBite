@@ -25,6 +25,8 @@ public class SignUpActivity extends AppCompatActivity {
     //Button SignUpActivity in SignUpActivity page
     Button buttonSignUp;
     Button buttonLocation;
+
+    String phone;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,9 +40,20 @@ public class SignUpActivity extends AppCompatActivity {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         final DatabaseReference table_customer = firebaseDatabase.getReference("Customer");
 
+
+
         buttonSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                if (editPhone.getText().toString().matches("")) {
+                    Toast.makeText(SignUpActivity.this, "please enter the phone number", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                phone = "+966"+editPhone.getText().toString().substring(1);
+
+
 
                 if (Common.isConnectedToInternet(getBaseContext())) {
                     final ProgressDialog mDialog = new ProgressDialog(SignUpActivity.this);
@@ -51,13 +64,13 @@ public class SignUpActivity extends AppCompatActivity {
                         public void onDataChange(DataSnapshot dataSnapshot) {
 
                             //check if the phone number already exist
-                            if (dataSnapshot.child(editPhone.getText().toString()).exists()) {
+                            if (dataSnapshot.child(phone).exists()) {
                                 mDialog.dismiss();
                                 Toast.makeText(SignUpActivity.this, "The phone number is already registered by a customer", Toast.LENGTH_LONG).show();
                             } else {
                                 mDialog.dismiss();
-                                Customer customer = new Customer(editName.getText().toString(), editPhone.getText().toString());
-                                table_customer.child(editPhone.getText().toString()).setValue(customer);
+                                Customer customer = new Customer(editName.getText().toString(), phone);
+                                table_customer.child(phone).setValue(customer);
                                 Toast.makeText(SignUpActivity.this, "Sign up successfully !", Toast.LENGTH_LONG).show();
                                 finish();
                             }

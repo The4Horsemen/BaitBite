@@ -34,6 +34,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.android.baitbite.Common.Common;
 import com.example.android.baitbite.Database.Database;
 import com.example.android.baitbite.Model.Chef;
 import com.example.android.baitbite.Service.ListenOrder;
@@ -91,6 +92,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Double x;
     private Double y;
 
+    TextView textView_customerName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,7 +110,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 Toolbar toolbar = (Toolbar) findViewById(R.id.mapToolbar);
                 //setSupportActionBar(toolbar);
-                toolbar.setTitle("Menu");
+                toolbar.setTitle("Map");
 
                 FButton fab = (FButton) findViewById(R.id.buttonSpecialOrder);
                 fab.setOnClickListener(new View.OnClickListener() {
@@ -124,8 +127,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 drawer.addDrawerListener(toggle);
                 toggle.syncState();
 
-                NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+                NavigationView navigationView = (NavigationView) findViewById(R.id.nav_mapView);
                 navigationView.setNavigationItemSelectedListener(this);
+
+                //Set the customer name
+                View headerView = navigationView.getHeaderView(0);
+                textView_customerName = (TextView) headerView.findViewById(R.id.textView_customerName);
+                textView_customerName.setText(Common.currentCustomer.getName());
 
             } else {
                 // no support
@@ -333,43 +341,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 System.err.println("There was an error with this query: " + error);
             }
         });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-
-        FirebaseDatabase.getInstance().getReference().child("Chef")
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                              Chef user = snapshot.getValue(Chef.class);
-                                SetMarker(user);
-
-
-                            //Log.d("TAG","X  "+user.getLocationX() + "Y  "+user.getLocationY());
-                            //Log.d("TAG","X   "+user.getEmail() + "Y   "+ user.getPhone_Number());
-                        }
-                    }
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                    }
-                });
-
-*/
-
-
     }
 
     private void SetMarker(Chef user){
