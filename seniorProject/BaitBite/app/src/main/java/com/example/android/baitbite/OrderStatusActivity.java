@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Toast;
 
 import com.example.android.baitbite.Common.Common;
 import com.example.android.baitbite.Model.Request;
@@ -38,11 +39,14 @@ public class OrderStatusActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView_orderList.setLayoutManager(layoutManager);
 
-        if(getIntent() == null) {
+
+
+        if(getIntent() != null) {
             loadOrder(Common.currentCustomer.getPhone());
         }else {
             loadOrder(getIntent().getStringExtra("customerId"));
         }
+
     }
 
     private void loadOrder(String phone) {
