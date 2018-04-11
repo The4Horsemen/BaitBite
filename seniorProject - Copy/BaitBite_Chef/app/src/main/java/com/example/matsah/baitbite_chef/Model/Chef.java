@@ -129,10 +129,5 @@ public class Chef {
         this.availability = availability;
     }
 
-    public void increaseAvailability(){
-        availability++;
-    }
-    public void decreaseAvailability(){
-        availability--;
-    }
+
 }

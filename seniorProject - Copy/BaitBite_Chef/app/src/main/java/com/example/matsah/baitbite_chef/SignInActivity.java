@@ -185,7 +185,7 @@ public class SignInActivity extends AppCompatActivity {
                // };
                // GPSTracker gpsTracker = new GPSTracker(SignInActivity.this);
                // if(permissionnManager.checkAndRequestPermissions(SignInActivity.this) && gpsTracker.canGetLocation()) {
-                    Intent signUp = new Intent(SignInActivity.this, SignUpActivity.class);
+                    Intent signUp = new Intent(SignInActivity.this, SignUP_WithVerify.class);
                     startActivity(signUp);
                // }
 
@@ -215,6 +215,11 @@ public class SignInActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 //Toast.makeText(SignInActivity.this, editPhone.getText().toString().substring(1),Toast.LENGTH_LONG).show();
+                if(editPhone.getText().toString().matches("")){
+                    Toast.makeText(SignInActivity.this, "please enter the phone number",Toast.LENGTH_LONG).show();
+                    return;
+                }
+
                 phone = "+966"+editPhone.getText().toString().substring(1);
 
                 if(checkBoxRememberMe.isChecked()) {
@@ -222,10 +227,7 @@ public class SignInActivity extends AppCompatActivity {
                     Paper.book().write(Common.CHEF_KEY, phone);
                 }
 
-                if(phone.matches("")){
-                    Toast.makeText(SignInActivity.this, "please enter the phone number",Toast.LENGTH_LONG).show();
-                    return;
-                }
+
 
                 final ProgressDialog mDialog = new ProgressDialog(SignInActivity.this);
                 mDialog.setMessage("Please wait...");

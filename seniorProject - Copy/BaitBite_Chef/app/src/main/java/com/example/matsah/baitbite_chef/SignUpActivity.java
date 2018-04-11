@@ -32,6 +32,8 @@ public class SignUpActivity extends AppCompatActivity {
     protected PermissionManager permissionnManager;
     //Button SignUpActivity in SignUpActivity page
     Button buttonSignUp;
+
+
     Chef chef;
 
     String phone;
