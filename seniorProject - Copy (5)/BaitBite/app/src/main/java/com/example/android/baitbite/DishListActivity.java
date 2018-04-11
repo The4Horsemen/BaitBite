@@ -66,7 +66,7 @@ public class DishListActivity extends AppCompatActivity {
             if(Common.isConnectedToInternet(getBaseContext())) {
                 loadListDish(categoryId);
             }else {
-                Toast.makeText(DishListActivity.this, "Please check your intenet connection !!!", Toast.LENGTH_LONG).show();
+                Toast.makeText(DishListActivity.this, "Please check your internet connection !!!", Toast.LENGTH_LONG).show();
                 return;
             }
         }

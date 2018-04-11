@@ -275,7 +275,7 @@ public class SignUpWithVerifyActivity extends AppCompatActivity {
                             Toast.makeText(SignUpWithVerifyActivity.this, "the code is verified successfully",Toast.LENGTH_LONG).show();
 
 
-                            Intent homeIntent = new Intent(SignUpWithVerifyActivity.this, HomeActivity.class);
+                            Intent homeIntent = new Intent(SignUpWithVerifyActivity.this, MapsActivity.class);
                             Common.currentCustomer = customer;
                             startActivity(homeIntent);
                             finish();

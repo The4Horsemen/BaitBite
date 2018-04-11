@@ -8,11 +8,12 @@ public class Customer {
     private String Email;
     private int LocationX;
     private int LocationY;
-    private int Mobile_Verification_Code;
     private String Name;
     private String Phone;
-    // delete this part after testing
     private String Password;
+    private String Profile_Image;
+    private String creditCard;
+
 
     public void setPassword(String password) {
         Password = password;
@@ -22,7 +23,16 @@ public class Customer {
     }
 
     //..........................................
+
+
     public Customer() {
+        Email = "";
+        LocationX = 0;
+        LocationY = 0;
+        Name = "";
+        Phone = "";
+        Password = "";
+        Profile_Image = "";
     }
 
     public Customer(String Name) {
@@ -40,23 +50,21 @@ public class Customer {
         this.LocationY = locationY;
         this.Name = name;
         this.Phone = phone;
+        this.Profile_Image = "";
 
     }
 
+    public String getProfile_Image() {
+        return Profile_Image;
+    }
 
+    public void setProfile_Image(String profile_Image) {
+        Profile_Image = profile_Image;
+    }
 
     public void Get_GPS_Location() {
 
-
-
-
     }
-
-
-
-
-
-
 
     public String getEmail() {
         return Email;
@@ -79,14 +87,6 @@ public class Customer {
 
     public void setLocationY(int locationY) {
         LocationY = locationY;
-    }
-
-    public int getMobile_Verification_Code() {
-        return Mobile_Verification_Code;
-    }
-
-    public void setMobile_Verification_Code(int mobile_Verification_Code) {
-        Mobile_Verification_Code = mobile_Verification_Code;
     }
 
     public String getName() {

@@ -293,9 +293,9 @@ public class SignInActivity extends AppCompatActivity {
                         //Set Phone number of the customer
                         customer.setPhone(phone);
 
-                        Intent homeIntent = new Intent(SignInActivity.this, MapsActivity.class);
+                        Intent mapIntent = new Intent(SignInActivity.this, MapsActivity.class);
                         Common.currentCustomer = customer;
-                        startActivity(homeIntent);
+                        startActivity(mapIntent);
                         finish();
 
 
@@ -343,9 +343,9 @@ public class SignInActivity extends AppCompatActivity {
                             Toast.makeText(SignInActivity.this, "the code is verified successfully",Toast.LENGTH_LONG).show();
                             //Customer customer = dataSnapshot.child(editPhone.getText().toString()).getValue(Customer.class);
 
-                            Intent homeIntent = new Intent(SignInActivity.this, HomeActivity.class);
+                            Intent mapIntent = new Intent(SignInActivity.this, MapsActivity.class);
                             Common.currentCustomer = customer;
-                            startActivity(homeIntent);
+                            startActivity(mapIntent);
                             finish();
 
 

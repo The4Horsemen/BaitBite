@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 
+import com.example.matsah.baitbite_chef.Common.Common;
 import com.example.matsah.baitbite_chef.Model.Request;
 import com.example.matsah.baitbite_chef.OrderStatusActivity;
 import com.example.matsah.baitbite_chef.R;
@@ -50,7 +51,7 @@ public class ListenOrder extends Service implements ChildEventListener{
     @Override
     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
         Request request = dataSnapshot.getValue(Request.class);
-        if(request.getStatus().equals("0"/*placed*/)){
+        if(request.getStatus().equals("0"/*placed*/) && request.getChefId().equals(Common.currentChef.getPhone_Number())){
             showNotification(dataSnapshot.getKey(),request);
         }
     }

@@ -160,7 +160,7 @@ public class HomeActivity extends AppCompatActivity
                 //Delete cart
                 new Database(getBaseContext()).cleanCart();
 
-                Toast.makeText(HomeActivity.this, "Your cart items have been deleted !", Toast.LENGTH_SHORT).show();
+                Toast.makeText(HomeActivity.this, "Your cart items have been deleted !", Toast.LENGTH_LONG).show();
                 isDelete = true;
                 finish();
             }

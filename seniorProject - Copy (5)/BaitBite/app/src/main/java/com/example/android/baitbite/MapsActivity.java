@@ -270,7 +270,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onInfoWindowClick(Marker marker) {
                 Chef tempChef = (Chef) marker.getTag();
-                //TODO: chefdishlistActivity
 
                 //Get ChefID & send it to DishList Activity
                 Intent chefDishList = new Intent(MapsActivity.this, ChefDishListActivity.class);
@@ -537,8 +536,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 //            fragmentManager.beginTransaction().replace();
 
         } else if (id == R.id.nav_cart) {
-            Intent cartIntent = new Intent(MapsActivity.this, CartActivity.class);
-            startActivity(cartIntent);
+            Toast.makeText(MapsActivity.this, "Your cart is empty !", Toast.LENGTH_LONG).show();
 
         } else if (id == R.id.nav_orders) {
             Intent orderStatusIntent = new Intent(MapsActivity.this, OrderStatusActivity.class);
