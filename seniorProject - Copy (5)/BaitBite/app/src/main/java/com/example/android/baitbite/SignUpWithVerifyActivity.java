@@ -2,36 +2,19 @@ package com.example.android.baitbite;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.android.baitbite.Common.Common;
 import com.example.android.baitbite.Model.Customer;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.rengwuxian.materialedittext.MaterialEditText;
-
-/*added by Ibra*/
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
-import android.util.Log;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-
+import com.firebase.geofire.GeoFire;
+import com.firebase.geofire.GeoLocation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
@@ -42,13 +25,21 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.karan.churi.PermissionManager.PermissionManager;
+import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.util.concurrent.TimeUnit;
 
-import io.paperdb.Paper;
-/**/
-
-public class SignInActivity extends AppCompatActivity {
+public class SignUpWithVerifyActivity extends AppCompatActivity {
+    //private GPSTracker gpsTracker ;
+    MaterialEditText editPhone, editName, verificationCode;
+    protected PermissionManager permissionnManager;
+    //Button SignUpActivity in SignUpActivity page
 
     /*added by Ibra*/
     private static final String TAG = "PhoneAuthActivity";
@@ -70,36 +61,24 @@ public class SignInActivity extends AppCompatActivity {
     private String mVerificationId;
     private PhoneAuthProvider.ForceResendingToken mResendToken;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
-
-    Customer customer;
     /**/
 
-    EditText editPhone,  verification_code;
-    TextView textSignup ;
-    com.rey.material.widget.CheckBox checkBoxRememberMe;
+    Button buttonSignUp, buttonVerify;
+    Customer customer;
 
     String phone;
-
-    //Button SignInActivity in SignInActivity page
-    Button buttonSignIn, buttonVerify;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_in);
+        setContentView(R.layout.activity_sign_up_with_verify);
+
 
         editPhone = (MaterialEditText) findViewById(R.id.editPhone);
-        verification_code = (MaterialEditText) findViewById(R.id.verification_code);
-
-        buttonSignIn = (Button) findViewById(R.id.buttonSignIn);
-        buttonVerify = (Button) findViewById(R.id.verify);
-
-        textSignup =  (TextView) findViewById(R.id.textSignup);
-
-        checkBoxRememberMe = (com.rey.material.widget.CheckBox) findViewById(R.id.checkBox_rememberMe);
-
-        //Init Paper
-        Paper.init(this);
+        editName = (MaterialEditText) findViewById(R.id.editName);
+        verificationCode = (MaterialEditText) findViewById(R.id.verificationCode);
+        buttonSignUp = (Button) findViewById(R.id.buttonSignUp);
+        buttonVerify = (Button) findViewById(R.id.buttonVerify);
 
         //Init Firebase
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
@@ -132,6 +111,8 @@ public class SignInActivity extends AppCompatActivity {
                 // This callback is invoked in an invalid request for verification is made,
                 // for instance if the the phone number format is not valid.
                 Log.w(TAG, "onVerificationFailed", e);
+                Toast.makeText(SignUpWithVerifyActivity.this, "Sign up onVerificationFailed !", Toast.LENGTH_LONG).show();
+
 
                 if (e instanceof FirebaseAuthInvalidCredentialsException) {
                     // Invalid request
@@ -154,7 +135,7 @@ public class SignInActivity extends AppCompatActivity {
                 // by combining the code with a verification ID.
                 Log.d(TAG, "onCodeSent:" + verificationId);
 
-                Toast.makeText(SignInActivity.this, "verification code is sent to your mobile ",Toast.LENGTH_LONG).show();
+                Toast.makeText(SignUpWithVerifyActivity.this, "verification code is sent to your mobile ",Toast.LENGTH_LONG).show();
 
                 // Save verification ID and resending token so we can use them later
                 mVerificationId = verificationId;
@@ -164,81 +145,76 @@ public class SignInActivity extends AppCompatActivity {
             }
         };
 
-        /**/
 
-        textSignup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent signUp = new Intent(SignInActivity.this, SignUpWithVerifyActivity.class);
-                startActivity(signUp);
-            }
-        });
 
         buttonVerify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
 
-                String code = verification_code.getText().toString();
+
+                String code = verificationCode.getText().toString();
                 if (TextUtils.isEmpty(code)) {
-                    Toast.makeText(SignInActivity.this, "please enter the verification code.",Toast.LENGTH_LONG).show();
+                    Toast.makeText(SignUpWithVerifyActivity.this, "please enter the verification code.",Toast.LENGTH_LONG).show();
                     //verification_code.setError("Cannot be empty.");
                     return;
                 }
 
                 verifyPhoneNumberWithCode(mVerificationId, code);
+
+                customer = new Customer(editName.getText().toString(), phone);
+                table_customer.child(phone).setValue(customer);
+                Toast.makeText(SignUpWithVerifyActivity.this, "Sign up successfully !", Toast.LENGTH_LONG).show();
+
+                //CreateStoreLocation(chef);
             }});
 
-        buttonSignIn.setOnClickListener(new View.OnClickListener() {
+
+
+        /**/
+
+
+
+        buttonSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                phone = "+966"+editPhone.getText().toString().substring(1);
+                if(editPhone.getText().toString().matches("")){
+                    Toast.makeText(SignUpWithVerifyActivity.this, "please enter the phone number",Toast.LENGTH_LONG).show();
+                    return;
+                }
 
                 if (Common.isConnectedToInternet(getBaseContext())) {
+                    phone = "+966"+editPhone.getText().toString().substring(1);
 
-                    if(checkBoxRememberMe.isChecked()) {
-                        //Save Customer
-                        Paper.book().write(Common.CUSTOMER_KEY, phone);
-                    }
-                    if (editPhone.getText().toString().matches("")) {
-                        Toast.makeText(SignInActivity.this, "please enter the phone number", Toast.LENGTH_LONG).show();
-                        return;
-                    }
-
-                    final ProgressDialog mDialog = new ProgressDialog(SignInActivity.this);
+                    final ProgressDialog mDialog = new ProgressDialog(SignUpWithVerifyActivity.this);
                     mDialog.setMessage("Please wait...");
                     mDialog.show();
-
                     table_customer.addValueEventListener(new ValueEventListener() {
-
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
 
-                            //Check Customer existence in Database
-                            if (dataSnapshot.child(phone).exists()) {
 
+
+                            //check if the phone number already exist
+                            if (dataSnapshot.child(phone).exists()) {
+                                mDialog.dismiss();
+                                Toast.makeText(SignUpWithVerifyActivity.this, "The phone number is already registered by a user", Toast.LENGTH_LONG).show();
+                            } else {
+                                /*Ibra*/
                                 startPhoneNumberVerification(phone);
 
-                                buttonSignIn.setVisibility(View.INVISIBLE);
-                                buttonVerify.setVisibility(View.VISIBLE);
+                                buttonSignUp.setVisibility(View.INVISIBLE);
+                                editName.setVisibility(View.INVISIBLE);
                                 editPhone.setVisibility(View.INVISIBLE);
-                                verification_code.setVisibility(View.VISIBLE);
-                                textSignup.setVisibility(View.INVISIBLE);
-                                checkBoxRememberMe.setVisibility(View.INVISIBLE);
-
-                                //Get Customer info
+                                buttonVerify.setVisibility(View.VISIBLE);
+                                verificationCode.setVisibility(View.VISIBLE);
+                                /**/
                                 mDialog.dismiss();
-                                customer = dataSnapshot.child(phone).getValue(Customer.class);
-                                //Set Phone number of the customer
-                                customer.setPhone(phone);
 
 
-                            } else {
-                                mDialog.dismiss();
-                                Toast.makeText(SignInActivity.this, "Customer not exist, Sign Up please!", Toast.LENGTH_LONG).show();
+                                //finish();
                             }
-
                         }
 
                         @Override
@@ -246,77 +222,27 @@ public class SignInActivity extends AppCompatActivity {
 
                         }
                     });
-                }else{
-                    Toast.makeText(SignInActivity.this, "Please check your intenet connection !!!", Toast.LENGTH_LONG).show();
+                }else {
+                    Toast.makeText(SignUpWithVerifyActivity.this, "Please check your intenet connection !!!", Toast.LENGTH_LONG).show();
                     return;
                 }
+
+
+
+                /*permissionnManager = new PermissionManager() {
+                };
+                gpsTracker = new GPSTracker(SignUP_WithVerify.this);
+                if (permissionnManager.checkAndRequestPermissions(SignUP_WithVerify.this) && gpsTracker.canGetLocation()) {
+
+
+
+                }*/
             }
         });
 
-        //Check remember me
-        String customer = Paper.book().read(Common.CUSTOMER_KEY);
-        if(customer != null){
-            if(!customer.isEmpty()){
-                signIn(customer);
-            }
-        }
 
     }
-
-    private void signIn(final String phone) {
-        //Init Firebase
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        final DatabaseReference table_customer = firebaseDatabase.getReference("Customer");
-
-        if (Common.isConnectedToInternet(getBaseContext())) {
-
-            if (phone.matches("")) {
-                Toast.makeText(SignInActivity.this, "please enter the phone number", Toast.LENGTH_LONG).show();
-                return;
-            }
-
-            final ProgressDialog mDialog = new ProgressDialog(SignInActivity.this);
-            mDialog.setMessage("Please wait...");
-            mDialog.show();
-
-            table_customer.addValueEventListener(new ValueEventListener() {
-
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-
-                    //Check Customer existence in Database
-                    if (dataSnapshot.child(phone).exists()) {
-
-                        //Get Customer info
-                        mDialog.dismiss();
-                        customer = dataSnapshot.child(phone).getValue(Customer.class);
-                        //Set Phone number of the customer
-                        customer.setPhone(phone);
-
-                        Intent homeIntent = new Intent(SignInActivity.this, MapsActivity.class);
-                        Common.currentCustomer = customer;
-                        startActivity(homeIntent);
-                        finish();
-
-
-                    } else {
-                        mDialog.dismiss();
-                        Toast.makeText(SignInActivity.this, "Customer not exist, Sign Up please!", Toast.LENGTH_LONG).show();
-                    }
-
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
-        }else{
-            Toast.makeText(SignInActivity.this, "Please check your intenet connection !!!", Toast.LENGTH_LONG).show();
-            return;
-        }
-    }
-
+    /*Ibra*/
     private void startPhoneNumberVerification(String phoneNumber) {
         // [START start_phone_auth]
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
@@ -330,6 +256,12 @@ public class SignInActivity extends AppCompatActivity {
         mVerificationInProgress = true;
     }
 
+    private void verifyPhoneNumberWithCode(String verificationId, String code) {
+        // [START verify_with_code]
+        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, code);
+        // [END verify_with_code]
+        signInWithPhoneAuthCredential(credential);
+    }
 
     private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
         mAuth.signInWithCredential(credential)
@@ -340,10 +272,10 @@ public class SignInActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
 
-                            Toast.makeText(SignInActivity.this, "the code is verified successfully",Toast.LENGTH_LONG).show();
-                            //Customer customer = dataSnapshot.child(editPhone.getText().toString()).getValue(Customer.class);
+                            Toast.makeText(SignUpWithVerifyActivity.this, "the code is verified successfully",Toast.LENGTH_LONG).show();
 
-                            Intent homeIntent = new Intent(SignInActivity.this, HomeActivity.class);
+
+                            Intent homeIntent = new Intent(SignUpWithVerifyActivity.this, HomeActivity.class);
                             Common.currentCustomer = customer;
                             startActivity(homeIntent);
                             finish();
@@ -356,7 +288,7 @@ public class SignInActivity extends AppCompatActivity {
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
                                 // The verification code entered was invalid
-                                Toast.makeText(SignInActivity.this, "the verification code is incorrect",Toast.LENGTH_LONG).show();
+                                Toast.makeText(SignUpWithVerifyActivity.this, "the verification code is incorrect",Toast.LENGTH_LONG).show();
 
                             }
                         }
@@ -364,11 +296,34 @@ public class SignInActivity extends AppCompatActivity {
                 });
     }
 
-    private void verifyPhoneNumberWithCode(String verificationId, String code) {
-        // [START verify_with_code]
-        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, code);
-        // [END verify_with_code]
-        signInWithPhoneAuthCredential(credential);
-    }
+    /**/
+
+
+    //function that create the store location
+   /* public void CreateStoreLocation(Chef chef){
+
+        GeoFire geoFire;
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("StoreLocation");
+        geoFire = new GeoFire(ref);
+
+
+        geoFire.setLocation(chef.getPhone_Number(), new GeoLocation(chef.getLocationX(), chef.getLocationY()), new GeoFire.CompletionListener(){
+            @Override
+            public void onComplete(String key, DatabaseError error) {
+                if (error != null) {
+                    System.err.println("There was an error saving the location to GeoFire: " + error);
+                } else {
+                    System.out.println("Location saved on server successfully!");
+                }
+            }
+
+
+        });
+
+
+
+
+    }*/
+
 
 }

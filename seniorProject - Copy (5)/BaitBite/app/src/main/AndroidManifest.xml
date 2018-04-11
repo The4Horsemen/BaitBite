@@ -54,7 +54,8 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".CustomerProfileActivity"></activity>
+        <activity android:name=".CustomerProfileActivity" />
+        <activity android:name=".SignUpWithVerifyActivity"></activity>
     </application>
 
 </manifest>
