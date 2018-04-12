@@ -27,6 +27,7 @@ public class Chef {
         this.LocationY = LocationY;
         this.Store_Summary = "";
         this.Profile_Image = "";
+        this.availability =0;
         this.Status = false;
 
     }
@@ -39,16 +40,21 @@ public class Chef {
         this.LocationY = 0;
         this.Store_Summary = "";
         this.Profile_Image = "";
+        this.availability =0;
         this.Status = false;
 
     }
 
     public Chef(String email, double locationX,double locationY, String name, String phone_number){
+        this.Phone_Number =phone_number;
+        this.Name = name;
         this.Email = email;
         this.LocationX = locationX;
         this.LocationY = locationY;
-        this.Name = name;
-        this.Phone_Number = phone_number;
+        this.Store_Summary = "";
+        this.Profile_Image = "";
+        this.availability =0;
+        this.Status = false;
 
     }
 
