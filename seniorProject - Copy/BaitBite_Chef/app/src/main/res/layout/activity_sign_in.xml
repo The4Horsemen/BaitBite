@@ -5,15 +5,17 @@
     android:id="@+id/ConstraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_darker"
+    android:background="@drawable/background"
     tools:context="com.example.matsah.baitbite_chef.SignInActivity"
     tools:layout_editor_absoluteY="25dp">
 
     <info.hoang8f.widget.FButton
         android:id="@+id/buttonSignIn"
-        android:layout_width="350dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="60dp"
         android:padding="12dp"
         android:text="Sign In"
         android:textColor="@android:color/white"
@@ -28,9 +30,11 @@
 
     <info.hoang8f.widget.FButton
         android:id="@+id/verify"
-        android:layout_width="350dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="60dp"
         android:padding="12dp"
         android:text="verify"
         android:textColor="@android:color/white"
@@ -46,8 +50,10 @@
 
     <com.rengwuxian.materialedittext.MaterialEditText
         android:id="@+id/editPhone"
-        android:layout_width="350dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
         android:layout_marginTop="40dp"
         android:hint="Phone Number e.g(0523456789)"
         android:inputType="phone"
@@ -66,8 +72,10 @@
 
     <com.rengwuxian.materialedittext.MaterialEditText
         android:id="@+id/verification_code"
-        android:layout_width="350dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
         android:layout_marginTop="40dp"
         android:hint="verification code"
         android:inputType="text|number"
@@ -93,7 +101,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo" />
+        app:srcCompat="@drawable/chef_logo" />
 
     <TextView
         android:id="@+id/textSlogan"
@@ -116,12 +124,8 @@
         android:textColor="@android:color/white"
         app:cbd_strokeColor="@android:color/white"
         app:cbd_tickColor="@color/colorPrimaryDark"
-        app:layout_constraintBottom_toTopOf="@+id/verify"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.063"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/verification_code"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintStart_toStartOf="@+id/verification_code"
+        app:layout_constraintTop_toBottomOf="@+id/verification_code" />
 
 
     <TextView
