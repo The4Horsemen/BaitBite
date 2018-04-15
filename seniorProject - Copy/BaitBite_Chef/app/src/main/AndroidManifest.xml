@@ -24,8 +24,6 @@
             android:theme="@style/AppTheme" />
         <activity android:name=".DishListActivity" />
         <activity android:name=".SignUP_WithVerify" />
-        <activity android:name=".DishListActivity" />
-        <activity android:name=".DishListActivity" />
         <activity android:name=".ChefProfileActivity" />
         <activity
             android:name=".SplashActivity"
