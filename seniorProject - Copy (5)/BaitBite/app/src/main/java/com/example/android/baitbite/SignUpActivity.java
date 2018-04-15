@@ -83,7 +83,7 @@ public class SignUpActivity extends AppCompatActivity {
                     });
 
                 }else {
-                    Toast.makeText(SignUpActivity.this, "Please check your intenet connection !!!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(SignUpActivity.this, "Please check your internet connection !!!", Toast.LENGTH_LONG).show();
                     return;
                 }
             }

@@ -132,7 +132,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 //Set the customer name
                 View headerView = navigationView.getHeaderView(0);
-                textView_customerName = (TextView) headerView.findViewById(R.id.textView_customerName);
+                textView_customerName = (TextView) headerView.findViewById(R.id.textView_mapCustomerName);
                 textView_customerName.setText(Common.currentCustomer.getName());
 
             } else {

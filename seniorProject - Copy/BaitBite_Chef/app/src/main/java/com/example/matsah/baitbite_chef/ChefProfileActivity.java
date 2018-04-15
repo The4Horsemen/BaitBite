@@ -115,8 +115,10 @@ public class ChefProfileActivity extends AppCompatActivity {
                         public void onComplete(String key, DatabaseError error) {
                             if (error != null) {
                                 System.err.println("There was an error saving the location to GeoFire: " + error);
+                                Toast.makeText(ChefProfileActivity.this, "Location Update Failed", Toast.LENGTH_SHORT).show();
                             } else {
                                 System.out.println("Location saved on server successfully!");
+                                Toast.makeText(ChefProfileActivity.this, "Location Updated", Toast.LENGTH_SHORT).show();
                             }
                         }
 
