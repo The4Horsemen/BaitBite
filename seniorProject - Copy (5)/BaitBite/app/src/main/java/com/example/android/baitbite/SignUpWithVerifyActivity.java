@@ -66,6 +66,9 @@ public class SignUpWithVerifyActivity extends AppCompatActivity {
     Button buttonSignUp, buttonVerify;
     Customer customer;
 
+    FirebaseDatabase firebaseDatabase;
+    DatabaseReference table_customer;
+
     String phone;
 
     @Override
@@ -81,8 +84,8 @@ public class SignUpWithVerifyActivity extends AppCompatActivity {
         buttonVerify = (Button) findViewById(R.id.buttonVerify);
 
         //Init Firebase
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        final DatabaseReference table_customer = firebaseDatabase.getReference("Customer");
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        table_customer = firebaseDatabase.getReference("Customer");
 
         /*Added by Ibra*/
         // [START initialize_auth]
@@ -162,9 +165,11 @@ public class SignUpWithVerifyActivity extends AppCompatActivity {
 
                 verifyPhoneNumberWithCode(mVerificationId, code);
 
+                /*
                 customer = new Customer(editName.getText().toString(), phone);
                 table_customer.child(phone).setValue(customer);
                 Toast.makeText(SignUpWithVerifyActivity.this, "Sign up successfully !", Toast.LENGTH_LONG).show();
+                */
 
                 //CreateStoreLocation(chef);
             }});
@@ -273,6 +278,11 @@ public class SignUpWithVerifyActivity extends AppCompatActivity {
                             Log.d(TAG, "signInWithCredential:success");
 
                             Toast.makeText(SignUpWithVerifyActivity.this, "the code is verified successfully",Toast.LENGTH_LONG).show();
+
+
+                            customer = new Customer(editName.getText().toString(), phone);
+                            table_customer.child(phone).setValue(customer);
+                            Toast.makeText(SignUpWithVerifyActivity.this, "Sign up successfully !", Toast.LENGTH_LONG).show();
 
 
                             Intent homeIntent = new Intent(SignUpWithVerifyActivity.this, MapsActivity.class);

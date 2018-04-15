@@ -64,6 +64,9 @@ public class SignUP_WithVerify extends AppCompatActivity {
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
     /**/
 
+    FirebaseDatabase firebaseDatabase;
+    DatabaseReference table_chef;
+
     Button buttonSignUp, buttonVerify;
     Chef chef;
 
@@ -82,8 +85,8 @@ public class SignUP_WithVerify extends AppCompatActivity {
         buttonVerify = (Button) findViewById(R.id.buttonVerify);
 
         //Init Firebase
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        final DatabaseReference table_chef = firebaseDatabase.getReference("Chef");
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        table_chef = firebaseDatabase.getReference("Chef");
 
         /*Added by Ibra*/
         // [START initialize_auth]
@@ -163,12 +166,14 @@ public class SignUP_WithVerify extends AppCompatActivity {
 
                 verifyPhoneNumberWithCode(mVerificationId, code);
 
+                /*
                 chef = new Chef("", gpsTracker.getLatitude(), gpsTracker.getLongitude(), editName.getText().toString(), phone);
                 chef.setProfile_Image("");
                 table_chef.child(phone).setValue(chef);
                 Toast.makeText(SignUP_WithVerify.this, "Sign up successfully !", Toast.LENGTH_LONG).show();
 
                 CreateStoreLocation(chef);
+                */
             }});
 
 
@@ -267,6 +272,12 @@ public class SignUP_WithVerify extends AppCompatActivity {
 
                             Toast.makeText(SignUP_WithVerify.this, "the code is verified successfully",Toast.LENGTH_LONG).show();
 
+                            chef = new Chef("", gpsTracker.getLatitude(), gpsTracker.getLongitude(), editName.getText().toString(), phone);
+                            chef.setProfile_Image("");
+                            table_chef.child(phone).setValue(chef);
+                            Toast.makeText(SignUP_WithVerify.this, "Sign up successfully !", Toast.LENGTH_LONG).show();
+
+                            CreateStoreLocation(chef);
 
                             Intent homeIntent = new Intent(SignUP_WithVerify.this, Home.class);
                             Common.currentChef = chef;
