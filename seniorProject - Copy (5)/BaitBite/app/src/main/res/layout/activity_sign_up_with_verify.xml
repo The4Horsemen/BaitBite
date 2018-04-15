@@ -127,7 +127,7 @@
         app:fButtonColor="@color/buttonSignUpColor"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editPhone"
+        app:layout_constraintTop_toBottomOf="@+id/verificationCode"
         app:shadowColor="@android:color/black"
         app:shadowEnabled="true"
         app:shadowHeight="5dp" />
