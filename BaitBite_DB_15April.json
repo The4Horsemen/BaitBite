@@ -1,66 +1,23 @@
 {
   "Category" : {
-    "01" : {
-      "image" : "https://firebasestorage.googleapis.com/v0/b/androidbaitbite.appspot.com/o/images%2F5ad6f209-2541-4851-a0d5-ea060cf2540c?alt=media&token=aea29d8c-7e0c-4365-baf7-edad7987914c",
-      "name" : "FINGErs"
-    }
+    
 	},
   "Chef" : {
-    "1456" : {
-      "email" : "rook",
-      "locationX" : 26.298864,
-      "locationY" : 50.117565,
-      "mobile_Verification_Code" : 0,
-      "name" : "golf cort",
-      "phone_Number" : "1456"
-    }
+    
 	},
   "Customer" : {
-    "0563603661" : {
-      "name" : "Abody",
-      "password" : "abodybig"
-    }
+    
 	},
   "Dishes" : {
-    "01" : {
-      "categoryId" : "11",
-      "description" : "",
-      "discount" : "0",
-      "image" : "http://medifoods.my/images/menu/p1_ginger_pao.jpg",
-      "name" : "GINGER PAO",
-      "price" : "200"
-    }
+    
 	},
   "OrderNow" : {
-    "1523236549270" : {
-      "address" : "thanks again KFUPM",
-      "chefId" : "+966567602509",
-      "dishes" : [ {
-        "discount" : "0",
-        "dishID" : "20",
-        "dishName" : "CREAM OF PUMPKIN",
-        "price" : "1000",
-        "quantity" : "1"
-      } ],
-      "name" : "janbisama",
-      "phone" : "+966567602509",
-      "status" : "0",
-      "total" : "$1,000.00"
-    }
+    
 	},
   "Rating" : {
-    "+966563603661" : {
-      "comment" : "nah.",
-      "customerPhone" : "+966563603661",
-      "dishID" : "19",
-      "rateValue" : "1"
-    }
+    
 	},
   "StoreLocation" : {
-    "1456" : {
-      ".priority" : "thets7w3zz",
-      "g" : "thets7w3zz",
-      "l" : [ 26.298864, 50.117565 ]
-    }
+    
   }
 }
