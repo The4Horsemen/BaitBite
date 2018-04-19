@@ -198,7 +198,9 @@ public class ChefDishListActivity extends AppCompatActivity {
             @Override
             protected void populateViewHolder(DishViewHolder viewHolder, Dish model, int position) {
                 viewHolder.textViewDishName.setText(model.getName());
-                Picasso.with(getBaseContext()).load(model.getImage()).into(viewHolder.imageViewDish);
+                if(!model.getImage().isEmpty()){
+                    Picasso.with(getBaseContext()).load(model.getImage()).into(viewHolder.imageViewDish);
+                }
 
                 final Dish local = model;
                 viewHolder.setItemClickListener(new ItemClickListener() {

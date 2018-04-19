@@ -112,17 +112,6 @@ public class DishDetailActivity extends AppCompatActivity implements NavigationV
         dishDetailLayout = (CoordinatorLayout) findViewById(R.id.dishDetailLayout);
 
         ratingBar = (RatingBar) findViewById(R.id.ratingBar);
-        /*
-        drawer = (DrawerLayout) findViewById(R.id.dishDetailLayout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
-        */
 
 
         dish_description = (TextView) findViewById(R.id.dish_description);
@@ -221,7 +210,7 @@ public class DishDetailActivity extends AppCompatActivity implements NavigationV
         });
     }
 
-    private void showUpdateDishDialog(final String key, final Dish item) {
+    private void showUpdateDishDialog(final String key, final Dish item1) {
         AlertDialog.Builder alertedDialog = new AlertDialog.Builder(DishDetailActivity.this);
         alertedDialog.setTitle("Edit Dish");
         alertedDialog.setMessage("Please fill full information");
@@ -237,15 +226,15 @@ public class DishDetailActivity extends AppCompatActivity implements NavigationV
 
 
         //set default value for view
-        editName.setText(item.getName());
-        editDiscount.setText(item.getDiscount());
-        editPrice.setText(item.getPrice());
-        editDescription.setText(item.getDescription());
-        editQuantity.setNumber(item.getQuantity());
+        editName.setText(currentDish.getName());
+        editDiscount.setText(currentDish.getDiscount());
+        editPrice.setText(currentDish.getPrice());
+        editDescription.setText(currentDish.getDescription());
+        editQuantity.setNumber(currentDish.getQuantity());
 
 
         buttonSelect = edit_menu_layout.findViewById(R.id.buttonSelect);
-        buttonUpload = edit_menu_layout.findViewById(R.id.buttonUpload);
+        //buttonUpload = edit_menu_layout.findViewById(R.id.buttonUpload);
 
         //Event for button
         buttonSelect.setOnClickListener(new View.OnClickListener() {
@@ -255,15 +244,14 @@ public class DishDetailActivity extends AppCompatActivity implements NavigationV
             }
         });
 
-        buttonUpload.setOnClickListener(new View.OnClickListener() {
+        /*buttonUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                changeImage(item);
+                changeImage();
             }
-        });
+        });*/
 
         alertedDialog.setView(edit_menu_layout);
-        alertedDialog.setIcon(R.drawable.ic_shopping_cart_black_24dp);
 
         alertedDialog.setPositiveButton("EDIT", new DialogInterface.OnClickListener() {
             @Override
@@ -272,17 +260,17 @@ public class DishDetailActivity extends AppCompatActivity implements NavigationV
 
 
                 //set the edited the values
-                item.setName(editName.getText().toString());
-                item.setPrice(editPrice.getText().toString());
-                item.setDiscount(editDiscount.getText().toString());
-                item.setDescription(editDescription.getText().toString());
-                item.setQuantity(editQuantity.getNumber());
+                currentDish.setName(editName.getText().toString());
+                currentDish.setPrice(editPrice.getText().toString());
+                currentDish.setDiscount(editDiscount.getText().toString());
+                currentDish.setDescription(editDescription.getText().toString());
+                currentDish.setQuantity(editQuantity.getNumber());
 
                 //increase the availability of the chef
                 updateDishQuantity(Integer.parseInt(editQuantity.getNumber().toString()));
 
-                dishes.child(key).setValue(item);
-                Snackbar.make(dishDetailLayout, "Dish "+item.getName()+" was edited", Snackbar.LENGTH_SHORT).show();
+                dishes.child(key).setValue(currentDish);
+                Snackbar.make(dishDetailLayout, "Dish "+currentDish.getName()+" was edited", Snackbar.LENGTH_SHORT).show();
 
             }
         });
@@ -304,6 +292,7 @@ public class DishDetailActivity extends AppCompatActivity implements NavigationV
 
             saveUri = data.getData();
             buttonSelect.setText("Image Selected !");
+            changeImage();
         }
     }
 
@@ -315,7 +304,7 @@ public class DishDetailActivity extends AppCompatActivity implements NavigationV
 
     }
 
-    private void changeImage(final Dish item) {
+    private void changeImage() {
         if(saveUri != null){
             final ProgressDialog mDialog = new ProgressDialog(this);
             mDialog.setMessage("Uploading...");
@@ -331,7 +320,7 @@ public class DishDetailActivity extends AppCompatActivity implements NavigationV
                     imageFolder.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
-                            item.setImage((uri.toString()));
+                            currentDish.setImage((uri.toString()));
 
                         }
                     });
