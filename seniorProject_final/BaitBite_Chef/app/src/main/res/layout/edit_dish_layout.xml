@@ -44,6 +44,7 @@
                     app:shadowEnabled="true"
                     app:shadowHeight="5dp" />
 
+               <!--
                 <info.hoang8f.widget.FButton
                     android:id="@+id/buttonUpload"
                     android:layout_width="0dp"
@@ -60,6 +61,7 @@
                     app:shadowColor="@android:color/black"
                     app:shadowEnabled="true"
                     app:shadowHeight="5dp" />
+                -->
 
             </LinearLayout>
 

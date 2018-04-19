@@ -167,7 +167,9 @@ public class DishDetailActivity extends AppCompatActivity implements RatingDialo
                 currentDish = dataSnapshot.getValue(Dish.class);
 
                 //Set Dish Image
-                Picasso.with(getBaseContext()).load(currentDish.getImage()).into(dish_image);
+                if(!currentDish.getImage().isEmpty()){
+                    Picasso.with(getBaseContext()).load(currentDish.getImage()).into(dish_image);
+                }
 
                 collapsingToolbarLayout.setTitle(currentDish.getName());
 

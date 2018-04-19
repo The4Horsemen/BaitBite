@@ -116,8 +116,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 fab.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent homeIntent = new Intent(MapsActivity.this, HomeActivity.class);
-                        startActivity(homeIntent);
+                        Toast.makeText(MapsActivity.this, "TODO: Special order", Toast.LENGTH_SHORT).show();
+//                        Intent homeIntent = new Intent(MapsActivity.this, HomeActivity.class);
+//                        startActivity(homeIntent);
                     }
                 });
 
@@ -367,7 +368,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 ImageView img = (ImageView) v.findViewById(R.id.imageView1) ;
                 Chef Tmp = (Chef)marker.getTag();
                 Name.setText(Tmp.getName());
-                phone.setText(Tmp.getPhone_Number());
+//                phone.setText(Tmp.getPhone_Number());
+                phone.setText(Tmp.getStore_Summary());
+
                 if(!Tmp.getProfile_Image().isEmpty()) {
                     Picasso.with(MapsActivity.this).load(Tmp.getProfile_Image()).into(img);
                 }

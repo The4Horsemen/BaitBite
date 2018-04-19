@@ -77,6 +77,8 @@ public class Home extends AppCompatActivity
 
     Uri saveUri;
 
+    Dish dummyDish;
+
 
     DrawerLayout drawer;
 
@@ -158,7 +160,7 @@ public class Home extends AppCompatActivity
 
 
         buttonSelect = add_menu_layout.findViewById(R.id.buttonSelect);
-        buttonUpload = add_menu_layout.findViewById(R.id.buttonUpload);
+        //buttonUpload = add_menu_layout.findViewById(R.id.buttonUpload);
         //choosePic = add_menu_layout.findViewById(R.id.choosePic);
         newDish = new Dish();
 
@@ -171,17 +173,15 @@ public class Home extends AppCompatActivity
             }
         });
 
-        buttonUpload.setOnClickListener(new View.OnClickListener() {
+       /* buttonUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 uploadImage();
             }
-        });
+        });*/
 
         alertedDialog.setView(add_menu_layout);
-        alertedDialog.setIcon(R.drawable.ic_shopping_cart_black_24dp);
 
-        alertedDialog.setPositiveButton("ADD", null);
 
         alertedDialog.setPositiveButton("ADD", new DialogInterface.OnClickListener() {
             @Override
@@ -270,9 +270,9 @@ public class Home extends AppCompatActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == Common.PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null){
-
             saveUri = data.getData();
             buttonSelect.setText("Image Selected !");
+            uploadImage();
         }
     }
 
@@ -389,9 +389,10 @@ public class Home extends AppCompatActivity
     //Update / Delete
 
     public boolean onContextItemSelected(MenuItem item) {
-        if(item.getTitle().equals(Common.UPDATE)){
-            showUpdateDishDialog(adapter.getRef(item.getOrder()).getKey(), adapter.getItem(item.getOrder()));
-        }else if(item.getTitle().equals(Common.DELETE)){
+        /*if(item.getTitle().equals(Common.UPDATE)){
+            //showUpdateDishDialog(adapter.getRef(item.getOrder()).getKey(), adapter.getItem(item.getOrder()));
+        }else*/
+        if(item.getTitle().equals(Common.DELETE)){
             deleteDish(adapter.getRef(item.getOrder()).getKey(), adapter.getItem(item.getOrder()));
         }
         return super.onContextItemSelected(item);
@@ -408,7 +409,7 @@ public class Home extends AppCompatActivity
 
     }
 
-    private void showUpdateDishDialog(final String key, final Dish item) {
+   /* private void showUpdateDishDialog(final String key, final Dish item) {
         AlertDialog.Builder alertedDialog = new AlertDialog.Builder(Home.this);
         alertedDialog.setTitle("Edit Dish");
         alertedDialog.setMessage("Please fill full information");
@@ -452,16 +453,11 @@ public class Home extends AppCompatActivity
         });
 
         alertedDialog.setView(edit_menu_layout);
-        alertedDialog.setIcon(R.drawable.ic_shopping_cart_black_24dp);
 
         alertedDialog.setPositiveButton("EDIT", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-
-
-
                 dialogInterface.dismiss();
-
                 item.setName(editName.getText().toString());
                 item.setPrice(editPrice.getText().toString());
                 item.setDiscount(editDiscount.getText().toString());
@@ -485,9 +481,9 @@ public class Home extends AppCompatActivity
         });
 
         alertedDialog.show();
-    }
+    }*/
 
-    private void changeImage(final Dish item) {
+    /*private void changeImage(final Dish item) {
         if(saveUri != null){
             final ProgressDialog mDialog = new ProgressDialog(this);
             mDialog.setMessage("Uploading...");
@@ -524,7 +520,7 @@ public class Home extends AppCompatActivity
             });
 
         }
-    }
+    }*/
 
     private void updateChefAvailability(int OldQuan, int newQuan) {
         int oldAvailability = Common.currentChef.getAvailability();

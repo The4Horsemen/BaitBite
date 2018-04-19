@@ -15,11 +15,16 @@ import android.widget.Toast;
 
 import com.example.android.baitbite.Common.Common;
 import com.example.android.baitbite.Database.Database;
+import com.example.android.baitbite.Model.Dish;
 import com.example.android.baitbite.Model.Order;
 import com.example.android.baitbite.Model.Request;
 import com.example.android.baitbite.ViewHolder.CartAdapter;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -33,6 +38,8 @@ public class CartActivity extends AppCompatActivity {
     FirebaseDatabase firebaseDatabase;
     DatabaseReference requests;
 
+    DatabaseReference dishes;
+
     RecyclerView recyclerView_order_dishes;
     RecyclerView.LayoutManager layoutManager;
 
@@ -43,6 +50,8 @@ public class CartActivity extends AppCompatActivity {
 
     CartAdapter cartAdapter;
 
+    Dish currentDish;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +60,7 @@ public class CartActivity extends AppCompatActivity {
         //Init Firebase
         firebaseDatabase = FirebaseDatabase.getInstance();
         requests = firebaseDatabase.getReference("OrderNow");
+        requests = firebaseDatabase.getReference("Dishes");
 
         //Load the data from Firebase DB to the RecyclerView
         recyclerView_order_dishes = (RecyclerView) findViewById(R.id.listCart);
@@ -103,6 +113,8 @@ public class CartActivity extends AppCompatActivity {
                         cartList
                 );
 
+                reduceDishQuantity();
+
                 //Submit to Firebase using System.CurrentMilli to Key
                 requests.child(String.valueOf(System.currentTimeMillis())).setValue(request);
 
@@ -122,6 +134,15 @@ public class CartActivity extends AppCompatActivity {
 
         alertDialog.show();
 
+    }
+
+    private void reduceDishQuantity(){
+        int orderQuantity = 0;
+        for(Order order:cartList){
+            orderQuantity = Integer.parseInt(order.getQuantity());
+            getDetailDish(order.getDishID());
+
+        }
     }
 
     private void loadDishList() {
@@ -164,5 +185,20 @@ public class CartActivity extends AppCompatActivity {
 
         //Refresh the Cart after deleting the item
         loadDishList();
+    }
+
+    private void getDetailDish(String dishID) {
+        dishes.child(dishID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                currentDish = dataSnapshot.getValue(Dish.class);
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 }
