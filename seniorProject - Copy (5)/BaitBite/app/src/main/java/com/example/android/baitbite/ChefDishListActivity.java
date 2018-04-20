@@ -73,7 +73,7 @@ public class ChefDishListActivity extends AppCompatActivity {
 
         //Load the data from Firebase DB to the RecyclerView
         recyclerView_dish = (RecyclerView) findViewById(R.id.recyclerView_chefDishList);
-        recyclerView_dish.setHasFixedSize(true);
+        //recyclerView_dish.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerView_dish.setLayoutManager(layoutManager);
 
@@ -198,8 +198,11 @@ public class ChefDishListActivity extends AppCompatActivity {
             @Override
             protected void populateViewHolder(DishViewHolder viewHolder, Dish model, int position) {
                 viewHolder.textViewDishName.setText(model.getName());
-                Picasso.with(getBaseContext()).load(model.getImage()).into(viewHolder.imageViewDish);
-
+                if(!model.getImage().isEmpty()) {
+                    Picasso.with(getBaseContext()).load(model.getImage()).into(viewHolder.imageViewDish);
+                }else {
+                    Toast.makeText(ChefDishListActivity.this, "No Dishes!", Toast.LENGTH_SHORT).show();
+                }
                 final Dish local = model;
                 viewHolder.setItemClickListener(new ItemClickListener() {
                     @Override
