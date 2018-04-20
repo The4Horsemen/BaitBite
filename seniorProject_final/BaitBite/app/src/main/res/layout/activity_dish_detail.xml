@@ -6,12 +6,12 @@
     android:id="@+id/constraintLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
+    android:background="@color/colorAccent"
     tools:context="com.example.android.baitbite.DishDetailActivity">
 
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floatingActionButton"
+        android:id="@+id/button_cart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
@@ -180,9 +180,9 @@
                             android:rating="0"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
                             tools:layout_conversion_absoluteHeight="57dp"
-                            tools:layout_conversion_absoluteWidth="240dp"
-                            tools:layout_editor_absoluteY="0dp" />
+                            tools:layout_conversion_absoluteWidth="240dp" />
 
                         <TextView
                             android:id="@+id/dish_description"

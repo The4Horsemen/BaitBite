@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/dishDetailLayout"
+    android:background="@color/colorAccent"
     tools:context="com.example.matsah.baitbite_chef.DishDetailActivity">
 
     <android.support.design.widget.AppBarLayout
