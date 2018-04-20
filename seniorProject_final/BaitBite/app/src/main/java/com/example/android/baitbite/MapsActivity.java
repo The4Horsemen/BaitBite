@@ -68,7 +68,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.karan.churi.PermissionManager.PermissionManager;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
+
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import info.hoang8f.widget.FButton;
 import io.paperdb.Paper;
@@ -93,6 +96,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Double y;
 
     TextView textView_customerName;
+
+    boolean IsLoaded = false;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -306,7 +313,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 Chef user = dataSnapshot.getValue(Chef.class);
                                 //if(user.getAvailability() > 0){
+                                if (!user.getProfile_Image().isEmpty()) {
+                                    Picasso.with(MapsActivity.this)
+                                            .load(user.getProfile_Image()).fetch();
+                                }else{
+                                    Picasso.with(MapsActivity.this)
+                                            .load("https://png.icons8.com/ios/50/000000/baguette.png").fetch();
+                                }
                                 SetMarker(user);
+
                                 //}
 
                             }
@@ -360,26 +375,41 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             @Override
             public View getInfoContents(Marker marker) {
+                View v = getLayoutInflater().inflate(R.layout.info_window, null);
+                final AtomicBoolean loaded = new AtomicBoolean();
+                    TextView Name = (TextView) v.findViewById((R.id.tv_locality));
+                    TextView phone = (TextView) v.findViewById((R.id.tv_locality2));
+                    ImageView img = (ImageView) v.findViewById(R.id.imageView1);
+                    Chef Tmp = (Chef) marker.getTag();
+                    Name.setText(Tmp.getName());
+                    phone.setText(Tmp.getPhone_Number());
+                    if (!Tmp.getProfile_Image().isEmpty()) {
 
-                View v = getLayoutInflater().inflate(R.layout.info_window,null);
 
-                TextView Name = (TextView) v.findViewById((R.id.tv_locality ));
-                TextView phone = (TextView) v.findViewById((R.id.tv_locality2 ));
-                ImageView img = (ImageView) v.findViewById(R.id.imageView1) ;
-                Chef Tmp = (Chef)marker.getTag();
-                Name.setText(Tmp.getName());
-                phone.setText(Tmp.getPhone_Number());
-                if(!Tmp.getProfile_Image().isEmpty()) {
-                    Picasso.with(MapsActivity.this).load(Tmp.getProfile_Image()).into(img);
+                        //Picasso.with(MapsActivity.this).load(Tmp.getProfile_Image()).into(img);
+                        Picasso.with(MapsActivity.this)
+                                .load(Tmp.getProfile_Image())
+                                .into(img,new Callback.EmptyCallback() {
+                            @Override public void onSuccess() {
+                                loaded.set(true);
+                            }
+                        });
+                    } else {
+                        Picasso.with(MapsActivity.this).load("https://png.icons8.com/ios/50/000000/baguette.png").into(img,new Callback.EmptyCallback() {
+                            @Override public void onSuccess() {
+                                loaded.set(true);
+                            }
+                        });
+
+                    }
+                if (loaded.get()) {
+                    return v;
                 }
-                else{
-                    Picasso.with(MapsActivity.this).load("https://png.icons8.com/ios/50/000000/baguette.png").into(img);
-
+                    return null;
                 }
 
-                return v;
 
-            }
+
         });
 
 
