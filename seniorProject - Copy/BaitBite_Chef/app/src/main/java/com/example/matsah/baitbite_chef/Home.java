@@ -181,23 +181,32 @@ public class Home extends AppCompatActivity
         alertedDialog.setView(add_menu_layout);
         alertedDialog.setIcon(R.drawable.ic_shopping_cart_black_24dp);
 
+        alertedDialog.setPositiveButton("ADD", null);
+
         alertedDialog.setPositiveButton("ADD", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
-                newDish.setName(editName.getText().toString());
-                newDish.setDescription(editDescription.getText().toString());
-                newDish.setPrice(editPrice.getText().toString());
-                newDish.setDiscount(editDiscount.getText().toString());
-                newDish.setCategoryId("");
-                newDish.setChefID(Common.currentChef.getPhone_Number());
-                newDish.setQuantity("0");
+
+               if(editName.getText().toString().isEmpty() || editPrice.getText().toString().isEmpty()){
+                    Toast.makeText(Home.this, "fill all required fields", Toast.LENGTH_SHORT).show();
+
+               }else{
+                    dialogInterface.dismiss();
+                    newDish.setName(editName.getText().toString());
+                    newDish.setDescription(editDescription.getText().toString());
+                    newDish.setPrice(editPrice.getText().toString());
+                    newDish.setDiscount(editDiscount.getText().toString());
+                    newDish.setCategoryId("");
+                    newDish.setChefID(Common.currentChef.getPhone_Number());
+                    newDish.setQuantity("0");
 
 
-                if(newDish != null){
-                    dishList.push().setValue(newDish);
-                    Snackbar.make(drawer, "New Dish "+newDish.getName()+" was added", Snackbar.LENGTH_SHORT).show();
-                }
+                    if(newDish != null){
+                        dishList.push().setValue(newDish);
+                        Snackbar.make(drawer, "New Dish "+newDish.getName()+" was added", Snackbar.LENGTH_SHORT).show();
+                    }
+               }
+
             }
         });
 
@@ -286,7 +295,9 @@ public class Home extends AppCompatActivity
                 viewHolder.DishName.setText(model.getName());
                 viewHolder.DishPrice.setText(model.getPrice()+" SAR");
                 viewHolder.DishQuantity.setText("QTY: "+model.getQuantity());
-                Picasso.with(getBaseContext()).load(model.getImage()).into(viewHolder.DishImage);
+                if(!model.getImage().isEmpty()) {
+                    Picasso.with(getBaseContext()).load(model.getImage()).into(viewHolder.DishImage);
+                }
 
                 viewHolder.setItemClicListener(new ItemClickListener() {
                     @Override
@@ -446,10 +457,10 @@ public class Home extends AppCompatActivity
         alertedDialog.setPositiveButton("EDIT", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+
+
+
                 dialogInterface.dismiss();
-
-
-
 
                 item.setName(editName.getText().toString());
                 item.setPrice(editPrice.getText().toString());

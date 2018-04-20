@@ -116,8 +116,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 fab.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent homeIntent = new Intent(MapsActivity.this, HomeActivity.class);
-                        startActivity(homeIntent);
+                        Toast.makeText(MapsActivity.this, "TODO: Special order", Toast.LENGTH_SHORT).show();
+//                        Intent homeIntent = new Intent(MapsActivity.this, HomeActivity.class);
+//                        startActivity(homeIntent);
                     }
                 });
 
@@ -132,7 +133,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 //Set the customer name
                 View headerView = navigationView.getHeaderView(0);
-                textView_customerName = (TextView) headerView.findViewById(R.id.textView_customerName);
+                textView_customerName = (TextView) headerView.findViewById(R.id.textView_mapCustomerName);
                 textView_customerName.setText(Common.currentCustomer.getName());
 
             } else {
@@ -367,7 +368,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 ImageView img = (ImageView) v.findViewById(R.id.imageView1) ;
                 Chef Tmp = (Chef)marker.getTag();
                 Name.setText(Tmp.getName());
-                phone.setText(Tmp.getPhone_Number());
+//                phone.setText(Tmp.getPhone_Number());
+                phone.setText(Tmp.getStore_Summary());
+
                 if(!Tmp.getProfile_Image().isEmpty()) {
                     Picasso.with(MapsActivity.this).load(Tmp.getProfile_Image()).into(img);
                 }
@@ -555,6 +558,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             startActivity(signInIntent);
 
         } else if (id == R.id.nav_profile) {
+            Intent profileIntent = new Intent(MapsActivity.this, CustomerProfileActivity.class);
+            startActivity(profileIntent);
 
         }
 

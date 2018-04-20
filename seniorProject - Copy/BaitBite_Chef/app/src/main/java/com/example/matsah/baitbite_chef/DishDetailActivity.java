@@ -192,18 +192,23 @@ public class DishDetailActivity extends AppCompatActivity implements NavigationV
             public void onDataChange(DataSnapshot dataSnapshot) {
                 currentDish = dataSnapshot.getValue(Dish.class);
 
-                //Set Dish Image
-                Picasso.with(getBaseContext()).load(currentDish.getImage()).into(dish_image);
+                if(currentDish != null){
 
-                collapsingToolbarLayout.setTitle(currentDish.getName());
+                    //Set Dish Image
+                    if(!currentDish.getImage().isEmpty()){
+                        Picasso.with(getBaseContext()).load(currentDish.getImage()).into(dish_image);
+                    }
 
-                dish_price.setText(currentDish.getPrice());
-                dish_name.setText(currentDish.getName());
-                dish_description.setText(currentDish.getDescription());
-                dish_quantity.setNumber(currentDish.getQuantity());
+                    collapsingToolbarLayout.setTitle(currentDish.getName());
 
-                //init the dish old quantity
-                dishOldQuantity = Integer.parseInt(currentDish.getQuantity());
+                    dish_price.setText(currentDish.getPrice());
+                    dish_name.setText(currentDish.getName());
+                    dish_description.setText(currentDish.getDescription());
+                    dish_quantity.setNumber(currentDish.getQuantity());
+
+                    //init the dish old quantity
+                    dishOldQuantity = Integer.parseInt(currentDish.getQuantity());
+                }
 
 
 
@@ -405,5 +410,14 @@ public class DishDetailActivity extends AppCompatActivity implements NavigationV
 
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent homeIntent = new Intent(DishDetailActivity.this, Home.class);
+        startActivity(homeIntent);
+
+
     }
 }

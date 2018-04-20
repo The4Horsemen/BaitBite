@@ -4,13 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_darker"
+    android:background="@drawable/background"
     tools:context="com.example.matsah.baitbite_chef.SignUP_WithVerify">
 
     <com.rengwuxian.materialedittext.MaterialEditText
         android:id="@+id/editName"
-        android:layout_width="350dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
         android:layout_marginTop="40dp"
         android:hint="Name"
         android:inputType="text"
@@ -29,8 +31,10 @@
 
     <com.rengwuxian.materialedittext.MaterialEditText
         android:id="@+id/editPhone"
-        android:layout_width="350dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
         android:hint="Phone Number e.g(0523456789)"
         android:inputType="phone"
         android:text=""
@@ -48,8 +52,10 @@
 
     <com.rengwuxian.materialedittext.MaterialEditText
         android:id="@+id/verificationCode"
-        android:layout_width="350dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
         android:layout_marginTop="40dp"
         android:hint="Verification code"
         android:inputType="phone"
@@ -76,7 +82,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo" />
+        app:srcCompat="@drawable/chef_logo" />
 
     <TextView
         android:id="@+id/textSlogan"
@@ -91,8 +97,10 @@
 
     <info.hoang8f.widget.FButton
         android:id="@+id/buttonSignUp"
-        android:layout_width="350dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
         android:layout_marginTop="30dp"
         android:text="Sign Up"
         android:textColor="@android:color/white"
@@ -107,8 +115,10 @@
 
     <info.hoang8f.widget.FButton
         android:id="@+id/buttonVerify"
-        android:layout_width="350dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
         android:layout_marginTop="30dp"
         android:text="Verify"
         android:textColor="@android:color/white"
@@ -117,7 +127,7 @@
         app:fButtonColor="@color/buttonSignUpColor"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editPhone"
+        app:layout_constraintTop_toBottomOf="@+id/verificationCode"
         app:shadowColor="@android:color/black"
         app:shadowEnabled="true"
         app:shadowHeight="5dp" />
