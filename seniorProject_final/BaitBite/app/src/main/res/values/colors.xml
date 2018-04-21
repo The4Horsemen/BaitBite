@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#6b1900</color>
     <color name="colorPrimaryDark">#640500</color>
-    <color name="colorAccent">#8b4440</color>
+    <color name="colorAccent">#de330505</color>
 
     <!-- Color for butSignUpActivitygnUp -->
     <color name="buttonSignUpColor">#991616</color>

@@ -12,7 +12,7 @@
         <ImageView
             android:id="@+id/menu_image"
             android:scaleType="centerCrop"
-            android:src="@drawable/background_darker"
+            android:src="@color/colorAccent"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
@@ -20,7 +20,7 @@
             android:id="@+id/menu_name"
             android:text="Name of the menu"
             android:textColor="@android:color/white"
-            android:background="#4f0e0d0e"
+            android:background="#d30e0d0e"
             android:textSize="20sp"
             android:gravity="center"
             android:layout_alignParentBottom="true"
