@@ -96,6 +96,7 @@ public class ChefDishListActivity extends AppCompatActivity {
         materialSearchBar = (MaterialSearchBar) findViewById(R.id.searchBar_chefDishList);
         materialSearchBar.setHint("Enter your Dish");
         loadSuggest();
+        //Remove the comment bellow if you want to show the suggestionList before typing in the search bar
         materialSearchBar.setLastSuggestions(suggestList);
         materialSearchBar.setCardViewElevation(10);
         materialSearchBar.addTextChangeListener(new TextWatcher() {
@@ -197,24 +198,28 @@ public class ChefDishListActivity extends AppCompatActivity {
         dishAdapter = new FirebaseRecyclerAdapter<Dish, DishViewHolder>(Dish.class, R.layout.dish_item, DishViewHolder.class, dishList.orderByChild("chefID").equalTo(chefID)) {
             @Override
             protected void populateViewHolder(DishViewHolder viewHolder, Dish model, int position) {
-                viewHolder.textViewDishName.setText(model.getName());
-                if(!model.getImage().isEmpty()) {
-                    Picasso.with(getBaseContext()).load(model.getImage()).into(viewHolder.imageViewDish);
-                }else {
-                    Toast.makeText(ChefDishListActivity.this, "No Dishes!", Toast.LENGTH_SHORT).show();
-                }
-                final Dish local = model;
-                viewHolder.setItemClickListener(new ItemClickListener() {
-                    @Override
-                    public void onClick(View view, int position, boolean isLongClick) {
-                        // Start Dish Detail Activity
-                        Intent dishDetail = new Intent(ChefDishListActivity.this, DishDetailActivity.class);
-
-                        //Send DishID to Dish Detail Activity
-                        dishDetail.putExtra("dishId", dishAdapter.getRef(position).getKey());
-                        startActivity(dishDetail);
+                if(!model.getQuantity().equals("0")) {
+                    viewHolder.textViewDishName.setText(model.getName());
+                    if (!model.getImage().isEmpty()) {
+                        Picasso.with(getBaseContext()).load(model.getImage()).into(viewHolder.imageViewDish);
+                    } else {
+                        Toast.makeText(ChefDishListActivity.this, "No Dishes!", Toast.LENGTH_LONG).show();
                     }
-                });
+                    final Dish local = model;
+                    viewHolder.setItemClickListener(new ItemClickListener() {
+                        @Override
+                        public void onClick(View view, int position, boolean isLongClick) {
+                            // Start Dish Detail Activity
+                            Intent dishDetail = new Intent(ChefDishListActivity.this, DishDetailActivity.class);
+
+                            //Send DishID to Dish Detail Activity
+                            dishDetail.putExtra("dishId", dishAdapter.getRef(position).getKey());
+                            startActivity(dishDetail);
+                        }
+                    });
+                }else{
+                    //TODO: remove dish from dishAdapter
+                    Toast.makeText(ChefDishListActivity.this, "Dish: "+model.getName(), Toast.LENGTH_SHORT).show();                }
             }
         };
 

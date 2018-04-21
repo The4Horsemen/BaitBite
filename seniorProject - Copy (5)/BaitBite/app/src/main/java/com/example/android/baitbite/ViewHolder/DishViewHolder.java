@@ -8,10 +8,6 @@ import android.widget.TextView;
 import com.example.android.baitbite.Interface.ItemClickListener;
 import com.example.android.baitbite.R;
 
-/**
- * Created by janbi on 3/24/2018.
- */
-
 public class DishViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     public TextView textViewDishName;

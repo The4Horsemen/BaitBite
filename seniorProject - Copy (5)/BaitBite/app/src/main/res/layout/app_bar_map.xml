@@ -22,18 +22,18 @@
 
     <include layout="@layout/content_map" />
 
-    <info.hoang8f.widget.FButton
-        android:id="@+id/buttonSpecialOrder"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:text="Special Order"
-        android:textColor="@android:color/white"
-        app:cornerRadius="4dp"
-        app:fButtonColor="@color/buttonSignUpColor"
-        app:shadowColor="@android:color/black"
-        android:layout_gravity="bottom"
-        app:shadowEnabled="true"
-        app:shadowHeight="5dp" />
+    <!--<info.hoang8f.widget.FButton-->
+        <!--android:id="@+id/buttonSpecialOrder"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:text="Special Order"-->
+        <!--android:textColor="@android:color/white"-->
+        <!--app:cornerRadius="4dp"-->
+        <!--app:fButtonColor="@color/buttonSignUpColor"-->
+        <!--app:shadowColor="@android:color/black"-->
+        <!--android:layout_gravity="bottom"-->
+        <!--app:shadowEnabled="true"-->
+        <!--app:shadowHeight="5dp" />-->
 
 </android.support.design.widget.CoordinatorLayout>
