@@ -172,7 +172,7 @@ public class OrderStatusActivity extends AppCompatActivity {
 
         ArrayAdapter adapter = new ArrayAdapter<String>(this,
                 R.layout.list_view, dishes);
-        
+
         dishList.setAdapter(adapter);
 
 
