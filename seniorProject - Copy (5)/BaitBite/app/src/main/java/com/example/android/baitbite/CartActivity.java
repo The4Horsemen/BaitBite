@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -51,6 +52,7 @@ public class CartActivity extends AppCompatActivity {
     CartAdapter cartAdapter;
 
     Dish currentDish;
+    int currentDishQuantity = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +62,7 @@ public class CartActivity extends AppCompatActivity {
         //Init Firebase
         firebaseDatabase = FirebaseDatabase.getInstance();
         requests = firebaseDatabase.getReference("OrderNow");
-        requests = firebaseDatabase.getReference("Dishes");
+        dishes = firebaseDatabase.getReference("Dishes");
 
         //Load the data from Firebase DB to the RecyclerView
         recyclerView_order_dishes = (RecyclerView) findViewById(R.id.listCart);
@@ -113,7 +115,10 @@ public class CartActivity extends AppCompatActivity {
                         cartList
                 );
 
-                reduceDishQuantity();
+                //Reduce dishes quantity
+                for(Order order:cartList){
+                    reduceDishQuantity(order.getDishID(), Integer.parseInt(order.getQuantity()));
+                }
 
                 //Submit to Firebase using System.CurrentMilli to Key
                 requests.child(String.valueOf(System.currentTimeMillis())).setValue(request);
@@ -134,15 +139,6 @@ public class CartActivity extends AppCompatActivity {
 
         alertDialog.show();
 
-    }
-
-    private void reduceDishQuantity(){
-        int orderQuantity = 0;
-        for(Order order:cartList){
-            orderQuantity = Integer.parseInt(order.getQuantity());
-            getDetailDish(order.getDishID());
-
-        }
     }
 
     private void loadDishList() {
@@ -187,17 +183,24 @@ public class CartActivity extends AppCompatActivity {
         loadDishList();
     }
 
-    private void getDetailDish(String dishID) {
-        dishes.child(dishID).addValueEventListener(new ValueEventListener() {
+    private void reduceDishQuantity(final String dishID, final int orderQuantity) {
+
+
+        dishes.child(dishID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 currentDish = dataSnapshot.getValue(Dish.class);
+                currentDishQuantity = Integer.parseInt(currentDish.getQuantity());
 
+                currentDishQuantity = currentDishQuantity - orderQuantity;
+                Log.d("currentDishQuantity", currentDishQuantity+" "+orderQuantity+" currentDishQuantity after "+currentDishQuantity);
+                currentDish.setQuantity(currentDishQuantity+"");
+                dishes.child(dishID).setValue(currentDish);
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                Log.d("Error!!!","the read failed "+databaseError.getCode());
             }
         });
     }
