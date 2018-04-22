@@ -119,15 +119,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 //setSupportActionBar(toolbar);
                 toolbar.setTitle("Map");
 
-                FButton fab = (FButton) findViewById(R.id.buttonSpecialOrder);
-                fab.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Toast.makeText(MapsActivity.this, "TODO: Special order", Toast.LENGTH_SHORT).show();
+                //TODO: Remove the comments to enable "Special Order" Button
+                //NOTE: Don't forget to remove the comments from the XML: app_bar_map.xml
+
+//                FButton fab = (FButton) findViewById(R.id.buttonSpecialOrder);
+//                fab.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        Toast.makeText(MapsActivity.this, "TODO: Special order", Toast.LENGTH_SHORT).show();
 //                        Intent homeIntent = new Intent(MapsActivity.this, HomeActivity.class);
 //                        startActivity(homeIntent);
-                    }
-                });
+//                    }
+//                });
 
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_mapLayout);
                 ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -419,7 +422,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void SetMarker(Chef user){
-
+        System.out.println(user.getName());
         LatLng newLocation = new LatLng(user.getLocationX(),user.getLocationY());
         Marker M = mMap.addMarker(new MarkerOptions()
                 .position(newLocation)
@@ -435,6 +438,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             @Override
             public View getInfoContents(Marker marker) {
+                System.out.println("Marker is set" );
                 View v = getLayoutInflater().inflate(R.layout.info_window, null);
                 final AtomicBoolean loaded = new AtomicBoolean();
                     TextView Name = (TextView) v.findViewById((R.id.tv_locality));

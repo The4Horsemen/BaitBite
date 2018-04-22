@@ -11,7 +11,7 @@ public class Chef {
     private String Store_Summary;
     private String Profile_Image;
     private boolean Status;
-
+    private int availability;
 
     //..........................................
     /*register constructor*/
@@ -22,8 +22,8 @@ public class Chef {
         this.LocationY = LocationY;
         this.Store_Summary = "";
         this.Profile_Image = "";
+        this.availability =0;
         this.Status = false;
-
     }
 
     public Chef() {
@@ -34,21 +34,34 @@ public class Chef {
         this.LocationY = 0;
         this.Store_Summary = "";
         this.Profile_Image = "";
+        this.availability =0;
         this.Status = false;
 
     }
 
     public Chef(String email, double locationX,double locationY, String name, String phone_number){
+        this.Phone_Number =phone_number;
+        this.Name = name;
         this.Email = email;
         this.LocationX = locationX;
         this.LocationY = locationY;
-        this.Name = name;
-        this.Phone_Number = phone_number;
+        this.Store_Summary = "";
+        this.Profile_Image = "";
+        this.availability =0;
+        this.Status = false;
 
     }
 
     public void Get_GPS_Location() {
 
+    }
+
+    public int getAvailability() {
+        return availability;
+    }
+
+    public void setAvailability(int availability) {
+        this.availability = availability;
     }
 
     public String getStore_Summary() {
