@@ -35,7 +35,7 @@ import info.hoang8f.widget.FButton;
 
 public class ChefProfileActivity extends AppCompatActivity {
 
-    MaterialEditText editName, editEmail, editStoreSummary;
+    MaterialEditText editName, editEmail, editStoreSummary, editCredit;
     ImageView profile_picture;
     FloatingActionButton choosePic;
     FButton setLocation, updateProfile;
@@ -75,6 +75,7 @@ public class ChefProfileActivity extends AppCompatActivity {
         editName = (MaterialEditText) findViewById(R.id.updateName);
         editEmail = (MaterialEditText) findViewById(R.id.updateEmail);
         editStoreSummary = (MaterialEditText) findViewById(R.id.updateStoreSummary);
+        editCredit = (MaterialEditText) findViewById(R.id.updateCredit);
 
         choosePic = (FloatingActionButton) findViewById(R.id.choosePic);
 
@@ -88,6 +89,8 @@ public class ChefProfileActivity extends AppCompatActivity {
         if(!Common.currentChef.getProfile_Image().isEmpty()){
             Picasso.with(getBaseContext()).load(Common.currentChef.getProfile_Image()).into(profile_picture);
         }
+        //if(Common.currentChef)
+        editCredit.setText(Common.currentChef.getCredit());
 
         choosePic.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,6 +141,7 @@ public class ChefProfileActivity extends AppCompatActivity {
                 Common.currentChef.setName(editName.getText().toString());
                 Common.currentChef.setEmail(editEmail.getText().toString());
                 Common.currentChef.setStore_Summary(editStoreSummary.getText().toString());
+                Common.currentChef.setCredit(editCredit.getText().toString());
 
                 chefs.child(Common.currentChef.getPhone_Number()).setValue(Common.currentChef);
                 Toast.makeText(ChefProfileActivity.this, "The profile is Updated", Toast.LENGTH_SHORT).show();

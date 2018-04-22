@@ -16,6 +16,7 @@ public class Chef {
     private String Profile_Image;
     private boolean Status;
     private int availability;
+    private String Credit;
 
 
     //..........................................
@@ -29,6 +30,7 @@ public class Chef {
         this.Profile_Image = "";
         this.availability =0;
         this.Status = false;
+        this.Credit = "";
 
     }
 
@@ -42,6 +44,7 @@ public class Chef {
         this.Profile_Image = "";
         this.availability =0;
         this.Status = false;
+        this.Credit = "";
 
     }
 
@@ -55,6 +58,7 @@ public class Chef {
         this.Profile_Image = "";
         this.availability =0;
         this.Status = false;
+        this.Credit = "";
 
     }
 
@@ -135,5 +139,11 @@ public class Chef {
         this.availability = availability;
     }
 
+    public String getCredit() {
+        return Credit;
+    }
 
+    public void setCredit(String credit) {
+        Credit = credit;
+    }
 }
