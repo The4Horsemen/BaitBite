@@ -112,7 +112,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 //setSupportActionBar(toolbar);
                 toolbar.setTitle("Map");
 
-                //Remove the comments to enable "Special Order" Button
+                //TODO: Remove the comments to enable "Special Order" Button
                 //NOTE: Don't forget to remove the comments from the XML: app_bar_map.xml
 
 //                FButton fab = (FButton) findViewById(R.id.buttonSpecialOrder);

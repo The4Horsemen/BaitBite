@@ -119,15 +119,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 //setSupportActionBar(toolbar);
                 toolbar.setTitle("Map");
 
-                FButton fab = (FButton) findViewById(R.id.buttonSpecialOrder);
-                fab.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Toast.makeText(MapsActivity.this, "TODO: Special order", Toast.LENGTH_SHORT).show();
+                //TODO: Remove the comments to enable "Special Order" Button
+                //NOTE: Don't forget to remove the comments from the XML: app_bar_map.xml
+
+//                FButton fab = (FButton) findViewById(R.id.buttonSpecialOrder);
+//                fab.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        Toast.makeText(MapsActivity.this, "TODO: Special order", Toast.LENGTH_SHORT).show();
 //                        Intent homeIntent = new Intent(MapsActivity.this, HomeActivity.class);
 //                        startActivity(homeIntent);
-                    }
-                });
+//                    }
+//                });
 
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_mapLayout);
                 ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

@@ -73,7 +73,7 @@ public class ChefDishListActivity extends AppCompatActivity {
 
         //Load the data from Firebase DB to the RecyclerView
         recyclerView_dish = (RecyclerView) findViewById(R.id.recyclerView_chefDishList);
-        recyclerView_dish.setHasFixedSize(true);
+        //recyclerView_dish.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerView_dish.setLayoutManager(layoutManager);
 
@@ -182,7 +182,9 @@ public class ChefDishListActivity extends AppCompatActivity {
                 for(DataSnapshot postDataSnapshot:dataSnapshot.getChildren()){
                     Dish dishItem = postDataSnapshot.getValue(Dish.class);
                     // Adding name of the Dish to Suggest List
-                    suggestList.add(dishItem.getName());
+                    if(!dishItem.getQuantity().equals("0")) {
+                        suggestList.add(dishItem.getName());
+                    }
                 }
             }
 
@@ -197,23 +199,30 @@ public class ChefDishListActivity extends AppCompatActivity {
         dishAdapter = new FirebaseRecyclerAdapter<Dish, DishViewHolder>(Dish.class, R.layout.dish_item, DishViewHolder.class, dishList.orderByChild("chefID").equalTo(chefID)) {
             @Override
             protected void populateViewHolder(DishViewHolder viewHolder, Dish model, int position) {
-                viewHolder.textViewDishName.setText(model.getName());
-                if(!model.getImage().isEmpty()){
-                    Picasso.with(getBaseContext()).load(model.getImage()).into(viewHolder.imageViewDish);
-                }
-
-                final Dish local = model;
-                viewHolder.setItemClickListener(new ItemClickListener() {
-                    @Override
-                    public void onClick(View view, int position, boolean isLongClick) {
-                        // Start Dish Detail Activity
-                        Intent dishDetail = new Intent(ChefDishListActivity.this, DishDetailActivity.class);
-
-                        //Send DishID to Dish Detail Activity
-                        dishDetail.putExtra("dishId", dishAdapter.getRef(position).getKey());
-                        startActivity(dishDetail);
+                if(!model.getQuantity().equals("0")) {
+                    viewHolder.textViewDishName.setText(model.getName());
+                    if (!model.getImage().isEmpty()) {
+                        Picasso.with(getBaseContext()).load(model.getImage()).into(viewHolder.imageViewDish);
+                    } else {
+                        Toast.makeText(ChefDishListActivity.this, "No Dishes!", Toast.LENGTH_LONG).show();
                     }
-                });
+                    final Dish local = model;
+                    viewHolder.setItemClickListener(new ItemClickListener() {
+                        @Override
+                        public void onClick(View view, int position, boolean isLongClick) {
+                            // Start Dish Detail Activity
+                            Intent dishDetail = new Intent(ChefDishListActivity.this, DishDetailActivity.class);
+
+                            //Send DishID to Dish Detail Activity
+                            dishDetail.putExtra("dishId", dishAdapter.getRef(position).getKey());
+                            startActivity(dishDetail);
+                        }
+                    });
+                }else{
+                    //TODO: remove dish from dishAdapter
+                    viewHolder.itemView.setVisibility(View.GONE);
+                    viewHolder.itemView.setLayoutParams(new RecyclerView.LayoutParams(0, 0));
+                }
             }
         };
 
