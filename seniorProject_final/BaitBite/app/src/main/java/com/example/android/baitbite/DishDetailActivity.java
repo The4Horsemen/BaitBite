@@ -50,6 +50,8 @@ public class DishDetailActivity extends AppCompatActivity implements RatingDialo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dish_detail);
 
+
+
         //Init Firebase
         firebaseDatabase = FirebaseDatabase.getInstance();
         dishes = firebaseDatabase.getReference("Dishes");
