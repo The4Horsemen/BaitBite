@@ -70,5 +70,8 @@ dependencies {
     //Rating needed Library
     implementation 'com.stepstone.apprating:app-rating:2.0.0'
 
+    //Circular ImageView
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
+
 }
 apply plugin: 'com.google.gms.google-services'
