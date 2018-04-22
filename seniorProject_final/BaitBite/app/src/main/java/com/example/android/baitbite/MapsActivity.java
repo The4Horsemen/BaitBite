@@ -119,15 +119,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 //setSupportActionBar(toolbar);
                 toolbar.setTitle("Map");
 
-                FButton fab = (FButton) findViewById(R.id.buttonSpecialOrder);
-                fab.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Toast.makeText(MapsActivity.this, "TODO: Special order", Toast.LENGTH_SHORT).show();
+                //TODO: Remove the comments to enable "Special Order" Button
+                //NOTE: Don't forget to remove the comments from the XML: app_bar_map.xml
+
+//                FButton fab = (FButton) findViewById(R.id.buttonSpecialOrder);
+//                fab.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        Toast.makeText(MapsActivity.this, "TODO: Special order", Toast.LENGTH_SHORT).show();
 //                        Intent homeIntent = new Intent(MapsActivity.this, HomeActivity.class);
 //                        startActivity(homeIntent);
-                    }
-                });
+//                    }
+//                });
 
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_mapLayout);
                 ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -299,7 +302,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Log.d("TAG","X  "+x + "Y  "+y);
         GeoFire geoFire;
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("StoreLocation");
-        final DatabaseReference Chefref = FirebaseDatabase.getInstance().getReference("Chef");
+        //final DatabaseReference Chefref = FirebaseDatabase.getInstance().getReference("Chef");
         geoFire = new GeoFire(ref);
 
         final GeoQuery geoQuery = geoFire.queryAtLocation(new GeoLocation(x,  y), 7);
@@ -356,6 +359,66 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 System.err.println("There was an error with this query: " + error);
             }
         });
+
+        /*
+        final GeoQuery geoQuery = geoFire.queryAtLocation(new GeoLocation(x,  y), 7);
+        geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
+            @Override
+            public void onKeyEntered(String key, GeoLocation location) {
+                System.out.println(String.format("Key %s entered the search area at [%f,%f]", key, location.latitude, location.longitude));
+                FirebaseDatabase.getInstance().getReference("Chef").child(key)
+                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                Chef user = dataSnapshot.getValue(Chef.class);
+                                //if(user.getAvailability() > 0){
+                                if (!user.getProfile_Image().isEmpty()) {
+                                    Picasso.with(MapsActivity.this)
+                                            .load(user.getProfile_Image()).fetch();
+                                }else{
+                                    Picasso.with(MapsActivity.this)
+                                            .load("https://png.icons8.com/ios/50/000000/baguette.png").fetch();
+                                }
+                                SetMarker(user);
+
+                                //}
+
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+
+            }
+
+            @Override
+            public void onKeyExited(String key) {
+                System.out.println(String.format("Key %s is no longer in the search area", key));
+            }
+
+            @Override
+            public void onKeyMoved(String key, GeoLocation location) {
+                System.out.println(String.format("Key %s moved within the search area to [%f,%f]", key, location.latitude, location.longitude));
+            }
+
+            @Override
+            public void onGeoQueryReady() {
+                System.out.println("All initial data has been loaded and events have been fired!");
+                geoQuery.removeAllListeners();
+            }
+
+            @Override
+            public void onGeoQueryError(DatabaseError error) {
+                System.err.println("There was an error with this query: " + error);
+            }
+        });
+         */
+
+
+
     }
 
     private void SetMarker(Chef user){
@@ -364,7 +427,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Marker M = mMap.addMarker(new MarkerOptions()
                 .position(newLocation)
         );
-        M.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_launcher_map));
+        M.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.map_pin_2));
         M.setTag(user);
 
         mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {

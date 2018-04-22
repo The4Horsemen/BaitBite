@@ -183,7 +183,9 @@ public class ChefDishListActivity extends AppCompatActivity {
                 for(DataSnapshot postDataSnapshot:dataSnapshot.getChildren()){
                     Dish dishItem = postDataSnapshot.getValue(Dish.class);
                     // Adding name of the Dish to Suggest List
-                    suggestList.add(dishItem.getName());
+                    if(!dishItem.getQuantity().equals("0")) {
+                        suggestList.add(dishItem.getName());
+                    }
                 }
             }
 
@@ -219,7 +221,9 @@ public class ChefDishListActivity extends AppCompatActivity {
                     });
                 }else{
                     //TODO: remove dish from dishAdapter
-                    Toast.makeText(ChefDishListActivity.this, "Dish: "+model.getName(), Toast.LENGTH_SHORT).show();                }
+                    viewHolder.itemView.setVisibility(View.GONE);
+                    viewHolder.itemView.setLayoutParams(new RecyclerView.LayoutParams(0, 0));
+                }
             }
         };
 
