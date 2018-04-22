@@ -71,14 +71,17 @@ public class Home extends AppCompatActivity
     // Add New Mwenu Layout
     MaterialEditText editName, editDescription, editPrice, editDiscount;
     ElegantNumberButton editQuantity;
-    //FloatingActionButton choosePic;
-    FButton buttonUpload, buttonSelect;
+    FloatingActionButton choosePic;
+    ImageView dish_picture ;
+    //FButton buttonUpload, buttonSelect;
 
     Dish newDish;
 
     Uri saveUri;
 
     DrawerLayout drawer;
+
+
 
 
     @Override
@@ -158,15 +161,17 @@ public class Home extends AppCompatActivity
         editPrice = add_menu_layout.findViewById(R.id.editPrice);
         editDiscount = add_menu_layout.findViewById(R.id.editDiscount);
 
+        dish_picture = (ImageView) add_menu_layout.findViewById(R.id.dish_pic);
 
 
-        buttonSelect = add_menu_layout.findViewById(R.id.buttonSelect);
+
+        //buttonSelect = add_menu_layout.findViewById(R.id.buttonSelect);
         //buttonUpload = add_menu_layout.findViewById(R.id.buttonUpload);
-        //choosePic = add_menu_layout.findViewById(R.id.choosePic);
+        choosePic = add_menu_layout.findViewById(R.id.choosePic);
         newDish = new Dish();
 
         //Event for button
-        buttonSelect.setOnClickListener(new View.OnClickListener() {
+        choosePic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ChooseImage();
@@ -254,8 +259,7 @@ public class Home extends AppCompatActivity
                         @Override
                         public void onSuccess(Uri uri) {
                             newDish.setImage(uri.toString());
-
-
+                            Picasso.with(getBaseContext()).load(newDish.getImage()).into(dish_picture);
                         }
                     });
 
@@ -287,7 +291,7 @@ public class Home extends AppCompatActivity
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == Common.PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null){
             saveUri = data.getData();
-            buttonSelect.setText("Image Selected !");
+            //buttonSelect.setText("Image Selected !");
             uploadImage();
         }
     }

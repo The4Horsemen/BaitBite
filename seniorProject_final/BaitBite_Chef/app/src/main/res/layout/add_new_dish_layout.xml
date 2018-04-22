@@ -29,9 +29,9 @@
                 android:weightSum="2"
                 android:id="@+id/linearLayout3">
 
-                <!--
+
                 <ImageView
-                    android:id="@+id/image_picture"
+                    android:id="@+id/dish_pic"
                     android:layout_width="75dp"
                     android:layout_height="75dp"
                     android:layout_marginTop="4dp"
@@ -50,11 +50,11 @@
                     android:layout_marginTop="56dp"
                     android:clickable="true"
                     app:backgroundTint="@color/buttonSignUpColor"
-                    app:layout_constraintStart_toStartOf="@+id/image_picture"
-                    app:layout_constraintTop_toTopOf="@+id/image_picture"
+                    app:layout_constraintStart_toStartOf="@+id/dish_pic"
+                    app:layout_constraintTop_toTopOf="@+id/dish_pic"
                     app:srcCompat="@drawable/ic_menu_camera" />
 
-
+                <!--
                 <info.hoang8f.widget.FButton
                     android:id="@+id/buttonSelect"
                     android:layout_width="wrap_content"
@@ -71,7 +71,7 @@
                     tools:layout_editor_absoluteX="33dp"
                     tools:layout_conversion_absoluteWidth="159dp" />
 
-                    -->
+
 
                 <ImageButton
                     android:id="@+id/imageButton"
@@ -87,6 +87,8 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/ic_menu_camera" />
+                -->
+
 
                 <!--
                 <info.hoang8f.widget.FButton
