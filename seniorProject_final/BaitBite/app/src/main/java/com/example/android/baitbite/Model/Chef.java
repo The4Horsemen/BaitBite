@@ -24,7 +24,6 @@ public class Chef {
         this.Profile_Image = "";
         this.availability =0;
         this.Status = false;
-
     }
 
     public Chef() {

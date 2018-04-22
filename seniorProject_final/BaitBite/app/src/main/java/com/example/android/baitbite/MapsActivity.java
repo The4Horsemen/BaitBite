@@ -422,7 +422,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void SetMarker(Chef user){
-
+        System.out.println(user.getName());
         LatLng newLocation = new LatLng(user.getLocationX(),user.getLocationY());
         Marker M = mMap.addMarker(new MarkerOptions()
                 .position(newLocation)
@@ -438,6 +438,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             @Override
             public View getInfoContents(Marker marker) {
+                System.out.println("Marker is set" );
                 View v = getLayoutInflater().inflate(R.layout.info_window, null);
                 final AtomicBoolean loaded = new AtomicBoolean();
                     TextView Name = (TextView) v.findViewById((R.id.tv_locality));
