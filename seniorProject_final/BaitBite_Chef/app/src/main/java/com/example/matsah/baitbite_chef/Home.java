@@ -22,6 +22,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -70,17 +71,16 @@ public class Home extends AppCompatActivity
     // Add New Mwenu Layout
     MaterialEditText editName, editDescription, editPrice, editDiscount;
     ElegantNumberButton editQuantity;
-    //FloatingActionButton choosePic;
-    FButton buttonUpload, buttonSelect;
+    FloatingActionButton choosePic;
+    ImageView dish_picture ;
+    //FButton buttonUpload, buttonSelect;
 
     Dish newDish;
 
     Uri saveUri;
 
-    Dish dummyDish;
-
-
     DrawerLayout drawer;
+
 
 
 
@@ -122,6 +122,8 @@ public class Home extends AppCompatActivity
 
         // set name for chef
 
+
+
         View headerView = navigationView.getHeaderView(0);
         txtFullName = (TextView) headerView.findViewById(R.id.textView_chefName);
         txtFullName.setText(Common.currentChef.getName());
@@ -132,6 +134,8 @@ public class Home extends AppCompatActivity
 
 
         //Init View
+        /*LayoutInflater inflater = this.getLayoutInflater();
+        final View orderView = inflater.inflate(R.layout.switch_layout, null);*/
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView_menu);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
@@ -147,7 +151,7 @@ public class Home extends AppCompatActivity
     private void showAddDishDialog() {
         AlertDialog.Builder alertedDialog = new AlertDialog.Builder(Home.this);
         alertedDialog.setTitle("Add new Dish");
-        alertedDialog.setMessage("Please fill full information");
+        alertedDialog.setMessage("Please fill Dish information");
 
         LayoutInflater inflater = this.getLayoutInflater();
         View add_menu_layout = inflater.inflate(R.layout.add_new_dish_layout,null);
@@ -157,15 +161,17 @@ public class Home extends AppCompatActivity
         editPrice = add_menu_layout.findViewById(R.id.editPrice);
         editDiscount = add_menu_layout.findViewById(R.id.editDiscount);
 
+        dish_picture = (ImageView) add_menu_layout.findViewById(R.id.dish_pic);
 
 
-        buttonSelect = add_menu_layout.findViewById(R.id.buttonSelect);
+
+        //buttonSelect = add_menu_layout.findViewById(R.id.buttonSelect);
         //buttonUpload = add_menu_layout.findViewById(R.id.buttonUpload);
-        //choosePic = add_menu_layout.findViewById(R.id.choosePic);
+        choosePic = add_menu_layout.findViewById(R.id.choosePic);
         newDish = new Dish();
 
         //Event for button
-        buttonSelect.setOnClickListener(new View.OnClickListener() {
+        choosePic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ChooseImage();
@@ -182,16 +188,39 @@ public class Home extends AppCompatActivity
 
         alertedDialog.setView(add_menu_layout);
 
+        alertedDialog.setPositiveButton("ADD", null);
+        alertedDialog.setNegativeButton("CANCEL", null);
+
+
 
         alertedDialog.setPositiveButton("ADD", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+            }
+        });
 
-               if(editName.getText().toString().isEmpty() || editPrice.getText().toString().isEmpty()){
-                    Toast.makeText(Home.this, "fill all required fields", Toast.LENGTH_SHORT).show();
 
-               }else{
-                    dialogInterface.dismiss();
+
+        alertedDialog.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+
+        final AlertDialog dialog = alertedDialog.create();
+        dialog.show();
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(editName.getText().toString().isEmpty()){
+                    Toast.makeText(Home.this, "please enter the Dish name", Toast.LENGTH_SHORT).show();
+                }else if( editPrice.getText().toString().isEmpty()){
+                    Toast.makeText(Home.this, "please enter the Dish price", Toast.LENGTH_SHORT).show();
+                }else if(newDish.getImage().isEmpty()){
+                    Toast.makeText(Home.this, "please upload image for the Dish", Toast.LENGTH_SHORT).show();
+                }else{
+                    dialog.dismiss();
                     newDish.setName(editName.getText().toString());
                     newDish.setDescription(editDescription.getText().toString());
                     newDish.setPrice(editPrice.getText().toString());
@@ -205,19 +234,11 @@ public class Home extends AppCompatActivity
                         dishList.push().setValue(newDish);
                         Snackbar.make(drawer, "New Dish "+newDish.getName()+" was added", Snackbar.LENGTH_SHORT).show();
                     }
-               }
 
+
+                }
             }
         });
-
-        alertedDialog.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
-            }
-        });
-
-        alertedDialog.show();
     }
 
 
@@ -238,8 +259,7 @@ public class Home extends AppCompatActivity
                         @Override
                         public void onSuccess(Uri uri) {
                             newDish.setImage(uri.toString());
-
-
+                            Picasso.with(getBaseContext()).load(newDish.getImage()).into(dish_picture);
                         }
                     });
 
@@ -271,7 +291,7 @@ public class Home extends AppCompatActivity
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == Common.PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null){
             saveUri = data.getData();
-            buttonSelect.setText("Image Selected !");
+            //buttonSelect.setText("Image Selected !");
             uploadImage();
         }
     }

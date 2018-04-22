@@ -152,15 +152,15 @@ public class CartActivity extends AppCompatActivity {
         recyclerView_order_dishes.setAdapter(cartAdapter);
 
         //Calculate total price
-        int total = 0;
+        double total = 0.0;
         for(Order order:cartList){
             total += (Integer.parseInt(order.getPrice()))*(Integer.parseInt(order.getQuantity()));
         }
 
-        Locale locale = new Locale("en", "US");
-        NumberFormat numberFormat = NumberFormat.getCurrencyInstance(locale);
+//        Locale locale = new Locale("en", "US");
+//        NumberFormat numberFormat = NumberFormat.getCurrencyInstance(locale);
 
-        textView_total.setText(numberFormat.format(total));
+        textView_total.setText(total+"");
     }
 
     @Override

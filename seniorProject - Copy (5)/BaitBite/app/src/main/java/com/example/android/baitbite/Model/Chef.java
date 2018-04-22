@@ -11,6 +11,7 @@ public class Chef {
     private String Store_Summary;
     private String Profile_Image;
     private boolean Status;
+    private int availability;
 
 
     //..........................................
@@ -22,6 +23,7 @@ public class Chef {
         this.LocationY = LocationY;
         this.Store_Summary = "";
         this.Profile_Image = "";
+        this.availability =0;
         this.Status = false;
 
     }
@@ -34,16 +36,21 @@ public class Chef {
         this.LocationY = 0;
         this.Store_Summary = "";
         this.Profile_Image = "";
+        this.availability =0;
         this.Status = false;
 
     }
 
     public Chef(String email, double locationX,double locationY, String name, String phone_number){
+        this.Phone_Number =phone_number;
+        this.Name = name;
         this.Email = email;
         this.LocationX = locationX;
         this.LocationY = locationY;
-        this.Name = name;
-        this.Phone_Number = phone_number;
+        this.Store_Summary = "";
+        this.Profile_Image = "";
+        this.availability =0;
+        this.Status = false;
 
     }
 
@@ -90,7 +97,6 @@ public class Chef {
     public void setLocationX(double locationX) {
         LocationX = locationX;
     }
-
     public double getLocationY() {
         return LocationY;
     }
@@ -113,6 +119,14 @@ public class Chef {
 
     public void setPhone_Number(String phone_Number) {
         Phone_Number = phone_Number;
+    }
+
+    public int getAvailability() {
+        return availability;
+    }
+
+    public void setAvailability(int availability) {
+        this.availability = availability;
     }
 
 }
