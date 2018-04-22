@@ -62,9 +62,9 @@ public class DishDetailActivity extends AppCompatActivity implements NavigationV
     Button buttonUpdateQuantity;
     TextView dish_name, dish_price, dish_description;
     ElegantNumberButton dish_quantity, editQuantity;
-    ImageView dish_image;
+    ImageView dish_image, edit_dish_picture;
     CollapsingToolbarLayout collapsingToolbarLayout;
-    FloatingActionButton button_cart, fButtonEditDish;
+    FloatingActionButton choose_pic, fButtonEditDish;
     ElegantNumberButton elegantNumberButton_quantity;
     RatingBar ratingBar;
 
@@ -223,6 +223,9 @@ public class DishDetailActivity extends AppCompatActivity implements NavigationV
         editPrice = edit_menu_layout.findViewById(R.id.editPrice);
         editDiscount = edit_menu_layout.findViewById(R.id.editDiscount);
         editQuantity = edit_menu_layout.findViewById(R.id.elegantNumberButton_quantity);
+        edit_dish_picture = (ImageView) edit_menu_layout.findViewById(R.id.dish_pic);
+
+        choose_pic = (FloatingActionButton) edit_menu_layout.findViewById(R.id.choosePic);
 
 
         //set default value for view
@@ -231,13 +234,16 @@ public class DishDetailActivity extends AppCompatActivity implements NavigationV
         editPrice.setText(currentDish.getPrice());
         editDescription.setText(currentDish.getDescription());
         editQuantity.setNumber(currentDish.getQuantity());
+        if(!currentDish.getImage().isEmpty()){
+            Picasso.with(getBaseContext()).load(currentDish.getImage()).into(edit_dish_picture);
+        }
 
 
-        buttonSelect = edit_menu_layout.findViewById(R.id.buttonSelect);
+        //buttonSelect = edit_menu_layout.findViewById(R.id.buttonSelect);
         //buttonUpload = edit_menu_layout.findViewById(R.id.buttonUpload);
 
         //Event for button
-        buttonSelect.setOnClickListener(new View.OnClickListener() {
+        choose_pic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ChooseImage();
@@ -321,6 +327,9 @@ public class DishDetailActivity extends AppCompatActivity implements NavigationV
                         @Override
                         public void onSuccess(Uri uri) {
                             currentDish.setImage((uri.toString()));
+                            if(!currentDish.getImage().isEmpty()){
+                                Picasso.with(getBaseContext()).load(currentDish.getImage()).into(edit_dish_picture);
+                            }
 
                         }
                     });
