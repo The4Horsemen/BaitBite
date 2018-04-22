@@ -219,6 +219,8 @@ public class ChefDishListActivity extends AppCompatActivity {
                     });
                 }else{
                     //TODO: remove dish from dishAdapter
+                    viewHolder.itemView.setVisibility(View.GONE);
+                    viewHolder.itemView.setLayoutParams(new RecyclerView.LayoutParams(0, 0));
                     Toast.makeText(ChefDishListActivity.this, "Dish: "+model.getName(), Toast.LENGTH_SHORT).show();                }
             }
         };
