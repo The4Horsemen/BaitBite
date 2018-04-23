@@ -11,10 +11,6 @@ import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by janbi on 3/25/2018.
- */
-
 public class Database extends SQLiteAssetHelper{
     private static final String DB_NAME = "BaitBiteDB.db";
     private static final int DB_VERSION = 1;
