@@ -185,7 +185,6 @@ public class CartActivity extends AppCompatActivity {
 
     private void reduceDishQuantity(final String dishID, final int orderQuantity) {
 
-
         dishes.child(dishID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
