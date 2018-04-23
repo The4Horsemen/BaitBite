@@ -6,7 +6,7 @@ public class Request {
     private String phone;
     private String chefId;
     private String name;
-    private String address;
+    private String note;
     private String total;
     private String status;
     private List<Order> dishes;
@@ -14,11 +14,11 @@ public class Request {
     public Request() {
     }
 
-    public Request(String phone, String chefId, String name, String address, String total, List<Order> dishes) {
+    public Request(String phone, String chefId, String name, String note, String total, List<Order> dishes) {
         this.phone = phone;
         this.chefId = chefId;
         this.name = name;
-        this.address = address;
+        this.note = note;
         this.total = total;
         this.status = "0"; //Default is 0, 0: Placed, 1: Shipping, 2:Shipped
         this.dishes = dishes;
@@ -56,12 +56,12 @@ public class Request {
         this.name = name;
     }
 
-    public String getAddress() {
-        return address;
+    public String getNote() {
+        return note;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setNote(String note) {
+        this.note = note;
     }
 
     public String getTotal() {

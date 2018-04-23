@@ -14,7 +14,8 @@
         android:layout_gravity="center_vertical"
         android:layout_marginBottom="16dp"
         android:layout_marginTop="16dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:baselineAligned="false">
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/linearLayout5"
@@ -48,9 +49,9 @@
                 android:textAllCaps="true"
                 android:textStyle="italic"
                 app:layout_constraintStart_toStartOf="@+id/textView_order_id"
+                app:layout_constraintTop_toBottomOf="@+id/textView_order_id"
                 tools:layout_conversion_absoluteHeight="19dp"
-                tools:layout_conversion_absoluteWidth="41dp"
-                tools:layout_editor_absoluteY="27dp" />
+                tools:layout_conversion_absoluteWidth="41dp" />
 
             <TextView
                 android:id="@+id/textView_order_phone"
@@ -61,9 +62,9 @@
                 android:textAllCaps="true"
                 android:textStyle="italic"
                 app:layout_constraintStart_toStartOf="@+id/textView_order_id"
+                app:layout_constraintTop_toBottomOf="@+id/textView_order_status"
                 tools:layout_conversion_absoluteHeight="19dp"
-                tools:layout_conversion_absoluteWidth="80dp"
-                tools:layout_editor_absoluteY="46dp" />
+                tools:layout_conversion_absoluteWidth="80dp" />
 
             <TextView
                 android:id="@+id/textView_Orderlabel"

@@ -4,15 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorAccent"
+    android:background="@drawable/background"
     tools:context=".CustomerProfileActivity"
     android:id="@+id/relativeLayout">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/profile_picture"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:layout_marginTop="50dp"
+        android:scaleType="centerCrop"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -64,13 +65,13 @@
         android:id="@+id/choosePic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="72dp"
-        android:layout_marginTop="72dp"
+        android:layout_marginStart="108dp"
+        android:layout_marginTop="108dp"
         android:backgroundTint="@color/buttonSignInColor"
         android:clickable="true"
         app:layout_constraintStart_toStartOf="@+id/profile_picture"
         app:layout_constraintTop_toTopOf="@+id/profile_picture"
-        app:srcCompat="@drawable/ic_menu_camera" />
+        app:srcCompat="@drawable/ic_photo_camera_white_24dp" />
 
     <info.hoang8f.widget.FButton
         android:id="@+id/buttonUpdateProfile"

@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -15,11 +16,15 @@ import android.widget.Toast;
 
 import com.example.android.baitbite.Common.Common;
 import com.example.android.baitbite.Database.Database;
+import com.example.android.baitbite.Model.Dish;
 import com.example.android.baitbite.Model.Order;
 import com.example.android.baitbite.Model.Request;
 import com.example.android.baitbite.ViewHolder.CartAdapter;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -32,6 +37,7 @@ public class CartActivity extends AppCompatActivity {
 
     FirebaseDatabase firebaseDatabase;
     DatabaseReference requests;
+    DatabaseReference dishes;
 
     RecyclerView recyclerView_order_dishes;
     RecyclerView.LayoutManager layoutManager;
@@ -43,6 +49,9 @@ public class CartActivity extends AppCompatActivity {
 
     CartAdapter cartAdapter;
 
+    Dish currentDish;
+    int currentDishQuantity = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +60,7 @@ public class CartActivity extends AppCompatActivity {
         //Init Firebase
         firebaseDatabase = FirebaseDatabase.getInstance();
         requests = firebaseDatabase.getReference("OrderNow");
+        dishes = firebaseDatabase.getReference("Dishes");
 
         //Load the data from Firebase DB to the RecyclerView
         recyclerView_order_dishes = (RecyclerView) findViewById(R.id.listCart);
@@ -80,7 +90,7 @@ public class CartActivity extends AppCompatActivity {
     private void showAlertDialog() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(CartActivity.this);
         alertDialog.setTitle("One more Step!");
-        alertDialog.setMessage("Enter your address: ");
+        alertDialog.setMessage("Enter your note if you have any:");
 
         //Add edit text to alert dialog
         final EditText editTextAddress = new EditText(CartActivity.this);
@@ -90,7 +100,7 @@ public class CartActivity extends AppCompatActivity {
         alertDialog.setView(editTextAddress);
         alertDialog.setIcon(R.drawable.ic_shopping_cart_black_24dp);
 
-        alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+        alertDialog.setPositiveButton("SUBMIT", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 //Create new Request
@@ -103,6 +113,11 @@ public class CartActivity extends AppCompatActivity {
                         cartList
                 );
 
+                //Reduce dishes quantity
+                for(Order order:cartList){
+                    reduceDishQuantity(order.getDishID(), Integer.parseInt(order.getQuantity()));
+                }
+
                 //Submit to Firebase using System.CurrentMilli to Key
                 requests.child(String.valueOf(System.currentTimeMillis())).setValue(request);
 
@@ -113,7 +128,7 @@ public class CartActivity extends AppCompatActivity {
             }
         });
 
-        alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+        alertDialog.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
@@ -161,5 +176,26 @@ public class CartActivity extends AppCompatActivity {
 
         //Refresh the Cart after deleting the item
         loadDishList();
+    }
+
+    private void reduceDishQuantity(final String dishID, final int orderQuantity) {
+
+        dishes.child(dishID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                currentDish = dataSnapshot.getValue(Dish.class);
+                currentDishQuantity = Integer.parseInt(currentDish.getQuantity());
+
+                currentDishQuantity = currentDishQuantity - orderQuantity;
+                Log.d("currentDishQuantity", currentDishQuantity+" "+orderQuantity+" currentDishQuantity after "+currentDishQuantity);
+                currentDish.setQuantity(currentDishQuantity+"");
+                dishes.child(dishID).setValue(currentDish);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d("Error!!!","the read failed "+databaseError.getCode());
+            }
+        });
     }
 }

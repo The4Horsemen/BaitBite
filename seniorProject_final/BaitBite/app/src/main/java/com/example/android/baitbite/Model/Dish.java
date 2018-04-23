@@ -5,7 +5,7 @@ package com.example.android.baitbite.Model;
  */
 
 public class Dish {
-    private String Name, Image, Description, Price, Discount, CategoryId, ChefId,  Quantity;
+    private String Name, Image, Description, Price, Discount, CategoryId, ChefID,  Quantity;
 
     public Dish(String name, String image, String description, String price, String discount, String categoryId) {
         Name = name;
@@ -24,16 +24,27 @@ public class Dish {
         this.Price = "";
         this.Discount = "";
         this.CategoryId="";
-        this.ChefId = "";
+        this.ChefID = "";
         this.Quantity = "0";
     }
 
-    public String getChefId() {
-        return ChefId;
+    public Dish(String name, String image, String description, String price, String discount, String categoryID, String chefID) {
+        Name = name;
+        Image = image;
+        Description = description;
+        Price = price;
+        Discount = discount;
+        CategoryId = categoryID;
+        ChefID = chefID;
+        this.Quantity = "0";
     }
 
-    public void setChefId(String chefId) {
-        ChefId = chefId;
+    public String getChefID() {
+        return ChefID;
+    }
+
+    public void setChefID(String chefID) {
+        ChefID = chefID;
     }
 
     public String getQuantity() {

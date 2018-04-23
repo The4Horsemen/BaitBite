@@ -18,9 +18,11 @@ import com.firebase.geofire.GeoFire;
 import com.firebase.geofire.GeoLocation;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -113,13 +115,17 @@ public class ChefProfileActivity extends AppCompatActivity {
                     geoFire = new GeoFire(ref);
 
 
-                    geoFire.setLocation(Common.currentChef.getPhone_Number(), new GeoLocation(gpsTracker.getLatitude(), gpsTracker.getLongitude()), new GeoFire.CompletionListener(){
+                    geoFire.setLocation(Common.currentChef.getPhone_Number(), new GeoLocation(gpsTracker.getLatitude(), gpsTracker.getLongitude()), new GeoFire.CompletionListener() {
                         @Override
                         public void onComplete(String key, DatabaseError error) {
                             if (error != null) {
                                 System.err.println("There was an error saving the location to GeoFire: " + error);
                                 Toast.makeText(ChefProfileActivity.this, "Location Update Failed", Toast.LENGTH_SHORT).show();
                             } else {
+                                Common.currentChef.setLocationX(gpsTracker.getLatitude());
+                                Common.currentChef.setLocationY(gpsTracker.getLongitude());
+                                DatabaseReference chef = firebaseDatabase.getReference("Chef");
+                                chef.child(Common.currentChef.getPhone_Number()).setValue(Common.currentChef);
                                 System.out.println("Location saved on server successfully!");
                                 Toast.makeText(ChefProfileActivity.this, "Location Updated", Toast.LENGTH_SHORT).show();
                             }
@@ -131,6 +137,7 @@ public class ChefProfileActivity extends AppCompatActivity {
 
 
                 }
+
             }
         });
 

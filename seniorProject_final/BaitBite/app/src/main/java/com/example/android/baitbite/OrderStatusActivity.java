@@ -4,7 +4,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.Toast;
 
 import com.example.android.baitbite.Common.Common;
 import com.example.android.baitbite.Model.Request;
@@ -60,7 +59,7 @@ public class OrderStatusActivity extends AppCompatActivity {
             protected void populateViewHolder(OrderViewHolder viewHolder, Request model, int position) {
                 viewHolder.textViewOrderID.setText(adapter.getRef(position).getKey());
                 viewHolder.textViewOrderStatus.setText(convertCodeToStatus(model.getStatus()));
-                viewHolder.textViewOrderAddress.setText(model.getAddress());
+                viewHolder.textViewOrderAddress.setText(model.getNote());
                 viewHolder.textViewOrderPhone.setText(model.getPhone());
 
             }

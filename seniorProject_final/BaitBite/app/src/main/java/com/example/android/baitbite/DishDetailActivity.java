@@ -45,10 +45,14 @@ public class DishDetailActivity extends AppCompatActivity implements RatingDialo
 
     Dish currentDish;
 
+    int maxQuantity = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dish_detail);
+
+
 
         //Init Firebase
         firebaseDatabase = FirebaseDatabase.getInstance();
@@ -57,6 +61,16 @@ public class DishDetailActivity extends AppCompatActivity implements RatingDialo
 
         //Init view
         elegantNumberButton_quantity = (ElegantNumberButton) findViewById(R.id.elegantNumberButton_quantity);
+
+        elegantNumberButton_quantity.setOnClickListener(new ElegantNumberButton.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(Integer.parseInt(elegantNumberButton_quantity.getNumber()) > maxQuantity){
+                    elegantNumberButton_quantity.setNumber(maxQuantity+"");
+                    Toast.makeText(DishDetailActivity.this, "The maximum number available is: "+maxQuantity, Toast.LENGTH_LONG).show();
+                }
+            }
+        });
 
         //Rating functionality
         button_rating = (FloatingActionButton) findViewById(R.id.button_rating);
@@ -176,6 +190,7 @@ public class DishDetailActivity extends AppCompatActivity implements RatingDialo
                 dish_price.setText(currentDish.getPrice());
                 dish_name.setText(currentDish.getName());
                 dish_description.setText(currentDish.getDescription());
+                maxQuantity = Integer.parseInt(currentDish.getQuantity());
 
             }
 

@@ -16,6 +16,8 @@ import android.util.Log;
 
 import com.karan.churi.PermissionManager.PermissionManager;
 
+import java.text.DecimalFormat;
+
 
 public class GPSTracker extends Service implements LocationListener {
 
@@ -98,6 +100,7 @@ public class GPSTracker extends Service implements LocationListener {
                             location = locationManager
                                     .getLastKnownLocation(LocationManager.GPS_PROVIDER);
                             if (location != null) {
+
                                 latitude = location.getLatitude();
                                 longitude = location.getLongitude();
                             }

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/dishDetailLayout"
-    android:background="@color/colorAccent"
+    android:background="@drawable/background"
     tools:context="com.example.matsah.baitbite_chef.DishDetailActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -148,7 +148,7 @@
                             android:layout_width="70dp"
                             android:layout_height="30dp"
                             android:layout_marginTop="8dp"
-                            android:background="@color/colorAccent"
+                            android:background="@drawable/background"
                             style="?android:attr/borderlessButtonStyle"/>
 
 
