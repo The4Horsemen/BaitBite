@@ -42,7 +42,7 @@ public class CartActivity extends AppCompatActivity {
     RecyclerView recyclerView_order_dishes;
     RecyclerView.LayoutManager layoutManager;
 
-    TextView textView_total;
+    TextView textView_total, textView_empty;
     FButton fButton_placeOrder;
 
     List<Order> cartList = new ArrayList<>();
@@ -69,6 +69,8 @@ public class CartActivity extends AppCompatActivity {
         recyclerView_order_dishes.setLayoutManager(layoutManager);
 
         textView_total = (TextView) findViewById(R.id.total);
+        textView_empty = (TextView) findViewById(R.id.textView_empty);
+
         fButton_placeOrder = (FButton) findViewById(R.id.buttonPlaceOrder);
 
         fButton_placeOrder.setOnClickListener(new View.OnClickListener() {
@@ -152,6 +154,12 @@ public class CartActivity extends AppCompatActivity {
         }
 
         textView_total.setText(""+total);
+
+        if(cartList.size() > 0) {
+            textView_empty.setText("");
+        }else{
+            textView_empty.setText("Your cart is empty");
+        }
     }
 
     @Override
