@@ -87,7 +87,7 @@ public class ChefDishListActivity extends AppCompatActivity {
                 Common.chefId = chefID;
                 loadListDish(chefID);
             }else {
-                Toast.makeText(ChefDishListActivity.this, "Please check your internet connection !!!", Toast.LENGTH_LONG).show();
+                Toast.makeText(ChefDishListActivity.this, "Please check your internet connection", Toast.LENGTH_LONG).show();
                 return;
             }
         }
@@ -204,7 +204,7 @@ public class ChefDishListActivity extends AppCompatActivity {
                     if (!model.getImage().isEmpty()) {
                         Picasso.with(getBaseContext()).load(model.getImage()).into(viewHolder.imageViewDish);
                     } else {
-                        Toast.makeText(ChefDishListActivity.this, "No Dishes!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(ChefDishListActivity.this, "No Dishes", Toast.LENGTH_LONG).show();
                     }
                     final Dish local = model;
                     viewHolder.setItemClickListener(new ItemClickListener() {
@@ -255,7 +255,7 @@ public class ChefDishListActivity extends AppCompatActivity {
                 //Delete cart
                 new Database(getBaseContext()).cleanCart();
 
-                Toast.makeText(ChefDishListActivity.this, "Your cart items have been deleted !", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ChefDishListActivity.this, "Your cart items have been deleted", Toast.LENGTH_SHORT).show();
                 isDelete = true;
                 finish();
             }

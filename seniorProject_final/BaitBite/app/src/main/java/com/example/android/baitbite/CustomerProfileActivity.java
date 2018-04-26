@@ -138,7 +138,7 @@ public class CustomerProfileActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     mDialog.dismiss();
-                    Toast.makeText(CustomerProfileActivity.this, "Uploaded !!!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CustomerProfileActivity.this, "Uploaded", Toast.LENGTH_SHORT).show();
                     imageFolder.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
