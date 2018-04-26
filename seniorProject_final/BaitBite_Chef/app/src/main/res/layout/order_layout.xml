@@ -28,12 +28,12 @@
                 android:id="@+id/textView_order_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="24dp"
                 android:gravity="center_vertical|start"
                 android:text="#01"
                 android:textAllCaps="true"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/textView_order_phone"
+                app:layout_constraintBottom_toTopOf="@+id/textView_customer_name"
                 app:layout_constraintStart_toEndOf="@+id/textView_Orderlabel"
                 app:layout_constraintTop_toTopOf="@+id/textView_Orderlabel"
                 app:layout_constraintVertical_bias="0.0"
@@ -54,7 +54,7 @@
                 tools:layout_conversion_absoluteWidth="41dp" />
 
             <TextView
-                android:id="@+id/textView_order_phone"
+                android:id="@+id/textView_customer_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical|start"
@@ -85,10 +85,10 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView_Orderlabel" />
 
             <TextView
-                android:id="@+id/textView_Phonelabel"
+                android:id="@+id/textView_customerNameLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Phone Number:"
+                android:text="customer Name: "
                 app:layout_constraintStart_toStartOf="@+id/textView_Statuslabel"
                 app:layout_constraintTop_toBottomOf="@+id/textView_Statuslabel" />
 

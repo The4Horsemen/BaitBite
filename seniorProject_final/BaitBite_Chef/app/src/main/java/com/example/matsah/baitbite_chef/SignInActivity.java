@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -181,13 +182,10 @@ public class SignInActivity extends AppCompatActivity {
         textSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               // permissionnManager = new PermissionManager() {
-               // };
-               // GPSTracker gpsTracker = new GPSTracker(SignInActivity.this);
-               // if(permissionnManager.checkAndRequestPermissions(SignInActivity.this) && gpsTracker.canGetLocation()) {
+
                     Intent signUp = new Intent(SignInActivity.this, SignUP_WithVerify.class);
                     startActivity(signUp);
-               // }
+
 
             }
         });
@@ -221,7 +219,14 @@ public class SignInActivity extends AppCompatActivity {
                         return;
                     }
 
+
+
                     phone = "+966"+editPhone.getText().toString().substring(1);
+
+                    if(!isValidPhoneNo(phone)){
+                        Toast.makeText(SignInActivity.this, "please enter a valid phone number",Toast.LENGTH_LONG).show();
+                        return;
+                    }
 
                     if(checkBoxRememberMe.isChecked()) {
                         //Save Chef
@@ -396,6 +401,11 @@ public class SignInActivity extends AppCompatActivity {
         PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, code);
         // [END verify_with_code]
         signInWithPhoneAuthCredential(credential);
+    }
+
+    public static boolean isValidPhoneNo(CharSequence iPhoneNo) {
+        return !TextUtils.isEmpty(iPhoneNo) &&
+                Patterns.PHONE.matcher(iPhoneNo).matches();
     }
 
 

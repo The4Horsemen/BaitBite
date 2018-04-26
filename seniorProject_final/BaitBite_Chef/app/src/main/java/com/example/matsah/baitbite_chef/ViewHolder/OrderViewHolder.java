@@ -13,7 +13,7 @@ import com.example.matsah.baitbite_chef.R;
  */
 
 public class OrderViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnCreateContextMenuListener{
-    public TextView textViewOrderID, textViewOrderStatus, textViewOrderPhone, textViewOrderAddress;
+    public TextView textViewOrderID, textViewOrderStatus, textViewOrderCustomerName, textViewOrderAddress;
 
     private ItemClickListener itemClickListener;
 
@@ -22,7 +22,7 @@ public class OrderViewHolder extends RecyclerView.ViewHolder implements View.OnC
 
         textViewOrderID = (TextView) itemView.findViewById(R.id.textView_order_id);
         textViewOrderStatus = (TextView) itemView.findViewById(R.id.textView_order_status);
-        textViewOrderPhone = (TextView) itemView.findViewById(R.id.textView_order_phone);
+        textViewOrderCustomerName = (TextView) itemView.findViewById(R.id.textView_customer_name);
 
         itemView.setOnClickListener(this);
         itemView.setOnCreateContextMenuListener(this);
