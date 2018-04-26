@@ -156,7 +156,7 @@ public class DishDetailActivity extends AppCompatActivity implements NavigationV
             @Override
             public void onClick(View view) {
 
-                showUpdateDishDialog(dishes.child(dishID).getKey(), currentDish);
+                showUpdateDishDialog(dishes.child(dishID).getKey());
             }
         });
 
@@ -210,7 +210,7 @@ public class DishDetailActivity extends AppCompatActivity implements NavigationV
         });
     }
 
-    private void showUpdateDishDialog(final String key, final Dish item1) {
+    private void showUpdateDishDialog(final String key) {
         AlertDialog.Builder alertedDialog = new AlertDialog.Builder(DishDetailActivity.this);
         alertedDialog.setTitle("Edit Dish");
         alertedDialog.setMessage("Please fill full information");
@@ -265,12 +265,15 @@ public class DishDetailActivity extends AppCompatActivity implements NavigationV
                 dialogInterface.dismiss();
 
 
+
                 //set the edited the values
                 currentDish.setName(editName.getText().toString());
                 currentDish.setPrice(editPrice.getText().toString());
                 currentDish.setDiscount(editDiscount.getText().toString());
                 currentDish.setDescription(editDescription.getText().toString());
                 currentDish.setQuantity(editQuantity.getNumber());
+
+
 
                 //increase the availability of the chef
                 updateDishQuantity(Integer.parseInt(editQuantity.getNumber().toString()));
@@ -415,6 +418,7 @@ public class DishDetailActivity extends AppCompatActivity implements NavigationV
         super.onBackPressed();
         Intent homeIntent = new Intent(DishDetailActivity.this, Home.class);
         startActivity(homeIntent);
+        finish();
 
 
     }

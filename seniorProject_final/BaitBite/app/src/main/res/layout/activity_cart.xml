@@ -8,6 +8,16 @@
     android:background="@drawable/background"
     tools:context="com.example.android.baitbite.CartActivity">
 
+    <TextView
+        android:id="@+id/textView_empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/listCart"
+        android:layout_centerHorizontal="true"
+        android:text="Your cart is empty"
+        android:textColor="@android:color/white"
+        android:textSize="20sp" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/listCart"
         android:background="@android:color/transparent"

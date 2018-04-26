@@ -214,68 +214,77 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                //Toast.makeText(SignInActivity.this, editPhone.getText().toString().substring(1),Toast.LENGTH_LONG).show();
-                if(editPhone.getText().toString().matches("")){
-                    Toast.makeText(SignInActivity.this, "please enter the phone number",Toast.LENGTH_LONG).show();
+                if (Common.isConnectedToInternet(getBaseContext())) {
+                    //Toast.makeText(SignInActivity.this, editPhone.getText().toString().substring(1),Toast.LENGTH_LONG).show();
+                    if(editPhone.getText().toString().matches("")){
+                        Toast.makeText(SignInActivity.this, "please enter the phone number",Toast.LENGTH_LONG).show();
+                        return;
+                    }
+
+                    phone = "+966"+editPhone.getText().toString().substring(1);
+
+                    if(checkBoxRememberMe.isChecked()) {
+                        //Save Chef
+                        Paper.book().write(Common.CHEF_KEY, phone);
+                    }
+
+
+
+                    final ProgressDialog mDialog = new ProgressDialog(SignInActivity.this);
+                    mDialog.setMessage("Please wait...");
+                    mDialog.show();
+
+                    table_chef.addValueEventListener(new ValueEventListener() {
+
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+
+                            //Check chef existence in Database
+                            if(dataSnapshot.child(phone).exists()){
+
+                                startPhoneNumberVerification(phone);
+
+                                buttonSignIn.setVisibility(View.INVISIBLE);
+                                buttonVerify.setVisibility(View.VISIBLE);
+                                editPhone.setVisibility(View.INVISIBLE);
+                                verification_code.setVisibility(View.VISIBLE);
+                                textSignup.setVisibility(View.INVISIBLE);
+                                checkBoxRememberMe.setVisibility(View.INVISIBLE);
+
+                                //Get chef info
+                                mDialog.dismiss();
+                                chef = dataSnapshot.child(phone).getValue(Chef.class);
+                                chef.setPhone_Number(phone);
+
+
+                            }else{
+                                mDialog.dismiss();
+                                Toast.makeText(SignInActivity.this, "chef not exist, Sign Up please!",Toast.LENGTH_LONG).show();
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
+
+                }else{
+                    Toast.makeText(SignInActivity.this, "Please check your internet connection !!!", Toast.LENGTH_LONG).show();
                     return;
                 }
 
-                phone = "+966"+editPhone.getText().toString().substring(1);
 
-                if(checkBoxRememberMe.isChecked()) {
-                    //Save Chef
-                    Paper.book().write(Common.CHEF_KEY, phone);
-                }
-
-
-
-                final ProgressDialog mDialog = new ProgressDialog(SignInActivity.this);
-                mDialog.setMessage("Please wait...");
-                mDialog.show();
-
-                table_chef.addValueEventListener(new ValueEventListener() {
-
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-
-                        //Check chef existence in Database
-                        if(dataSnapshot.child(phone).exists()){
-
-                            startPhoneNumberVerification(phone);
-
-                            buttonSignIn.setVisibility(View.INVISIBLE);
-                            buttonVerify.setVisibility(View.VISIBLE);
-                            editPhone.setVisibility(View.INVISIBLE);
-                            verification_code.setVisibility(View.VISIBLE);
-                            textSignup.setVisibility(View.INVISIBLE);
-                            checkBoxRememberMe.setVisibility(View.INVISIBLE);
-
-                            //Get chef info
-                            mDialog.dismiss();
-                            chef = dataSnapshot.child(phone).getValue(Chef.class);
-                            chef.setPhone_Number(phone);
-
-
-                        }else{
-                            mDialog.dismiss();
-                            Toast.makeText(SignInActivity.this, "chef not exist, Sign Up please!",Toast.LENGTH_LONG).show();
-                        }
-
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
             }
         });
 
         //Check remember me
-        String customer = Paper.book().read(Common.CHEF_KEY);
-        if(customer != null){
-            if(!customer.isEmpty()){
-                signIn(customer);
+        String chef = Paper.book().read(Common.CHEF_KEY);
+        if(chef != null){
+            if(!chef.isEmpty()){
+                signIn(chef);
             }
         }
 
@@ -330,7 +339,7 @@ public class SignInActivity extends AppCompatActivity {
                 }
             });
         }else{
-            Toast.makeText(SignInActivity.this, "Please check your intenet connection !!!", Toast.LENGTH_LONG).show();
+            Toast.makeText(SignInActivity.this, "Please check your internet connection !!!", Toast.LENGTH_LONG).show();
             return;
         }
     }
