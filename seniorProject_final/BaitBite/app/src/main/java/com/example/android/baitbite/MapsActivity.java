@@ -362,7 +362,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 Chef user = dataSnapshot.getValue(Chef.class);
-                                //if(user.getAvailability() > 0){
+                                if(user.getAvailability() > 0){
                                 if (!user.getProfile_Image().isEmpty()) {
                                     Picasso.with(MapsActivity.this)
                                             .load(user.getProfile_Image()).fetch();
@@ -372,7 +372,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 }
                                 SetMarker(user);
 
-                                //}
+                                }
 
                             }
 
