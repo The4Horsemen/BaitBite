@@ -98,7 +98,7 @@ public class HomeActivity extends AppCompatActivity
             // Calling for method loadMenu to load the data from the Firebase DB
             loadMenu();
         }else {
-            Toast.makeText(this, "Please check your intenet connection !!!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Please check your intenet connection", Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -148,7 +148,7 @@ public class HomeActivity extends AppCompatActivity
     private void showAlertDialog() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(HomeActivity.this);
         alertDialog.setTitle("Are sure you want to go back?");
-        alertDialog.setMessage("Your cart will be deleted !!!");
+        alertDialog.setMessage("Your cart will be deleted");
 
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
 
@@ -160,7 +160,7 @@ public class HomeActivity extends AppCompatActivity
                 //Delete cart
                 new Database(getBaseContext()).cleanCart();
 
-                Toast.makeText(HomeActivity.this, "Your cart items have been deleted !", Toast.LENGTH_LONG).show();
+                Toast.makeText(HomeActivity.this, "Your cart items have been deleted", Toast.LENGTH_LONG).show();
                 isDelete = true;
                 finish();
             }

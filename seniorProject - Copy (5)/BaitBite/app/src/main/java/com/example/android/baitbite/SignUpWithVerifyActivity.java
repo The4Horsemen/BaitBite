@@ -114,7 +114,7 @@ public class SignUpWithVerifyActivity extends AppCompatActivity {
                 // This callback is invoked in an invalid request for verification is made,
                 // for instance if the the phone number format is not valid.
                 Log.w(TAG, "onVerificationFailed", e);
-                Toast.makeText(SignUpWithVerifyActivity.this, "Sign up onVerificationFailed !", Toast.LENGTH_LONG).show();
+                Toast.makeText(SignUpWithVerifyActivity.this, "Sign up onVerificationFailed", Toast.LENGTH_LONG).show();
 
 
                 if (e instanceof FirebaseAuthInvalidCredentialsException) {
@@ -228,7 +228,7 @@ public class SignUpWithVerifyActivity extends AppCompatActivity {
                         }
                     });
                 }else {
-                    Toast.makeText(SignUpWithVerifyActivity.this, "Please check your intenet connection !!!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(SignUpWithVerifyActivity.this, "Please check your intenet connection", Toast.LENGTH_LONG).show();
                     return;
                 }
 

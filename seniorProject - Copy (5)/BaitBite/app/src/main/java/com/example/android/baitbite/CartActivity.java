@@ -199,7 +199,7 @@ public class CartActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Log.d("Error!!!","the read failed "+databaseError.getCode());
+                Log.d("Error!","the read failed "+databaseError.getCode());
             }
         });
     }

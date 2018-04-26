@@ -241,7 +241,7 @@ public class SignInActivity extends AppCompatActivity {
 
                             } else {
                                 mDialog.dismiss();
-                                Toast.makeText(SignInActivity.this, "Customer not exist, Sign Up please!", Toast.LENGTH_LONG).show();
+                                Toast.makeText(SignInActivity.this, "Customer not exist, Sign Up please", Toast.LENGTH_LONG).show();
                             }
 
                         }
@@ -252,7 +252,7 @@ public class SignInActivity extends AppCompatActivity {
                         }
                     });
                 }else{
-                    Toast.makeText(SignInActivity.this, "Please check your intenet connection !!!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(SignInActivity.this, "Please check your intenet connection", Toast.LENGTH_LONG).show();
                     return;
                 }
             }
@@ -306,7 +306,7 @@ public class SignInActivity extends AppCompatActivity {
 
                     } else {
                         mDialog.dismiss();
-                        Toast.makeText(SignInActivity.this, "Customer not exist, Sign Up please!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(SignInActivity.this, "Customer not exist, Sign Up please", Toast.LENGTH_LONG).show();
                     }
 
                 }
@@ -317,7 +317,7 @@ public class SignInActivity extends AppCompatActivity {
                 }
             });
         }else{
-            Toast.makeText(SignInActivity.this, "Please check your intenet connection !!!", Toast.LENGTH_LONG).show();
+            Toast.makeText(SignInActivity.this, "Please check your intenet connection", Toast.LENGTH_LONG).show();
             return;
         }
     }

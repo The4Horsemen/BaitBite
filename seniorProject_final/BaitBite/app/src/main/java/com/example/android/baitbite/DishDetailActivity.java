@@ -120,7 +120,7 @@ public class DishDetailActivity extends AppCompatActivity implements RatingDialo
                 getRatingDish(dishID);
                 
             }else {
-                Toast.makeText(DishDetailActivity.this, "Please check your intenet connection !!!", Toast.LENGTH_LONG).show();
+                Toast.makeText(DishDetailActivity.this, "Please check your intenet connection", Toast.LENGTH_LONG).show();
                 return;
             }
         }
@@ -225,7 +225,7 @@ public class DishDetailActivity extends AppCompatActivity implements RatingDialo
                     rating_table.child(Common.currentCustomer.getPhone()).setValue(rating);
                 }
 
-                Toast.makeText(DishDetailActivity.this, "Thanks for your Rating & Feedback!", Toast.LENGTH_LONG).show();
+                Toast.makeText(DishDetailActivity.this, "Thanks for your Rating & Feedback", Toast.LENGTH_LONG).show();
             }
 
             @Override
