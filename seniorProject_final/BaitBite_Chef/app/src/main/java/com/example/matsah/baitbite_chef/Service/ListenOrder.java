@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
 import com.example.matsah.baitbite_chef.Common.Common;
 import com.example.matsah.baitbite_chef.Model.Request;
@@ -25,6 +26,7 @@ public class ListenOrder extends Service implements ChildEventListener{
 
     FirebaseDatabase database;
     DatabaseReference orders;
+    String ChefKey;
 
     @Override
     public void onCreate() {
@@ -32,6 +34,7 @@ public class ListenOrder extends Service implements ChildEventListener{
 
         database = FirebaseDatabase.getInstance();
         orders = database.getReference("OrderNow");
+
     }
 
     @Override
@@ -51,9 +54,12 @@ public class ListenOrder extends Service implements ChildEventListener{
     @Override
     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
         Request request = dataSnapshot.getValue(Request.class);
+
         if(request.getStatus().equals("0"/*placed*/) && request.getChefId().equals(Common.currentChef.getPhone_Number())){
+            Log.d("currentChef","currentChef: "+Common.currentChef.getPhone_Number());
             showNotification(dataSnapshot.getKey(),request);
         }
+
     }
 
     private void showNotification(String key, Request request) {

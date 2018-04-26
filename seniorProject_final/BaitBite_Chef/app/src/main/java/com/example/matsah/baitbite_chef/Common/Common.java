@@ -7,6 +7,7 @@ import android.net.NetworkInfo;
 import com.example.matsah.baitbite_chef.Model.Chef;
 import com.example.matsah.baitbite_chef.Model.Dish;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,7 +16,7 @@ import java.util.List;
 
 public class Common {
     public static Chef currentChef;
-    public static List<Dish> dishes;
+    public static List<Dish> dishes ;
 
     public static final String UPDATE = "Update";
     public static final String DELETE = "Delete";
