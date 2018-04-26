@@ -118,7 +118,7 @@
                         android:paddingLeft="12dp"
                         android:paddingRight="12dp"
                         android:paddingTop="12dp"
-                        android:text="How many dishes you have today?"
+                        android:text="How many dishes do you have today?"
                         android:textColor="@color/colorPrimary"
                         android:textSize="20sp"
                         android:textStyle="bold" />
