@@ -183,14 +183,16 @@ public class SignUpWithVerifyActivity extends AppCompatActivity {
         buttonSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                if(editPhone.getText().toString().matches("")){
-                    Toast.makeText(SignUpWithVerifyActivity.this, "please enter the phone number",Toast.LENGTH_LONG).show();
+                PermissionManager permissionnManager = new PermissionManager() {
+                };
+                if (permissionnManager.checkAndRequestPermissions(SignUpWithVerifyActivity.this)) {
+                if (editPhone.getText().toString().matches("")) {
+                    Toast.makeText(SignUpWithVerifyActivity.this, "please enter the phone number", Toast.LENGTH_LONG).show();
                     return;
                 }
 
                 if (Common.isConnectedToInternet(getBaseContext())) {
-                    phone = "+966"+editPhone.getText().toString().substring(1);
+                    phone = "+966" + editPhone.getText().toString().substring(1);
 
                     final ProgressDialog mDialog = new ProgressDialog(SignUpWithVerifyActivity.this);
                     mDialog.setMessage("Please wait...");
@@ -198,7 +200,6 @@ public class SignUpWithVerifyActivity extends AppCompatActivity {
                     table_customer.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-
 
 
                             //check if the phone number already exist
@@ -227,7 +228,7 @@ public class SignUpWithVerifyActivity extends AppCompatActivity {
 
                         }
                     });
-                }else {
+                } else {
                     Toast.makeText(SignUpWithVerifyActivity.this, "Please check your intenet connection", Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -243,6 +244,7 @@ public class SignUpWithVerifyActivity extends AppCompatActivity {
 
                 }*/
             }
+        }
         });
 
 

@@ -1,7 +1,9 @@
 package com.example.matsah.baitbite_chef;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -14,6 +16,15 @@ import android.widget.Toast;
 import com.example.matsah.baitbite_chef.Common.Common;
 import com.example.matsah.baitbite_chef.GPS.GPSTracker;
 import com.example.matsah.baitbite_chef.Model.Chef;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResult;
+import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -213,25 +224,25 @@ public class SignInActivity extends AppCompatActivity {
         buttonSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                //Toast.makeText(SignInActivity.this, editPhone.getText().toString().substring(1),Toast.LENGTH_LONG).show();
-                if(editPhone.getText().toString().matches("")){
-                    Toast.makeText(SignInActivity.this, "please enter the phone number",Toast.LENGTH_LONG).show();
+                PermissionManager permissionnManager = new PermissionManager() {
+                };
+                if (permissionnManager.checkAndRequestPermissions(SignInActivity.this)) {
+                if (editPhone.getText().toString().matches("")) {
+                    Toast.makeText(SignInActivity.this, "please enter the phone number", Toast.LENGTH_LONG).show();
                     return;
                 }
 
-                phone = "+966"+editPhone.getText().toString().substring(1);
+                phone = "+966" + editPhone.getText().toString().substring(1);
 
-                if(checkBoxRememberMe.isChecked()) {
+                if (checkBoxRememberMe.isChecked()) {
                     //Save Chef
                     Paper.book().write(Common.CHEF_KEY, phone);
                 }
 
 
-
                 final ProgressDialog mDialog = new ProgressDialog(SignInActivity.this);
-                mDialog.setMessage("Please wait...");
-                mDialog.show();
+                    mDialog.setMessage("Please wait...");
+                    mDialog.show();
 
                 table_chef.addValueEventListener(new ValueEventListener() {
 
@@ -239,7 +250,7 @@ public class SignInActivity extends AppCompatActivity {
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
                         //Check chef existence in Database
-                        if(dataSnapshot.child(phone).exists()){
+                        if (dataSnapshot.child(phone).exists()) {
 
                             startPhoneNumberVerification(phone);
 
@@ -253,12 +264,12 @@ public class SignInActivity extends AppCompatActivity {
                             //Get chef info
                             mDialog.dismiss();
                             chef = dataSnapshot.child(phone).getValue(Chef.class);
-                            chef.setPhone_Number(phone);
+                            chef.setPhone_Number(phone);} else {
 
 
-                        }else{
-                            mDialog.dismiss();
-                            Toast.makeText(SignInActivity.this, "chef not exist, Sign Up please!",Toast.LENGTH_LONG).show();
+
+                             mDialog.dismiss();
+                            Toast.makeText(SignInActivity.this, "chef not exist, Sign Up please!", Toast.LENGTH_LONG).show();
                         }
 
                     }
@@ -269,6 +280,8 @@ public class SignInActivity extends AppCompatActivity {
                     }
                 });
             }
+            }
+
         });
 
         //Check remember me
@@ -388,7 +401,6 @@ public class SignInActivity extends AppCompatActivity {
         // [END verify_with_code]
         signInWithPhoneAuthCredential(credential);
     }
-
 
 
 
