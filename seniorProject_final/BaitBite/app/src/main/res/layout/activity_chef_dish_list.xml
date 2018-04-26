@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         app:mt_speechMode="false"
-        app:mt_hint="Enter your Dish"/>
+        app:mt_hint="Search for Dish"/>
 
     <android.support.v7.widget.RecyclerView
         android:layout_below="@id/searchBar_chefDishList"

@@ -94,7 +94,7 @@ public class ChefDishListActivity extends AppCompatActivity {
 
         //Search
         materialSearchBar = (MaterialSearchBar) findViewById(R.id.searchBar_chefDishList);
-        materialSearchBar.setHint("Enter your Dish");
+        materialSearchBar.setHint("Search for Dish");
         loadSuggest();
         materialSearchBar.setLastSuggestions(suggestList);
         materialSearchBar.setCardViewElevation(10);

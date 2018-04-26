@@ -42,6 +42,7 @@
             <item
                 android:id="@+id/nav_send"
                 android:icon="@drawable/ic_menu_send"
+                android:iconTint="@android:color/white"
                 android:title="Send Feedback" />
         </menu>
     </item>
