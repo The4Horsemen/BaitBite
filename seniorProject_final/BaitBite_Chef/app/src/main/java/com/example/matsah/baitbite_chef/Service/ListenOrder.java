@@ -51,9 +51,11 @@ public class ListenOrder extends Service implements ChildEventListener{
     @Override
     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
         Request request = dataSnapshot.getValue(Request.class);
-        if(request.getStatus().equals("0"/*placed*/) && request.getChefId().equals(Common.currentChef.getPhone_Number())){
-            showNotification(dataSnapshot.getKey(),request);
-        }
+
+        //if(request.getStatus().equals("0"/*placed*/) && request.getChefId().equals(Common.currentChef.getPhone_Number())){
+          //  showNotification(dataSnapshot.getKey(),request);
+       // }
+
     }
 
     private void showNotification(String key, Request request) {
