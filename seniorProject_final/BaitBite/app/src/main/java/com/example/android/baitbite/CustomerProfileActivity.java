@@ -68,6 +68,8 @@ public class CustomerProfileActivity extends AppCompatActivity {
 
         //Init view
         profile_picture = (ImageView) findViewById(R.id.profile_picture);
+        profile_picture.getLayoutParams().height = 400; // OR
+        profile_picture.getLayoutParams().width = 400;
 
         editName = (MaterialEditText) findViewById(R.id.updateName);
         editEmail = (MaterialEditText) findViewById(R.id.updateEmail);

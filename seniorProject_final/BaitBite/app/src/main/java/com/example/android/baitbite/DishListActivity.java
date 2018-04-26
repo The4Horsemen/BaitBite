@@ -73,7 +73,7 @@ public class DishListActivity extends AppCompatActivity {
 
         //Search
         materialSearchBar = (MaterialSearchBar) findViewById(R.id.searchBar_dishList);
-        materialSearchBar.setHint("Enter your Dish");
+        materialSearchBar.setHint("Search for Dish");
         loadSuggest();
         materialSearchBar.setLastSuggestions(suggestList);
         materialSearchBar.setCardViewElevation(10);
