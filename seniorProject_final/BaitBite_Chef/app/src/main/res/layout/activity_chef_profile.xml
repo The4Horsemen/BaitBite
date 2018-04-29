@@ -8,8 +8,7 @@
     android:background="@drawable/background"
     tools:context="com.example.matsah.baitbite_chef.ChefProfileActivity">
 
-
-
+    
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"

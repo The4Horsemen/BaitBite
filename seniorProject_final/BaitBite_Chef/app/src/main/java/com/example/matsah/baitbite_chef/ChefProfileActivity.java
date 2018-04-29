@@ -219,13 +219,4 @@ public class ChefProfileActivity extends AppCompatActivity {
 
         }
     }
-
-    public void onBackPressed() {
-        super.onBackPressed();
-        Intent homeIntent = new Intent(ChefProfileActivity.this, Home.class);
-        startActivity(homeIntent);
-        finish();
-
-
-    }
 }

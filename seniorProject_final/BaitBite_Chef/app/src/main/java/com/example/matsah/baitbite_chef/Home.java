@@ -11,7 +11,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -47,7 +46,6 @@ import com.google.firebase.storage.UploadTask;
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.UUID;
 
 import info.hoang8f.widget.FButton;
@@ -75,6 +73,7 @@ public class Home extends AppCompatActivity
     ElegantNumberButton editQuantity;
     FloatingActionButton choosePic;
     ImageView dish_picture ;
+    //FButton buttonUpload, buttonSelect;
 
     Dish newDish;
 
@@ -166,7 +165,8 @@ public class Home extends AppCompatActivity
 
 
 
-
+        //buttonSelect = add_menu_layout.findViewById(R.id.buttonSelect);
+        //buttonUpload = add_menu_layout.findViewById(R.id.buttonUpload);
         choosePic = add_menu_layout.findViewById(R.id.choosePic);
         newDish = new Dish();
 
@@ -179,7 +179,12 @@ public class Home extends AppCompatActivity
             }
         });
 
-
+       /* buttonUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                uploadImage();
+            }
+        });*/
 
         alertedDialog.setView(add_menu_layout);
 
@@ -214,8 +219,6 @@ public class Home extends AppCompatActivity
                     Toast.makeText(Home.this, "please enter the Dish price", Toast.LENGTH_SHORT).show();
                 }else if(newDish.getImage().isEmpty()){
                     Toast.makeText(Home.this, "please upload image for the Dish", Toast.LENGTH_SHORT).show();
-                }else if(isDishExist(editName.getText().toString())){
-                    Toast.makeText(Home.this, "Dish name is already used", Toast.LENGTH_SHORT).show();
                 }else{
                     dialog.dismiss();
                     newDish.setName(editName.getText().toString());
@@ -238,16 +241,6 @@ public class Home extends AppCompatActivity
         });
     }
 
-    private boolean isDishExist(String editName) {
-        boolean dishFound = false;
-        for (Dish temp : Common.dishes) {
-            if(temp.getName().equals(editName)){
-                dishFound = true;
-            }
-        }
-        return dishFound;
-    }
-
 
     private void uploadImage() {
         if(saveUri != null){
@@ -261,7 +254,7 @@ public class Home extends AppCompatActivity
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     mDialog.dismiss();
-                    Toast.makeText(Home.this, "image Uploaded !!!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Home.this, "Uploaed !!!", Toast.LENGTH_SHORT).show();
                     imageFolder.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
@@ -313,15 +306,12 @@ public class Home extends AppCompatActivity
 
 
     private void loadListDish() {
-        Common.dishes= new ArrayList<Dish>();
         adapter = new FirebaseRecyclerAdapter<Dish, DishViewHolder>(Dish.class,
                 R.layout.dish_item,
                 DishViewHolder.class,
                 dishList.orderByChild("chefID").equalTo(Common.currentChef.getPhone_Number())) {
             @Override
             protected void populateViewHolder(DishViewHolder viewHolder, Dish model, int position) {
-                if(model != null)
-                    Common.dishes.add(model);
                 viewHolder.DishName.setText(model.getName());
                 viewHolder.DishPrice.setText(model.getPrice()+" SAR");
                 viewHolder.DishQuantity.setText("QTY: "+model.getQuantity());
@@ -419,7 +409,9 @@ public class Home extends AppCompatActivity
     //Update / Delete
 
     public boolean onContextItemSelected(MenuItem item) {
-
+        /*if(item.getTitle().equals(Common.UPDATE)){
+            //showUpdateDishDialog(adapter.getRef(item.getOrder()).getKey(), adapter.getItem(item.getOrder()));
+        }else*/
         if(item.getTitle().equals(Common.DELETE)){
             deleteDish(adapter.getRef(item.getOrder()).getKey(), adapter.getItem(item.getOrder()));
         }
@@ -435,10 +427,120 @@ public class Home extends AppCompatActivity
         Common.currentChef.setAvailability(itemOldQuantity - Integer.parseInt(item.getQuantity()));
         chefs.child(Common.currentChef.getPhone_Number()).setValue(Common.currentChef);
 
-
     }
 
+   /* private void showUpdateDishDialog(final String key, final Dish item) {
+        AlertDialog.Builder alertedDialog = new AlertDialog.Builder(Home.this);
+        alertedDialog.setTitle("Edit Dish");
+        alertedDialog.setMessage("Please fill full information");
 
+        LayoutInflater inflater = this.getLayoutInflater();
+        View edit_menu_layout = inflater.inflate(R.layout.edit_dish_layout,null);
+
+        editName = edit_menu_layout.findViewById(R.id.editName);
+        editDescription = edit_menu_layout.findViewById(R.id.editDescription);
+        editPrice = edit_menu_layout.findViewById(R.id.editPrice);
+        editDiscount = edit_menu_layout.findViewById(R.id.editDiscount);
+        editQuantity = edit_menu_layout.findViewById(R.id.elegantNumberButton_quantity);
+
+
+        //set default value for view
+        editName.setText(item.getName());
+        editDiscount.setText(item.getDiscount());
+        editPrice.setText(item.getPrice());
+        editDescription.setText(item.getDescription());
+        editQuantity.setNumber(item.getQuantity());
+
+        final int dishOldQuantity = Integer.parseInt(item.getQuantity());
+
+
+        buttonSelect = edit_menu_layout.findViewById(R.id.buttonSelect);
+        buttonUpload = edit_menu_layout.findViewById(R.id.buttonUpload);
+
+        //Event for button
+        buttonSelect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ChooseImage();
+            }
+        });
+
+        buttonUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changeImage(item);
+            }
+        });
+
+        alertedDialog.setView(edit_menu_layout);
+
+        alertedDialog.setPositiveButton("EDIT", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+                item.setName(editName.getText().toString());
+                item.setPrice(editPrice.getText().toString());
+                item.setDiscount(editDiscount.getText().toString());
+                item.setDescription(editDescription.getText().toString());
+                item.setQuantity(editQuantity.getNumber());
+
+                updateChefAvailability(dishOldQuantity, Integer.parseInt(editQuantity.getNumber()));
+
+
+                dishList.child(key).setValue(item);
+                Snackbar.make(drawer, "Dish "+item.getName()+" was edited", Snackbar.LENGTH_SHORT).show();
+
+            }
+        });
+
+        alertedDialog.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+
+        alertedDialog.show();
+    }*/
+
+    /*private void changeImage(final Dish item) {
+        if(saveUri != null){
+            final ProgressDialog mDialog = new ProgressDialog(this);
+            mDialog.setMessage("Uploading...");
+            mDialog.show();
+
+            String imageName = UUID.randomUUID().toString();
+            final StorageReference imageFolder = storageRefrence.child("images/"+imageName);
+            imageFolder.putFile(saveUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    mDialog.dismiss();
+                    Toast.makeText(Home.this, "Uploaded !!!", Toast.LENGTH_SHORT).show();
+                    imageFolder.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            item.setImage((uri.toString()));
+
+                        }
+                    });
+
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    mDialog.dismiss();
+                    Toast.makeText(Home.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                    double progress =  (100.0 * (taskSnapshot.getBytesTransferred()/taskSnapshot.getTotalByteCount()));
+                    mDialog.setMessage("Upload "+progress+"%");
+                }
+            });
+
+        }
+    }*/
 
     private void updateChefAvailability(int OldQuan, int newQuan) {
         int oldAvailability = Common.currentChef.getAvailability();

@@ -17,6 +17,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.karan.churi.PermissionManager.PermissionManager;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 /*added by Ibra*/
@@ -188,21 +189,27 @@ public class SignInActivity extends AppCompatActivity {
 
                 verifyPhoneNumberWithCode(mVerificationId, code);
             }});
+        PermissionManager permissionnManager = new PermissionManager() {
+        };
+        if(permissionnManager.checkAndRequestPermissions(SignInActivity.this)) {
 
+        }
         buttonSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                PermissionManager permissionnManager = new PermissionManager() {
+                };
+                if (permissionnManager.checkAndRequestPermissions(SignInActivity.this)) {
                 if (editPhone.getText().toString().matches("")) {
                     Toast.makeText(SignInActivity.this, "please enter the phone number", Toast.LENGTH_LONG).show();
                     return;
                 }
 
-                phone = "+966"+editPhone.getText().toString().substring(1);
+                phone = "+966" + editPhone.getText().toString().substring(1);
 
                 if (Common.isConnectedToInternet(getBaseContext())) {
 
-                    if(checkBoxRememberMe.isChecked()) {
+                    if (checkBoxRememberMe.isChecked()) {
                         //Save Customer
                         Paper.book().write(Common.CUSTOMER_KEY, phone);
                     }
@@ -251,12 +258,14 @@ public class SignInActivity extends AppCompatActivity {
 
                         }
                     });
-                }else{
-                    Toast.makeText(SignInActivity.this, "Please check your intenet connection", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(SignInActivity.this, "Please check your internet connection", Toast.LENGTH_LONG).show();
                     return;
                 }
             }
+            }
         });
+
 
         //Check remember me
         String customer = Paper.book().read(Common.CUSTOMER_KEY);
