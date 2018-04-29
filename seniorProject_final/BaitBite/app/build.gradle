@@ -79,5 +79,8 @@ dependencies {
     //Circular ImageView
     implementation 'de.hdodenhof:circleimageview:2.2.0'
 
+    //spinner
+    implementation 'com.jaredrummler:material-spinner:1.1.0'
+
 }
 apply plugin: 'com.google.gms.google-services'

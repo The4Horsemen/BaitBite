@@ -4,14 +4,19 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import com.example.android.baitbite.Model.Chef;
 import com.example.android.baitbite.Model.Customer;
 
 public class Common {
     public static Customer currentCustomer;
     public static String chefId;
+    public static Chef currentChef;
 
+    public static final String UPDATE = "Update";
     public static final String DELETE = "Delete";
     public static final String CUSTOMER_KEY = "Customer";
+
+    public static final String CHEF_KEY = "Chef";
 
     public static final int PICK_IMAGE_REQUEST = 71;
 
@@ -31,12 +36,12 @@ public class Common {
         return false;
     }
 
-    public static String convertCodeToStatus(String status) {
-        if(status.equals("0")){
+    public static String convertCodeToStatus(String code){
+        if(code.equals("0")){
             return "Placed";
-        }else if(status.equals("1")){
-            return "Shipping";
-        }else {
+        }else if(code.equals("1")){
+            return "On My Way";
+        }else{
             return "Shipped";
         }
     }
