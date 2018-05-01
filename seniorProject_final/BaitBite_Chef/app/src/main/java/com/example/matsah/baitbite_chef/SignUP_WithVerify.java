@@ -207,8 +207,12 @@ public class SignUP_WithVerify extends AppCompatActivity {
 
                             //check if the phone number already exist
                             if (dataSnapshot.child(phone).exists()) {
-                                mDialog.dismiss();
+
                                 Toast.makeText(SignUP_WithVerify.this, "The phone number is already registered by a chef", Toast.LENGTH_LONG).show();
+                                mDialog.dismiss();
+                                table_chef.removeEventListener(this);
+                                table_chef.removeEventListener(this);
+                                finish();
                             } else {
                                 /*Ibra*/
                                 startPhoneNumberVerification(phone);
@@ -222,9 +226,10 @@ public class SignUP_WithVerify extends AppCompatActivity {
                                 mDialog.dismiss();
 
 
-                                //finish();
+
                             }
                         }
+
 
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
@@ -270,7 +275,8 @@ public class SignUP_WithVerify extends AppCompatActivity {
 
                             Toast.makeText(SignUP_WithVerify.this, "the code is verified successfully",Toast.LENGTH_LONG).show();
 
-                            chef = new Chef("", gpsTracker.getLatitude(), gpsTracker.getLongitude(), editName.getText().toString(), phone);
+                           chef = new Chef("", gpsTracker.getLatitude(), gpsTracker.getLongitude(), editName.getText().toString(), phone);
+                           // chef = new Chef("", 26.310885, 50.148136, editName.getText().toString(), phone);
                             chef.setProfile_Image("");
                             table_chef.child(phone).setValue(chef);
                             Toast.makeText(SignUP_WithVerify.this, "Sign up successfully !", Toast.LENGTH_LONG).show();
@@ -283,7 +289,7 @@ public class SignUP_WithVerify extends AppCompatActivity {
                             finish();
 
 
-                            FirebaseUser user = task.getResult().getUser();
+
                             // ...
                         } else {
                             // Sign in failed, display a message and update the UI
@@ -309,7 +315,8 @@ public class SignUP_WithVerify extends AppCompatActivity {
         geoFire = new GeoFire(ref);
 
 
-        geoFire.setLocation(chef.getPhone_Number(), new GeoLocation(chef.getLocationX(), chef.getLocationY()), new GeoFire.CompletionListener(){
+        //geoFire.setLocation(chef.getPhone_Number(), new GeoLocation(chef.getLocationX(), chef.getLocationY()), new GeoFire.CompletionListener(){
+              geoFire.setLocation(chef.getPhone_Number(), new GeoLocation(chef.getLocationX(), chef.getLocationY()), new GeoFire.CompletionListener(){
             @Override
             public void onComplete(String key, DatabaseError error) {
                 if (error != null) {

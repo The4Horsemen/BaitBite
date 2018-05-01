@@ -209,10 +209,7 @@ public class SignInActivity extends AppCompatActivity {
 
                 if (Common.isConnectedToInternet(getBaseContext())) {
 
-                    if (checkBoxRememberMe.isChecked()) {
-                        //Save Customer
-                        Paper.book().write(Common.CUSTOMER_KEY, phone);
-                    }
+
                     if (editPhone.getText().toString().matches("")) {
                         Toast.makeText(SignInActivity.this, "please enter the phone number", Toast.LENGTH_LONG).show();
                         return;
@@ -359,6 +356,10 @@ public class SignInActivity extends AppCompatActivity {
 
                             Intent mapIntent = new Intent(SignInActivity.this, MapsActivity.class);
                             Common.currentCustomer = customer;
+                            if (checkBoxRememberMe.isChecked()) {
+                                //Save Customer
+                                Paper.book().write(Common.CUSTOMER_KEY, phone);
+                            }
                             startActivity(mapIntent);
                             finish();
 

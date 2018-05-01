@@ -1,0 +1,68 @@
+{
+  "Chef" : {
+    "+96654146205" : {
+      "availability" : 0,
+      "credit" : "",
+      "email" : "",
+      "locationX" : 26.3132019,
+      "locationY" : 50.1441709,
+      "name" : "ibra",
+      "phone_Number" : "+96654146205",
+      "profile_Image" : "https://firebasestorage.googleapis.com/v0/b/androidbaitbite.appspot.com/o/images%2Fc32d687b-e80c-44ce-a916-049f6aec24f1?alt=media&token=ce75ef20-0caa-4899-9618-6e955c71a2f8",
+      "status" : false,
+      "store_Summary" : ""
+    }
+  },
+  "Customer" : {
+    "+96654146205" : {
+      "locationX" : 0,
+      "locationY" : 0,
+      "name" : "ibra",
+      "phone" : "+966541462055"
+    }
+  },
+  "Dishes" : {
+    "-LACwgwlzg-f1m1l4EiM" : {
+      "categoryId" : "",
+      "chefID" : "+96656767767",
+      "description" : "chocolate with marshmallow",
+      "discount" : "",
+      "image" : "https://firebasestorage.googleapis.com/v0/b/androidbaitbite.appspot.com/o/images%2Ff6edddbb-b2ad-4203-8b3d-b7a537c84df2?alt=media&token=3c0a764c-de53-4683-b208-27a5415ff4ff",
+      "name" : "Rocky road 🍫",
+      "price" : "30",
+      "quantity" : "15"
+    }
+  },
+  "OrderNow" : {
+    "1523236549270" : {
+      "address" : "thanks again KFUPM",
+      "chefId" : "+96656760250",
+      "dishes" : [ {
+        "discount" : "0",
+        "dishID" : "20",
+        "dishName" : "CREAM OF PUMPKIN",
+        "price" : "1000",
+        "quantity" : "1"
+      } ],
+      "name" : "janbisama",
+      "phone" : "+96656760250",
+      "status" : "0",
+      "total" : "$1,000.00"
+    }
+  },
+  "Rating" : {
+    "+96656360366" : {
+      "comment" : "nah.",
+      "customerPhone" : "+96656360366",
+      "dishID" : "19",
+      "rateValue" : "1"
+    }
+  },
+  "StoreLocation" : {
+    "+96654146205" : {
+      ".priority" : "thettn1veb",
+      "g" : "thettn1veb",
+      "l" : [ 26.3132006, 50.1441716 ]
+    }
+  }
+}

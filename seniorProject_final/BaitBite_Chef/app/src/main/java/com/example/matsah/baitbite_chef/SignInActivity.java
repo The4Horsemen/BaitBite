@@ -247,16 +247,7 @@ public class SignInActivity extends AppCompatActivity {
                             return;
                         }
 
-                        if(checkBoxRememberMe.isChecked()) {
-                            //Save Chef
-                            Paper.book().write(Common.CHEF_KEY, phone);
-                        }
 
-
-                        if (checkBoxRememberMe.isChecked()) {
-                            //Save Chef
-                            Paper.book().write(Common.CHEF_KEY, phone);
-                        }
 
 
                         final ProgressDialog mDialog = new ProgressDialog(SignInActivity.this);
@@ -283,7 +274,9 @@ public class SignInActivity extends AppCompatActivity {
                                     //Get chef info
                                     mDialog.dismiss();
                                     chef = dataSnapshot.child(phone).getValue(Chef.class);
-                                    chef.setPhone_Number(phone);} else {
+                                    chef.setPhone_Number(phone);
+
+                                } else {
 
 
 
@@ -399,6 +392,12 @@ public class SignInActivity extends AppCompatActivity {
 
                             Intent homeIntent = new Intent(SignInActivity.this, Home.class);
                             Common.currentChef = chef;
+
+                            if(checkBoxRememberMe.isChecked()) {
+                                //Save Chef
+                                Paper.book().write(Common.CHEF_KEY, phone);
+                            }
+
                             startActivity(homeIntent);
                             finish();
 
