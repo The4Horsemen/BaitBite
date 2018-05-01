@@ -47,6 +47,7 @@ public class DishListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dish_list);
 
+
         //Init Firebase
         firebaseDatabase = FirebaseDatabase.getInstance();
         dishList = firebaseDatabase.getReference("Dishes");
@@ -146,6 +147,7 @@ public class DishListActivity extends AppCompatActivity {
                         //Send DishID to Dish Detail Activity
                         dishDetail.putExtra("dishId", searchAdapter.getRef(position).getKey());
                         startActivity(dishDetail);
+
                     }
                 });
             }

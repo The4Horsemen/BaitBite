@@ -1,5 +1,6 @@
 package com.example.android.baitbite;
 
+import android.graphics.drawable.Drawable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +23,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.michaelmuenzer.android.scrollablennumberpicker.ScrollableNumberPicker;
+import com.michaelmuenzer.android.scrollablennumberpicker.ScrollableNumberPickerListener;
 import com.squareup.picasso.Picasso;
 import com.stepstone.apprating.AppRatingDialog;
 import com.stepstone.apprating.listener.RatingDialogListener;
@@ -34,7 +37,8 @@ public class DishDetailActivity extends AppCompatActivity implements RatingDialo
     ImageView dish_image;
     CollapsingToolbarLayout collapsingToolbarLayout;
     FloatingActionButton button_cart, button_rating;
-    ElegantNumberButton elegantNumberButton_quantity;
+   // ElegantNumberButton elegantNumberButton_quantity;
+   ScrollableNumberPicker verticalNumberPicker;
     RatingBar ratingBar;
 
     String dishID = "";
@@ -59,19 +63,32 @@ public class DishDetailActivity extends AppCompatActivity implements RatingDialo
         dishes = firebaseDatabase.getReference("Dishes");
         rating_table = firebaseDatabase.getReference("Rating");
 
-        //Init view
-        elegantNumberButton_quantity = (ElegantNumberButton) findViewById(R.id.elegantNumberButton_quantity);
+         verticalNumberPicker = (ScrollableNumberPicker) findViewById(R.id.number_picker_horizontal);
 
-        elegantNumberButton_quantity.setOnClickListener(new ElegantNumberButton.OnClickListener() {
+
+        //Init view
+        //elegantNumberButton_quantity = (ElegantNumberButton) findViewById(R.id.elegantNumberButton_quantity);
+        verticalNumberPicker.setListener(new ScrollableNumberPickerListener() {
             @Override
-            public void onClick(View view) {
-                if(Integer.parseInt(elegantNumberButton_quantity.getNumber()) > maxQuantity){
-                    elegantNumberButton_quantity.setNumber(maxQuantity+"");
+            public void onNumberPicked(int value) {
+                if(value > maxQuantity){
+                    verticalNumberPicker.setValue(maxQuantity);
                     Toast.makeText(DishDetailActivity.this, "The maximum number available is: "+maxQuantity, Toast.LENGTH_LONG).show();
                 }
             }
         });
-
+        /*
+        verticalNumberPicker.setOnClickListener(new ScrollableNumberPicker.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(DishDetailActivity.this, "The  numbmaximumer available is: "+maxQuantity, Toast.LENGTH_LONG).show();
+                if(verticalNumberPicker.getValue() > maxQuantity){
+                    verticalNumberPicker.setValue(maxQuantity);
+                    Toast.makeText(DishDetailActivity.this, "The maximum number available is: "+maxQuantity, Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+*/
         //Rating functionality
         button_rating = (FloatingActionButton) findViewById(R.id.button_rating);
         ratingBar = (RatingBar) findViewById(R.id.ratingBar);
@@ -91,7 +108,7 @@ public class DishDetailActivity extends AppCompatActivity implements RatingDialo
                 new Database(getBaseContext()).addToCart(new Order(
                         dishID,
                         currentDish.getName(),
-                        elegantNumberButton_quantity.getNumber(),
+                        verticalNumberPicker.getValue()+"",
                         currentDish.getPrice(),
                         currentDish.getDiscount()
                 ));
@@ -106,8 +123,10 @@ public class DishDetailActivity extends AppCompatActivity implements RatingDialo
         dish_image = (ImageView) findViewById(R.id.imageView_dish);
 
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing);
+
         collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.CollapsedAppbar);
         collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.ExpandedAppbar);
+
 
         //Get Dish ID from the Intent
         if(getIntent() != null){
@@ -239,4 +258,10 @@ public class DishDetailActivity extends AppCompatActivity implements RatingDialo
     public void onNegativeButtonClicked() {
 
     }
+    @Override
+    public void onBackPressed() {
+
+       finish();
+    }
+
 }

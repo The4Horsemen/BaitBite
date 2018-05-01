@@ -37,6 +37,7 @@
                 android:id="@+id/textView_cart_item_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
                 android:gravity="center_vertical|start"
                 android:text="10000"
                 android:textAllCaps="true"

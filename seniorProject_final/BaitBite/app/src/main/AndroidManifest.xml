@@ -22,7 +22,9 @@
             android:name=".HomeActivity"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme" />
-        <activity android:name=".DishListActivity" />
+        <activity android:name=".DishListActivity"
+            android:theme="@style/Theme.AppCompat.Light"/>
+
         <activity android:name=".DishDetailActivity" />
         <activity android:name=".CartActivity" />
         <activity android:name=".OrderStatusActivity" />

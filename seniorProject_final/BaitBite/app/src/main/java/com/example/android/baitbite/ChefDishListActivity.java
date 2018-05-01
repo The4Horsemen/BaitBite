@@ -133,7 +133,13 @@ public class ChefDishListActivity extends AppCompatActivity {
             @Override
             public void onSearchConfirmed(CharSequence text) {
                 //When search is finished, Show the result of search adapter
-                startSearch(text);
+                String searchText = text+"";
+                if(suggestList.contains(searchText)){
+                    startSearch(text);
+                }else {
+                    Toast.makeText(ChefDishListActivity.this, "Dish not found", Toast.LENGTH_LONG).show();
+                    return;
+                }
             }
 
             @Override
@@ -182,7 +188,7 @@ public class ChefDishListActivity extends AppCompatActivity {
                 for(DataSnapshot postDataSnapshot:dataSnapshot.getChildren()){
                     Dish dishItem = postDataSnapshot.getValue(Dish.class);
                     // Adding name of the Dish to Suggest List
-                    if(!dishItem.getQuantity().equals("0")) {
+                    if(!dishItem.getQuantity().equals("0") && dishItem.getChefID().equals(chefID)) {
                         suggestList.add(dishItem.getName());
                     }
                 }

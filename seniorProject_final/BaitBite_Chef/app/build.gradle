@@ -69,5 +69,8 @@ dependencies {
 
     //Circular ImageView
     implementation 'de.hdodenhof:circleimageview:2.2.0'
+
+    //Quantity selector
+    implementation 'com.michaelmuenzer.android:ScrollableNumberPicker:0.2.2'
 }
 apply plugin: 'com.google.gms.google-services'
