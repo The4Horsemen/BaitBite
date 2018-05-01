@@ -493,7 +493,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     ImageView img = (ImageView) v.findViewById(R.id.imageView1);
                     Chef Tmp = (Chef) marker.getTag();
                     Name.setText(Tmp.getName());
-                    phone.setText(Tmp.getPhone_Number());
+                    phone.setText(Tmp.getStore_Summary());
                     if (!Tmp.getProfile_Image().isEmpty()) {
 
 
