@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -40,7 +41,7 @@ public class SignUP_WithVerify extends AppCompatActivity {
     private GPSTracker gpsTracker ;
     MaterialEditText editPhone, editName, verificationCode;
     protected PermissionManager permissionnManager;
-    //Button SignUpActivity in SignUpActivity page
+
 
     /*added by Ibra*/
     private static final String TAG = "PhoneAuthActivity";
@@ -166,14 +167,6 @@ public class SignUP_WithVerify extends AppCompatActivity {
 
                 verifyPhoneNumberWithCode(mVerificationId, code);
 
-                /*
-                chef = new Chef("", gpsTracker.getLatitude(), gpsTracker.getLongitude(), editName.getText().toString(), phone);
-                chef.setProfile_Image("");
-                table_chef.child(phone).setValue(chef);
-                Toast.makeText(SignUP_WithVerify.this, "Sign up successfully !", Toast.LENGTH_LONG).show();
-
-                CreateStoreLocation(chef);
-                */
             }});
 
 
@@ -192,6 +185,11 @@ public class SignUP_WithVerify extends AppCompatActivity {
                 }
 
                 phone = "+966"+editPhone.getText().toString().substring(1);
+
+                if(!isValidPhoneNo(phone)){
+                    Toast.makeText(SignUP_WithVerify.this, "please enter a valid phone number",Toast.LENGTH_LONG).show();
+                    return;
+                }
 
                 permissionnManager = new PermissionManager() {
                 };
@@ -327,6 +325,11 @@ public class SignUP_WithVerify extends AppCompatActivity {
 
 
 
+    }
+
+    public static boolean isValidPhoneNo(CharSequence iPhoneNo) {
+        return !TextUtils.isEmpty(iPhoneNo) &&
+                Patterns.PHONE.matcher(iPhoneNo).matches();
     }
 
 

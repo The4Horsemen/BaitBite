@@ -17,12 +17,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".SignInActivity" />
-        <activity android:name=".SignUpActivity" />
         <activity
             android:name=".Home"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme" />
-        <activity android:name=".DishListActivity" />
         <activity android:name=".SignUP_WithVerify" />
         <activity android:name=".ChefProfileActivity" />
         <activity

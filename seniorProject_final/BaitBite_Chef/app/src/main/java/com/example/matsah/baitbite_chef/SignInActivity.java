@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentSender;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -192,13 +193,10 @@ public class SignInActivity extends AppCompatActivity {
         textSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               // permissionnManager = new PermissionManager() {
-               // };
-               // GPSTracker gpsTracker = new GPSTracker(SignInActivity.this);
-               // if(permissionnManager.checkAndRequestPermissions(SignInActivity.this) && gpsTracker.canGetLocation()) {
+
                     Intent signUp = new Intent(SignInActivity.this, SignUP_WithVerify.class);
                     startActivity(signUp);
-               // }
+
 
             }
         });
@@ -227,59 +225,83 @@ public class SignInActivity extends AppCompatActivity {
                 PermissionManager permissionnManager = new PermissionManager() {
                 };
                 if (permissionnManager.checkAndRequestPermissions(SignInActivity.this)) {
-                if (editPhone.getText().toString().matches("")) {
-                    Toast.makeText(SignInActivity.this, "please enter the phone number", Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-                phone = "+966" + editPhone.getText().toString().substring(1);
-
-                if (checkBoxRememberMe.isChecked()) {
-                    //Save Chef
-                    Paper.book().write(Common.CHEF_KEY, phone);
-                }
+                    if (editPhone.getText().toString().matches("")) {
+                        Toast.makeText(SignInActivity.this, "please enter the phone number", Toast.LENGTH_LONG).show();
+                        return;
+                    }
 
 
-                final ProgressDialog mDialog = new ProgressDialog(SignInActivity.this);
-                    mDialog.setMessage("Please wait...");
-                    mDialog.show();
-
-                table_chef.addValueEventListener(new ValueEventListener() {
-
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-
-                        //Check chef existence in Database
-                        if (dataSnapshot.child(phone).exists()) {
-
-                            startPhoneNumberVerification(phone);
-
-                            buttonSignIn.setVisibility(View.INVISIBLE);
-                            buttonVerify.setVisibility(View.VISIBLE);
-                            editPhone.setVisibility(View.INVISIBLE);
-                            verification_code.setVisibility(View.VISIBLE);
-                            textSignup.setVisibility(View.INVISIBLE);
-                            checkBoxRememberMe.setVisibility(View.INVISIBLE);
-
-                            //Get chef info
-                            mDialog.dismiss();
-                            chef = dataSnapshot.child(phone).getValue(Chef.class);
-                            chef.setPhone_Number(phone);} else {
-
-
-
-                             mDialog.dismiss();
-                            Toast.makeText(SignInActivity.this, "chef not exist, Sign Up please!", Toast.LENGTH_LONG).show();
+                    if (Common.isConnectedToInternet(getBaseContext())) {
+                        //Toast.makeText(SignInActivity.this, editPhone.getText().toString().substring(1),Toast.LENGTH_LONG).show();
+                        if(editPhone.getText().toString().matches("")){
+                            Toast.makeText(SignInActivity.this, "please enter the phone number",Toast.LENGTH_LONG).show();
+                            return;
                         }
 
-                    }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
 
+                        phone = "+966"+editPhone.getText().toString().substring(1);
+
+                        if(!isValidPhoneNo(phone)){
+                            Toast.makeText(SignInActivity.this, "please enter a valid phone number",Toast.LENGTH_LONG).show();
+                            return;
+                        }
+
+                        if(checkBoxRememberMe.isChecked()) {
+                            //Save Chef
+                            Paper.book().write(Common.CHEF_KEY, phone);
+                        }
+
+
+                        if (checkBoxRememberMe.isChecked()) {
+                            //Save Chef
+                            Paper.book().write(Common.CHEF_KEY, phone);
+                        }
+
+
+                        final ProgressDialog mDialog = new ProgressDialog(SignInActivity.this);
+                        mDialog.setMessage("Please wait...");
+                        mDialog.show();
+
+                        table_chef.addValueEventListener(new ValueEventListener() {
+
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                //Check chef existence in Database
+                                if (dataSnapshot.child(phone).exists()) {
+
+                                    startPhoneNumberVerification(phone);
+
+                                    buttonSignIn.setVisibility(View.INVISIBLE);
+                                    buttonVerify.setVisibility(View.VISIBLE);
+                                    editPhone.setVisibility(View.INVISIBLE);
+                                    verification_code.setVisibility(View.VISIBLE);
+                                    textSignup.setVisibility(View.INVISIBLE);
+                                    checkBoxRememberMe.setVisibility(View.INVISIBLE);
+
+                                    //Get chef info
+                                    mDialog.dismiss();
+                                    chef = dataSnapshot.child(phone).getValue(Chef.class);
+                                    chef.setPhone_Number(phone);} else {
+
+
+
+                                    mDialog.dismiss();
+                                    Toast.makeText(SignInActivity.this, "chef not exist, Sign Up please!", Toast.LENGTH_LONG).show();
+                                }
+
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
                     }
-                });
-            }
+                }
+
+
             }
 
         });
@@ -293,6 +315,7 @@ public class SignInActivity extends AppCompatActivity {
         }
 
     }
+
 
     private void signIn(final String phone) {
         //Init Firebase
@@ -400,6 +423,11 @@ public class SignInActivity extends AppCompatActivity {
         PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, code);
         // [END verify_with_code]
         signInWithPhoneAuthCredential(credential);
+    }
+
+    public static boolean isValidPhoneNo(CharSequence iPhoneNo) {
+        return !TextUtils.isEmpty(iPhoneNo) &&
+                Patterns.PHONE.matcher(iPhoneNo).matches();
     }
 
 

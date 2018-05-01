@@ -239,8 +239,6 @@ public class DishDetailActivity extends AppCompatActivity implements NavigationV
         }
 
 
-        //buttonSelect = edit_menu_layout.findViewById(R.id.buttonSelect);
-        //buttonUpload = edit_menu_layout.findViewById(R.id.buttonUpload);
 
         //Event for button
         choose_pic.setOnClickListener(new View.OnClickListener() {
@@ -250,12 +248,6 @@ public class DishDetailActivity extends AppCompatActivity implements NavigationV
             }
         });
 
-        /*buttonUpload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changeImage();
-            }
-        });*/
 
         alertedDialog.setView(edit_menu_layout);
 
