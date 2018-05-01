@@ -394,7 +394,7 @@ public class SignInActivity extends AppCompatActivity {
                             Common.currentChef = chef;
 
                             if(checkBoxRememberMe.isChecked()) {
-                                //Save Chef
+                                //Save Chefgf
                                 Paper.book().write(Common.CHEF_KEY, phone);
                             }
 
