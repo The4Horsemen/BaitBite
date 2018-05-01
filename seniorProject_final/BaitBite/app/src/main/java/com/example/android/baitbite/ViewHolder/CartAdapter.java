@@ -46,7 +46,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartViewHolder>{
         Locale  locale = new Locale("en", "US");
         NumberFormat numberFormat = NumberFormat.getCurrencyInstance(locale);
         int price = (Integer.parseInt(orderList.get(position).getPrice()))*(Integer.parseInt(orderList.get(position).getQuantity()));
-        holder.textView_cart_price.setText(numberFormat.format(price));
+        holder.textView_cart_price.setText(price+" SAR");
 
         holder.textView_cart_name.setText(orderList.get(position).getDishName());
     }

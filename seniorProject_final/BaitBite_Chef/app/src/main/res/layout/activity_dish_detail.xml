@@ -129,7 +129,7 @@
                         android:layout_height="wrap_content"
                         android:paddingLeft="5dp"
                         android:orientation="horizontal">
-
+                        <!--
                         <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
                             android:layout_width="100dp"
                             android:layout_height="30dp"
@@ -139,7 +139,32 @@
                             android:layout_marginBottom="18dp"
                             app:textSize="8sp"
                             app:backGroundColor="@color/colorAccent" />
+                        -->
 
+                        <com.michaelmuenzer.android.scrollablennumberpicker.ScrollableNumberPicker
+                            android:id="@+id/number_picker_horizontal"
+                            android:layout_width="87dp"
+                            android:layout_height="30dp"
+                            android:layout_margin="7dp"
+
+                            app:snp_buttonBackgroundTintSelector="@color/colorPrimary"
+                            app:snp_buttonTouchScaleFactor="1.2"
+                            app:snp_orientation="horizontal"
+                            app:snp_valueMarginEnd="5dp"
+                            app:snp_valueMarginStart="5dp"
+                            app:snp_value_text_color="@color/colorPrimary"
+                            app:snp_value_text_size="20sp"
+
+                            app:snp_value_text_appearance="?android:attr/textAppearanceLarge"
+                            android:background="@drawable/number_picker_bg_color"
+                            app:snp_maxValue="100"
+                            app:snp_minValue="0"
+                            app:snp_scrollEnabled="true"
+                            app:snp_stepSize="1"
+
+
+
+                            />
 
                         <Button
                             android:id="@+id/buttonUpdateQuantity"
@@ -148,7 +173,7 @@
                             android:layout_width="70dp"
                             android:layout_height="30dp"
                             android:layout_marginTop="8dp"
-                            android:background="@drawable/background"
+                            android:background="@color/colorPrimary"
                             style="?android:attr/borderlessButtonStyle"/>
 
 

@@ -45,6 +45,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.michaelmuenzer.android.scrollablennumberpicker.ScrollableNumberPicker;
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.squareup.picasso.Picasso;
 
@@ -61,11 +62,13 @@ public class DishDetailActivity extends AppCompatActivity implements NavigationV
     FButton buttonUpload, buttonSelect;
     Button buttonUpdateQuantity;
     TextView dish_name, dish_price, dish_description;
-    ElegantNumberButton dish_quantity, editQuantity;
+    //ElegantNumberButton /*dish_quantity,*/ editQuantity;
     ImageView dish_image, edit_dish_picture;
     CollapsingToolbarLayout collapsingToolbarLayout;
     FloatingActionButton choose_pic, fButtonEditDish;
-    ElegantNumberButton elegantNumberButton_quantity;
+    //ElegantNumberButton elegantNumberButton_quantity;
+    ScrollableNumberPicker verticalNumberPicker;
+    ScrollableNumberPicker verticalNumberPicker2;
     RatingBar ratingBar;
 
     String dishID = "";
@@ -107,7 +110,7 @@ public class DishDetailActivity extends AppCompatActivity implements NavigationV
         storageReference = storage.getReference();
 
         //Init view
-        elegantNumberButton_quantity = (ElegantNumberButton) findViewById(R.id.elegantNumberButton_quantity);
+       // elegantNumberButton_quantity = (ElegantNumberButton) findViewById(R.id.elegantNumberButton_quantity);
 
         dishDetailLayout = (CoordinatorLayout) findViewById(R.id.dishDetailLayout);
 
@@ -118,8 +121,8 @@ public class DishDetailActivity extends AppCompatActivity implements NavigationV
         dish_name = (TextView) findViewById(R.id.dish_name);
         dish_price = (TextView) findViewById(R.id.dish_price);
         dish_image = (ImageView) findViewById(R.id.imageView_dish);
-        dish_quantity = (ElegantNumberButton) findViewById(R.id.elegantNumberButton_quantity);
-
+        //dish_quantity = (ElegantNumberButton) findViewById(R.id.elegantNumberButton_quantity);
+        verticalNumberPicker = (ScrollableNumberPicker) findViewById(R.id.number_picker_horizontal);
 
 
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing);
@@ -142,8 +145,8 @@ public class DishDetailActivity extends AppCompatActivity implements NavigationV
         buttonUpdateQuantity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                currentDish.setQuantity(dish_quantity.getNumber().toString());
-                updateDishQuantity(Integer.parseInt(dish_quantity.getNumber().toString()));
+                currentDish.setQuantity(verticalNumberPicker.getValue()+"");
+                updateDishQuantity(verticalNumberPicker.getValue());
                 dishes.child(dishID).setValue(currentDish);
 
                 Toast.makeText(DishDetailActivity.this, "dish quantity is updated", Toast.LENGTH_SHORT).show();
@@ -193,7 +196,7 @@ public class DishDetailActivity extends AppCompatActivity implements NavigationV
                     dish_price.setText(currentDish.getPrice());
                     dish_name.setText(currentDish.getName());
                     dish_description.setText(currentDish.getDescription());
-                    dish_quantity.setNumber(currentDish.getQuantity());
+                    verticalNumberPicker.setValue(Integer.parseInt(currentDish.getQuantity()));
 
                     //init the dish old quantity
                     dishOldQuantity = Integer.parseInt(currentDish.getQuantity());
@@ -222,7 +225,7 @@ public class DishDetailActivity extends AppCompatActivity implements NavigationV
         editDescription = edit_menu_layout.findViewById(R.id.editDescription);
         editPrice = edit_menu_layout.findViewById(R.id.editPrice);
         editDiscount = edit_menu_layout.findViewById(R.id.editDiscount);
-        editQuantity = edit_menu_layout.findViewById(R.id.elegantNumberButton_quantity);
+        verticalNumberPicker2 = edit_menu_layout.findViewById(R.id.number_picker_EditDish_Dialog);
         edit_dish_picture = (ImageView) edit_menu_layout.findViewById(R.id.dish_pic);
 
         choose_pic = (FloatingActionButton) edit_menu_layout.findViewById(R.id.choosePic);
@@ -233,7 +236,7 @@ public class DishDetailActivity extends AppCompatActivity implements NavigationV
         editDiscount.setText(currentDish.getDiscount());
         editPrice.setText(currentDish.getPrice());
         editDescription.setText(currentDish.getDescription());
-        editQuantity.setNumber(currentDish.getQuantity());
+        verticalNumberPicker2.setValue(Integer.parseInt(currentDish.getQuantity()));
         if(!currentDish.getImage().isEmpty()){
             Picasso.with(getBaseContext()).load(currentDish.getImage()).into(edit_dish_picture);
         }
@@ -262,10 +265,10 @@ public class DishDetailActivity extends AppCompatActivity implements NavigationV
                 currentDish.setPrice(editPrice.getText().toString());
                 currentDish.setDiscount(editDiscount.getText().toString());
                 currentDish.setDescription(editDescription.getText().toString());
-                currentDish.setQuantity(editQuantity.getNumber());
+                currentDish.setQuantity(verticalNumberPicker2.getValue()+"");
 
                 //increase the availability of the chef
-                updateDishQuantity(Integer.parseInt(editQuantity.getNumber().toString()));
+                updateDishQuantity(verticalNumberPicker2.getValue());
 
                 dishes.child(key).setValue(currentDish);
                 Snackbar.make(dishDetailLayout, "Dish "+currentDish.getName()+" was edited", Snackbar.LENGTH_SHORT).show();
