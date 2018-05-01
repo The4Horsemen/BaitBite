@@ -207,6 +207,8 @@ public class ChefDishListActivity extends AppCompatActivity {
             protected void populateViewHolder(DishViewHolder viewHolder, Dish model, int position) {
                 if(!model.getQuantity().equals("0")) {
                     viewHolder.textViewDishName.setText(model.getName());
+                    viewHolder.textViewDishQuantity.setText("QTY: "+model.getQuantity());
+                    viewHolder.textViewDishPrice.setText(model.getPrice()+" SAR");
                     if (!model.getImage().isEmpty()) {
                         Picasso.with(getBaseContext()).load(model.getImage()).into(viewHolder.imageViewDish);
                     } else {

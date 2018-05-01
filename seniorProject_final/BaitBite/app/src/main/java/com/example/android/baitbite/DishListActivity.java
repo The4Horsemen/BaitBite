@@ -178,7 +178,10 @@ public class DishListActivity extends AppCompatActivity {
         dishAdapter = new FirebaseRecyclerAdapter<Dish, DishViewHolder>(Dish.class, R.layout.dish_item, DishViewHolder.class, dishList.orderByChild("categoryId").equalTo(categoryId)) {
             @Override
             protected void populateViewHolder(DishViewHolder viewHolder, Dish model, int position) {
+                Toast.makeText(DishListActivity.this, "results"+model.getQuantity()+" "+model.getPrice(), Toast.LENGTH_LONG).show();
                 viewHolder.textViewDishName.setText(model.getName());
+                viewHolder.textViewDishQuantity.setText("QTY: "+model.getQuantity());
+                viewHolder.textViewDishPrice.setText(model.getPrice()+" SAR");
                 Picasso.with(getBaseContext()).load(model.getImage()).into(viewHolder.imageViewDish);
 
                 final Dish local = model;

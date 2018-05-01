@@ -14,7 +14,7 @@ import com.example.android.baitbite.R;
 
 public class DishViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    public TextView textViewDishName;
+    public TextView textViewDishName,textViewDishQuantity,textViewDishPrice;
     public ImageView imageViewDish;
 
     private ItemClickListener itemClickListener;
@@ -27,6 +27,8 @@ public class DishViewHolder extends RecyclerView.ViewHolder implements View.OnCl
         super(itemView);
 
         textViewDishName = (TextView) itemView.findViewById(R.id.dish_name);
+        textViewDishQuantity= (TextView) itemView.findViewById(R.id.dish_quantity);
+        textViewDishPrice = (TextView) itemView.findViewById(R.id.dish_price);
         imageViewDish = (ImageView) itemView.findViewById(R.id.dish_image);
 
         itemView.setOnClickListener(this);

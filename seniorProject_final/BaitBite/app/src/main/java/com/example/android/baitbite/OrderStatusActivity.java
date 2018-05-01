@@ -154,7 +154,7 @@ public class OrderStatusActivity extends AppCompatActivity {
         final View view = inflater.inflate(R.layout.update_order_layout, null);
 
         spinner = (MaterialSpinner) view.findViewById(R.id.statusSpinner);
-        spinner.setItems("Placed", "On My Way", "Shipped");
+        spinner.setItems("Placed", "Preparing", "Ready to pickup");
 
         alertDialog.setView(view);
 
