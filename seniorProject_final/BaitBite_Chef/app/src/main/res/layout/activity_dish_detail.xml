@@ -19,6 +19,7 @@
             android:id="@+id/collapsing"
             android:layout_width="match_parent"
             android:layout_height="350dp"
+            app:collapsedTitleGravity="center"
             android:fitsSystemWindows="true"
             app:contentScrim="#0e0d0e"
             app:expandedTitleTextAppearance="@android:color/transparent"
