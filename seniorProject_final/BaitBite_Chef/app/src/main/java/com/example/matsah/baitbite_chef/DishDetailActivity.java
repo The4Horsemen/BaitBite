@@ -347,6 +347,8 @@ public class DishDetailActivity extends AppCompatActivity implements NavigationV
         }
     }
 
+    
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
