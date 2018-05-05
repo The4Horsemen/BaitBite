@@ -366,7 +366,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 if (!user.getProfile_Image().isEmpty()) {
                                     Picasso.with(MapsActivity.this)
                                             .load(user.getProfile_Image()).fetch();
-                                }else{
+                                }
+
+                                else{
                                     Picasso.with(MapsActivity.this)
                                             .load("https://png.icons8.com/ios/50/000000/baguette.png").fetch();
                                 }
